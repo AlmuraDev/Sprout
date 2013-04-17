@@ -73,9 +73,9 @@ public class GrowthTask implements Runnable {
 					return true;
 				}
 				final Block block = w.getBlockAt(x, y, z);
-				if (!(block instanceof SpoutBlock)) {
-					return true;
-				}
+				//if (((SpoutBlock)block).getCustomBlock() == null) {
+				//	return true;
+				//}
 				plugin.getLogger().info("Found a Spout block at " + block.toString() + ". Gathering growth data from associated Sprout.");
 				final Sprout sprout = (Sprout) o;
 				final Stage current = sprout.getCurrentStage(localTime);

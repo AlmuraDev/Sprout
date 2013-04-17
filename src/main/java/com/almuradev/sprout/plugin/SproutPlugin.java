@@ -19,8 +19,13 @@
  */
 package com.almuradev.sprout.plugin;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.almuradev.sprout.api.Stage;
 import com.almuradev.sprout.api.io.Registry;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
+import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.io.SimpleRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
@@ -36,9 +41,16 @@ public class SproutPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		registry.add("world", 0, 0, 0, new SimpleSprout("TestSprout", null));
-		registry.add("world", 0, 1, 0, new SimpleSprout("TestSprout1", null));
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, "world"), 0, 0);
+		final Map<Integer, Stage> stages = new HashMap<>(4);
+		stages.put(0, new SimpleStage("customblock1", 0));
+		stages.put(1, new SimpleStage("customblock2", 100));
+		stages.put(2, new SimpleStage("customblock3", 1000));
+		stages.put(3, new SimpleStage("customblock4", 10000));
+		stages.put(4, new SimpleStage("customblock5", 100000));
+		for (int i = 0; i < 1; i++) {
+			registry.add("world", i, 0, i, new SimpleSprout("TestSprout", stages));
+		}
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, "world"), 250, 250);
 	}
 
 	public Registry getRegistry() {

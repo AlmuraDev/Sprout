@@ -45,15 +45,6 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
-	public Sprout addStage(int level, Stage stage) {
-		if (stage == null) {
-			throw new IllegalArgumentException("Stage cannot be null!");
-		}
-		stages.put(level, stage);
-		return this;
-	}
-
-	@Override
 	public Stage getStage(int level) {
 		return stages.get(level);
 	}
@@ -87,9 +78,7 @@ public class SimpleSprout implements Sprout {
 				}
 			}
 
-			if (increment < currentTime) {
-				continue;
-			} else if (increment > currentTime) {
+			if (increment > currentTime) {
 				break;
 			}
 		}
@@ -106,11 +95,6 @@ public class SimpleSprout implements Sprout {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public Stage removeStage(int level) {
-		return stages.remove(level);
 	}
 
 	@Override
