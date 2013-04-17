@@ -8,11 +8,12 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>Sprout</name>
 	<url>http://www.almuradev.com</url>
-	<description>The premiere farming emulation system.</description>
+	<description>The premiere Spoutcraft farming emulation system.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<bukkitVersion>1.5.1-R0.3-SNAPSHOT</bukkitVersion>
+		<spoutVersion>1.5.1-R0.3-SNAPSHOT</spoutVersion>
 		<mainClass>com.almuradev.sprout.plugin.SproutPlugin</mainClass>
 	</properties>
 
@@ -57,7 +58,7 @@
 		<dependency>
 			<groupId>org.getspout</groupId>
 			<artifactId>spoutplugin</artifactId>
-			<version>dev-SNAPSHOT</version>
+			<version>${spoutVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

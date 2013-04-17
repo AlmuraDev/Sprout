@@ -1,0 +1,9 @@
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+author: ${project.organization.name}
+website: ${project.organization.url}
+
+main: ${mainClass}
+depend: [Spout]
+load: POSTWORLD

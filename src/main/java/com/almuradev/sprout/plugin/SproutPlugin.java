@@ -20,8 +20,11 @@
 package com.almuradev.sprout.plugin;
 
 import com.almuradev.sprout.api.io.Registry;
+import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.io.SimpleRegistry;
+import com.almuradev.sprout.plugin.task.GrowthTask;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SproutPlugin extends JavaPlugin {
@@ -29,6 +32,13 @@ public class SproutPlugin extends JavaPlugin {
 
 	public SproutPlugin() {
 		registry = new SimpleRegistry();
+	}
+
+	@Override
+	public void onEnable() {
+		registry.add("world", 0, 0, 0, new SimpleSprout("TestSprout", null));
+		registry.add("world", 0, 1, 0, new SimpleSprout("TestSprout1", null));
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, "world"), 0, 0);
 	}
 
 	public Registry getRegistry() {
