@@ -29,6 +29,7 @@ import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
+import com.almuradev.sprout.plugin.io.Storage;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
 import org.bukkit.Bukkit;
@@ -37,6 +38,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SproutPlugin extends JavaPlugin {
 	private final SimpleSproutRegistry sproutRegistry;
 	private final SimpleWorldRegistry worldRegistry;
+	private Storage storage;
 
 	public SproutPlugin() {
 		sproutRegistry = new SimpleSproutRegistry();
@@ -45,6 +47,8 @@ public class SproutPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		storage = new Storage(this);
+		storage.onEnable();
 		final Map<Integer, Stage> stages = new HashMap<>(4);
 		stages.put(0, new SimpleStage("customblock1", 0));
 		stages.put(1, new SimpleStage("customblock2", 100));
