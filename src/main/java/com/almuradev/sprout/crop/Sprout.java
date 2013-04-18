@@ -17,13 +17,18 @@
  * You should have received a copy of the GNU General Public License. If not,
  * see <http://www.gnu.org/licenses/> for the GNU General Public License.
  */
-package com.almuradev.sprout.api;
+package com.almuradev.sprout.crop;
+
+import com.almuradev.sprout.mech.Drop;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
 
 public interface Sprout extends Serializable {
 	public String getIdentifier();
+
+    public String getSource();
 
 	public Stage getStage(int level);
 
@@ -34,6 +39,8 @@ public interface Sprout extends Serializable {
 	public Stage getNextStage(long currentTime);
 
 	public Map<Integer, Stage> getStages();
+
+    public Collection<Drop> getDrops();
 
 	public long getDispersedTime();
 }

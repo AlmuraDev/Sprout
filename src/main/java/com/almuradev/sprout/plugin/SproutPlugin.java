@@ -22,7 +22,7 @@ package com.almuradev.sprout.plugin;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.almuradev.sprout.api.Stage;
+import com.almuradev.sprout.crop.Stage;
 import com.almuradev.sprout.api.io.Registry;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License. If not,
  * see <http://www.gnu.org/licenses/> for the GNU General Public License.
  */
-package com.almuradev.sprout.api;
+package com.almuradev.sprout.crop;
 
 /**
  * Immutable object which binds a custom block's name to growth ticks.

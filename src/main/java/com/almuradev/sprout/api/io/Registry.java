@@ -21,7 +21,7 @@ package com.almuradev.sprout.api.io;
 
 import java.util.Map;
 
-import com.almuradev.sprout.api.Sprout;
+import com.almuradev.sprout.crop.Sprout;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 
 public interface Registry {

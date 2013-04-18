@@ -19,8 +19,8 @@
  */
 package com.almuradev.sprout.plugin.task;
 
-import com.almuradev.sprout.api.Sprout;
-import com.almuradev.sprout.api.Stage;
+import com.almuradev.sprout.crop.Sprout;
+import com.almuradev.sprout.crop.Stage;
 import com.almuradev.sprout.api.io.Registry;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
