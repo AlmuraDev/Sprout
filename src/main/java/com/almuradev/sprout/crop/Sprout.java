@@ -19,16 +19,16 @@
  */
 package com.almuradev.sprout.crop;
 
-import com.almuradev.sprout.mech.Drop;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
+import com.almuradev.sprout.mech.Drop;
+
 public interface Sprout extends Serializable {
 	public String getIdentifier();
 
-    public String getSource();
+	public String getSource();
 
 	public Stage getStage(int level);
 
@@ -40,7 +40,7 @@ public interface Sprout extends Serializable {
 
 	public Map<Integer, Stage> getStages();
 
-    public Collection<Drop> getDrops();
+	public Collection<Drop> getDrops();
 
 	public long getDispersedTime();
 }

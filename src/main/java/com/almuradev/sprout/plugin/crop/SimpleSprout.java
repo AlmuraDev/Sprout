@@ -29,10 +29,10 @@ import com.almuradev.sprout.mech.Drop;
 
 public class SimpleSprout implements Sprout {
 	private final String identifier;
-    private final String source;
+	private final String source;
 	private final Map<Integer, Stage> stages;
-    private final Collection<Drop> drops;
-    private long dispersedTime;
+	private final Collection<Drop> drops;
+	private long dispersedTime;
 
 	public SimpleSprout(String identifier, String source, Map<Integer, Stage> stages, Collection<Drop> drops) {
 		if (identifier == null || identifier.isEmpty() || source == null || source.isEmpty()) {
@@ -40,9 +40,9 @@ public class SimpleSprout implements Sprout {
 		}
 
 		this.identifier = identifier;
-        this.source = source;
+		this.source = source;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
-        this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
+		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
 	}
 
 	@Override
@@ -50,12 +50,12 @@ public class SimpleSprout implements Sprout {
 		return identifier;
 	}
 
-    @Override
-    public String getSource() {
-        return source;
-    }
+	@Override
+	public String getSource() {
+		return source;
+	}
 
-    @Override
+	@Override
 	public Stage getStage(int level) {
 		return stages.get(level);
 	}
@@ -82,7 +82,7 @@ public class SimpleSprout implements Sprout {
 			prior = value;
 			increment += value.getGrowthTicks();
 			if (key == 0) {
-				 if (increment > currentTime) {
+				if (increment > currentTime) {
 					break;
 				} else {
 					continue;
@@ -113,12 +113,12 @@ public class SimpleSprout implements Sprout {
 		return Collections.unmodifiableMap(stages);
 	}
 
-    @Override
-    public Collection<Drop> getDrops() {
-        return Collections.unmodifiableCollection(drops);
-    }
+	@Override
+	public Collection<Drop> getDrops() {
+		return Collections.unmodifiableCollection(drops);
+	}
 
-    @Override
+	@Override
 	public long getDispersedTime() {
 		return dispersedTime;
 	}
