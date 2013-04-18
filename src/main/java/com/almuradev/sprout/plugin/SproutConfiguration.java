@@ -34,7 +34,7 @@ public class SproutConfiguration {
 	}
 
 	public long getGrowthIntervalFor(String world) {
-		return growthIntervals.get(world);
+		return growthIntervals.get(world) == null ? 300 : growthIntervals.get(world);
 	}
 
 	public void save() {
