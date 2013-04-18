@@ -103,9 +103,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 
     private List<Sprout> createSprouts(File yml) {
         final YamlConfiguration reader = YamlConfiguration.loadConfiguration(yml);
-        final Set<String> keys = reader.getKeys(false);
-        final Iterator<String> iterator = keys.iterator();
         final List<Sprout> createdSprouts = new ArrayList<>();
+        final Iterator<String> iterator = reader.getKeys(false).iterator();
 
         while (iterator.hasNext()) {
             //Identifier
