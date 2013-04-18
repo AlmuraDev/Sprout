@@ -60,9 +60,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.almuradev.sprout.crop.Sprout;
-import com.almuradev.sprout.crop.Stage;
-import com.almuradev.sprout.mech.Drop;
+import com.almuradev.sprout.api.crop.Sprout;
+import com.almuradev.sprout.api.crop.Stage;
+import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;

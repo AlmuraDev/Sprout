@@ -22,7 +22,7 @@ package com.almuradev.sprout.api.io;
 import java.util.Map;
 
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
-import com.almuradev.sprout.crop.Sprout;
+import com.almuradev.sprout.api.crop.Sprout;
 
 public interface WorldRegistry {
 	public Sprout add(String world, int x, int y, int z, Sprout sprout);

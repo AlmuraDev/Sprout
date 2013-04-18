@@ -19,7 +19,7 @@
  */
 package com.almuradev.sprout.plugin.crop.stage;
 
-import com.almuradev.sprout.crop.Stage;
+import com.almuradev.sprout.api.crop.Stage;
 
 public class SimpleStage implements Stage {
 	private final String customName;

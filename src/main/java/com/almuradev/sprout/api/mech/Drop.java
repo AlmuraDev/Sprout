@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License. If not,
  * see <http://www.gnu.org/licenses/> for the GNU General Public License.
  */
-package com.almuradev.sprout.mech;
+package com.almuradev.sprout.api.mech;
 
 import java.io.Serializable;
 

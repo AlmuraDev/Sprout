@@ -24,7 +24,7 @@ import java.util.Map;
 
 import com.almuradev.sprout.api.io.SproutRegistry;
 import com.almuradev.sprout.api.io.WorldRegistry;
-import com.almuradev.sprout.crop.Stage;
+import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;

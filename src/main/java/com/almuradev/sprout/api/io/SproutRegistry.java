@@ -21,7 +21,7 @@ package com.almuradev.sprout.api.io;
 
 import java.util.Collection;
 
-import com.almuradev.sprout.crop.Sprout;
+import com.almuradev.sprout.api.crop.Sprout;
 
 public interface SproutRegistry {
 	public Sprout add(Sprout sprout);

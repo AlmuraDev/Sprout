@@ -25,7 +25,7 @@ import java.util.Map;
 
 import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
-import com.almuradev.sprout.crop.Sprout;
+import com.almuradev.sprout.api.crop.Sprout;
 
 public class SimpleWorldRegistry implements WorldRegistry {
 	private static final HashMap<String, TInt21TripleObjectHashMap> REGISTRIES = new HashMap<>();

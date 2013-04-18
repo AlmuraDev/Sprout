@@ -19,7 +19,7 @@
  */
 package com.almuradev.sprout.plugin.mech;
 
-import com.almuradev.sprout.mech.Drop;
+import com.almuradev.sprout.api.mech.Drop;
 
 public class SproutDrop implements Drop {
 	private final String identifier;

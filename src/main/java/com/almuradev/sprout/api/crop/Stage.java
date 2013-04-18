@@ -17,30 +17,13 @@
  * You should have received a copy of the GNU General Public License. If not,
  * see <http://www.gnu.org/licenses/> for the GNU General Public License.
  */
-package com.almuradev.sprout.crop;
+package com.almuradev.sprout.api.crop;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
+/**
+ * Immutable object which binds a custom block's name to growth ticks.
+ */
+public interface Stage {
+	public String getCustomName();
 
-import com.almuradev.sprout.mech.Drop;
-
-public interface Sprout extends Serializable {
-	public String getIdentifier();
-
-	public String getSource();
-
-	public Stage getStage(int level);
-
-	public Stage getStage(String customName);
-
-	public Stage getCurrentStage(long currentTime);
-
-	public Stage getNextStage(long currentTime);
-
-	public Map<Integer, Stage> getStages();
-
-	public Collection<Drop> getDrops();
-
-	public long getDispersedTime();
+	public int getGrowthTicks();
 }

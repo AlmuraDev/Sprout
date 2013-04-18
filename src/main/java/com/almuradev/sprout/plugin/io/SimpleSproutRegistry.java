@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.almuradev.sprout.api.io.SproutRegistry;
-import com.almuradev.sprout.crop.Sprout;
+import com.almuradev.sprout.api.crop.Sprout;
 
 public class SimpleSproutRegistry implements SproutRegistry {
 	private final List<Sprout> sprouts = new ArrayList<>();

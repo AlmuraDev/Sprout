@@ -23,9 +23,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import com.almuradev.sprout.crop.Sprout;
-import com.almuradev.sprout.crop.Stage;
-import com.almuradev.sprout.mech.Drop;
+import com.almuradev.sprout.api.crop.Sprout;
+import com.almuradev.sprout.api.crop.Stage;
+import com.almuradev.sprout.api.mech.Drop;
 
 public class SimpleSprout implements Sprout {
 	private final String identifier;
