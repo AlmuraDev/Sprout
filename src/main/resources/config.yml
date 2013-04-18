@@ -1,0 +1,11 @@
+# You can specify the intervals (wait times) between each tick of the growth task per world.
+#
+# Simply follow the style in the file. Keys are world names.
+#
+# WARNING: Setting a value too low will be too intensive for servers with many custom crops.
+# Three hundred is typically a good compromise but feel free to experiment and see what works
+# for you.
+world:
+    growth-interval: 300
+world_nether:
+    growth-interval: 325
