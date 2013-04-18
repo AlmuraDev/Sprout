@@ -48,7 +48,7 @@ public class SproutPlugin extends JavaPlugin {
 		stages.put(3, new SimpleStage("customblock4", 10000));
 		stages.put(4, new SimpleStage("customblock5", 100000));
 		for (int i = 0; i < 1; i++) {
-			registry.add("world", i, 0, i, new SimpleSprout("TestSprout", stages));
+			registry.add("world", i, 0, i, new SimpleSprout("TestSprout", "datplugin.datcrop", stages, null));
 		}
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, "world"), 250, 250);
 	}
