@@ -22,21 +22,25 @@ package com.almuradev.sprout.plugin;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.almuradev.sprout.api.io.Registry;
+import com.almuradev.sprout.api.io.SproutRegistry;
+import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.crop.Stage;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
-import com.almuradev.sprout.plugin.io.SimpleRegistry;
+import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
+import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SproutPlugin extends JavaPlugin {
-	private final SimpleRegistry registry;
+	private final SimpleSproutRegistry sproutRegistry;
+	private final SimpleWorldRegistry worldRegistry;
 
 	public SproutPlugin() {
-		registry = new SimpleRegistry();
+		sproutRegistry = new SimpleSproutRegistry();
+		worldRegistry = new SimpleWorldRegistry();
 	}
 
 	@Override
@@ -48,12 +52,16 @@ public class SproutPlugin extends JavaPlugin {
 		stages.put(3, new SimpleStage("customblock4", 10000));
 		stages.put(4, new SimpleStage("customblock5", 100000));
 		for (int i = 0; i < 1; i++) {
-			registry.add("world", i, 0, i, new SimpleSprout("TestSprout", "datplugin.datcrop", stages, null));
+			worldRegistry.add("world", i, 0, i, new SimpleSprout("TestSprout", "datplugin.datcrop", stages, null));
 		}
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, "world"), 250, 250);
 	}
 
-	public Registry getRegistry() {
-		return registry;
+	public SproutRegistry getSproutRegistry() {
+		return sproutRegistry;
+	}
+
+	public WorldRegistry getWorldRegistry() {
+		return worldRegistry;
 	}
 }

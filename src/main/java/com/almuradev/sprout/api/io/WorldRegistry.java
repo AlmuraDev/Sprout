@@ -24,7 +24,7 @@ import java.util.Map;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.crop.Sprout;
 
-public interface Registry {
+public interface WorldRegistry {
 	public Sprout add(String world, int x, int y, int z, Sprout sprout);
 
 	public boolean contains(String world, int x, int y, int z);

@@ -19,7 +19,7 @@
  */
 package com.almuradev.sprout.plugin.task;
 
-import com.almuradev.sprout.api.io.Registry;
+import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.crop.Sprout;
@@ -39,13 +39,13 @@ import org.bukkit.block.Block;
 
 public class GrowthTask implements Runnable {
 	private final SproutPlugin plugin;
-	private final Registry registry;
+	private final WorldRegistry worldRegistry;
 	private final String world;
 
 	public GrowthTask(SproutPlugin plugin, String world) {
 		this.plugin = plugin;
 		this.world = world;
-		registry = plugin.getRegistry();
+		worldRegistry = plugin.getWorldRegistry();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class GrowthTask implements Runnable {
 		if (w == null) {
 			return;
 		}
-		final TInt21TripleObjectHashMap worldRegistry = registry.getRegistryFor(world);
+		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.getRegistryFor(world);
 		if (worldRegistry == null) {
 			return;
 		}
