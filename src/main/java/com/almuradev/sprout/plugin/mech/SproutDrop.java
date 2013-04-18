@@ -22,17 +22,17 @@ package com.almuradev.sprout.plugin.mech;
 import com.almuradev.sprout.api.mech.Drop;
 
 public class SproutDrop implements Drop {
-	private final String identifier;
+	private final String name;
 	private final int amount;
 
-	public SproutDrop(String identifier, int amount) {
-		this.identifier = identifier;
+	public SproutDrop(String name, int amount) {
+		this.name = name;
 		this.amount = amount;
 	}
 
 	@Override
-	public String getIdentifier() {
-		return identifier;
+	public String getName() {
+		return name;
 	}
 
 	@Override

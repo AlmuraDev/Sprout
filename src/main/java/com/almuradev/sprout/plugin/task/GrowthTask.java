@@ -55,7 +55,7 @@ public class GrowthTask implements Runnable {
 		if (w == null) {
 			return;
 		}
-		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.getRegistryFor(world);
+		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.get(world);
 		if (worldRegistry == null) {
 			return;
 		}
@@ -84,13 +84,13 @@ public class GrowthTask implements Runnable {
 					plugin.getLogger().info("Spout block " + block.toString() + " has no further growth stages.");
 					return true;
 				}
-				if (current.getCustomName().equals(next.getCustomName())) {
-					plugin.getLogger().info("Skipping replacement of same name material (" + current.getCustomName() + ")");
+				if (current.getName().equals(next.getName())) {
+					plugin.getLogger().info("Skipping replacement of same name material (" + current.getName() + ")");
 					return true;
 				}
-				final CustomBlock customBlock = MaterialData.getCustomBlock(next.getCustomName());
+				final CustomBlock customBlock = MaterialData.getCustomBlock(next.getName());
 				if (customBlock == null) {
-					plugin.getLogger().info("Could not find custom block with name: " + next.getCustomName());
+					plugin.getLogger().info("Could not find custom block with name: " + next.getName());
 					return true;
 				}
 				((SpoutBlock) block).setCustomBlock(customBlock);

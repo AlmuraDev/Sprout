@@ -1,10 +1,12 @@
 # You can specify the intervals (wait times) between each tick of the growth task per world.
+# These values are in ticks, not seconds. There is approximately 20 ticks in one real second
+# so keep that in mind (IE 300 ticks = every 15 seconds).
 #
 # Simply follow the style in the file. Keys are world names.
 #
 # WARNING: Setting a value too low will be too intensive for servers with many custom crops.
-# Three hundred is typically a good compromise but feel free to experiment and see what works
-# for you.
+#          Three hundred is typically a good compromise but feel free to experiment and see
+#          what works for you.
 world:
     growth-interval: 300
 world_nether:

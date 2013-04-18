@@ -31,9 +31,9 @@ public interface WorldRegistry {
 
 	public Sprout get(String world, int x, int y, int z);
 
-	public Sprout remove(String world, int x, int y, int z);
+	public TInt21TripleObjectHashMap get(String world);
 
-	public TInt21TripleObjectHashMap getRegistryFor(String world);
+	public Sprout remove(String world, int x, int y, int z);
 
 	public Map<String, TInt21TripleObjectHashMap> getAll();
 }

@@ -37,7 +37,6 @@ public class SproutConfiguration {
 	}
 
 	public void onEnable() {
-		//Read in default config.yml
 		if (!new File(plugin.getDataFolder(), "config.yml").exists()) {
 			plugin.saveDefaultConfig();
 		}

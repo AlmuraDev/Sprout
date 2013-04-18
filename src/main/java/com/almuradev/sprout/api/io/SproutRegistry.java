@@ -28,11 +28,11 @@ public interface SproutRegistry {
 
 	public SproutRegistry addAll(Collection<Sprout> sprouts);
 
-	public boolean contains(String identifier);
+	public boolean contains(String name);
 
-	public Sprout get(String identifier);
+	public Sprout get(String name);
 
-	public Sprout remove(String identifier);
+	public Sprout remove(String name);
 
 	public Collection<Sprout> getAll();
 }

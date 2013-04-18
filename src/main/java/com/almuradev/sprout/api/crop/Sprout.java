@@ -26,13 +26,13 @@ import java.util.Map;
 import com.almuradev.sprout.api.mech.Drop;
 
 public interface Sprout extends Serializable {
-	public String getIdentifier();
+	public String getName();
 
 	public String getSource();
 
 	public Stage getStage(int level);
 
-	public Stage getStage(String customName);
+	public Stage getStage(String name);
 
 	public Stage getCurrentStage(long currentTime);
 

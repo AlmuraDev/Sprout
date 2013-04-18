@@ -28,26 +28,26 @@ import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Drop;
 
 public class SimpleSprout implements Sprout {
-	private final String identifier;
+	private final String name;
 	private final String source;
 	private final Map<Integer, Stage> stages;
 	private final Collection<Drop> drops;
 	private long dispersedTime;
 
-	public SimpleSprout(String identifier, String source, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		if (identifier == null || identifier.isEmpty() || source == null || source.isEmpty()) {
+	public SimpleSprout(String name, String source, Map<Integer, Stage> stages, Collection<Drop> drops) {
+		if (name == null || name.isEmpty() || source == null || source.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier or source is null!");
 		}
 
-		this.identifier = identifier;
+		this.name = name;
 		this.source = source;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
 	}
 
 	@Override
-	public String getIdentifier() {
-		return identifier;
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -61,11 +61,11 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
-	public Stage getStage(String customName) {
+	public Stage getStage(String name) {
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			final Stage stage = entry.getValue();
 
-			if (stage.getCustomName().equals(customName)) {
+			if (stage.getName().equals(name)) {
 				return stage;
 			}
 		}
@@ -80,7 +80,7 @@ public class SimpleSprout implements Sprout {
 			final Integer key = entry.getKey();
 			final Stage value = entry.getValue();
 			prior = value;
-			increment += value.getGrowthTicks();
+			increment += value.getGrowthInterval();
 			if (key == 0) {
 				if (increment > currentTime) {
 					break;

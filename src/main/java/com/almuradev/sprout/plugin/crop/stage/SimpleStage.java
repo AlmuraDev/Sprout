@@ -22,21 +22,21 @@ package com.almuradev.sprout.plugin.crop.stage;
 import com.almuradev.sprout.api.crop.Stage;
 
 public class SimpleStage implements Stage {
-	private final String customName;
-	private final int growthTicks;
+	private final String name;
+	private final int growthInterval;
 
-	public SimpleStage(final String customName, final int growthTicks) {
-		this.customName = customName;
-		this.growthTicks = growthTicks;
+	public SimpleStage(final String name, final int growthInterval) {
+		this.name = name;
+		this.growthInterval = growthInterval;
 	}
 
 	@Override
-	public String getCustomName() {
-		return customName;
+	public String getName() {
+		return name;
 	}
 
 	@Override
-	public int getGrowthTicks() {
-		return growthTicks;
+	public int getGrowthInterval() {
+		return growthInterval;
 	}
 }

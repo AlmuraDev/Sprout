@@ -19,11 +19,8 @@
  */
 package com.almuradev.sprout.api.crop;
 
-/**
- * Immutable object which binds a custom block's name to growth ticks.
- */
 public interface Stage {
-	public String getCustomName();
+	public String getName();
 
-	public int getGrowthTicks();
+	public int getGrowthInterval();
 }

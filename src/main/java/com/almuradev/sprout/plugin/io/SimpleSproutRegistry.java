@@ -50,12 +50,12 @@ public class SimpleSproutRegistry implements SproutRegistry {
 	}
 
 	@Override
-	public boolean contains(String identifier) {
-		if (identifier == null || identifier.isEmpty()) {
-			throw new IllegalArgumentException("Identifier is null or empty!");
+	public boolean contains(String name) {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null or empty!");
 		}
 		for (Sprout sprout : sprouts) {
-			if (sprout.getIdentifier().equals(identifier)) {
+			if (sprout.getName().equals(name)) {
 				return true;
 			}
 		}
@@ -63,12 +63,12 @@ public class SimpleSproutRegistry implements SproutRegistry {
 	}
 
 	@Override
-	public Sprout get(String identifier) {
-		if (identifier == null || identifier.isEmpty()) {
-			throw new IllegalArgumentException("Identifier is null or empty!");
+	public Sprout get(String name) {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null or empty!");
 		}
 		for (Sprout sprout : sprouts) {
-			if (sprout.getIdentifier().equals(identifier)) {
+			if (sprout.getName().equals(name)) {
 				return sprout;
 			}
 		}
@@ -76,16 +76,16 @@ public class SimpleSproutRegistry implements SproutRegistry {
 	}
 
 	@Override
-	public Sprout remove(String identifier) {
-		if (identifier == null || identifier.isEmpty()) {
-			throw new IllegalArgumentException("Identifier is null or empty!");
+	public Sprout remove(String name) {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null or empty!");
 		}
 
 		final Iterator<Sprout> sproutIterator = sprouts.iterator();
 		Sprout toRemove = null;
 		while (sproutIterator.hasNext()) {
 			toRemove = sproutIterator.next();
-			if (toRemove.getIdentifier().equals(identifier)) {
+			if (toRemove.getName().equals(name)) {
 				sproutIterator.remove();
 			}
 		}

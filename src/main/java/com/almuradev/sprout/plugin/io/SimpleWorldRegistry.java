@@ -68,6 +68,11 @@ public class SimpleWorldRegistry implements WorldRegistry {
 	}
 
 	@Override
+	public TInt21TripleObjectHashMap get(String world) {
+		return REGISTRIES.get(world);
+	}
+
+	@Override
 	public Sprout remove(String world, int x, int y, int z) {
 		if (world == null || world.isEmpty()) {
 			throw new NullPointerException("Specified world is null!");
@@ -77,11 +82,6 @@ public class SimpleWorldRegistry implements WorldRegistry {
 			return null;
 		}
 		return (Sprout) REGISTRY.remove(x, y, z);
-	}
-
-	@Override
-	public TInt21TripleObjectHashMap getRegistryFor(String world) {
-		return REGISTRIES.get(world);
 	}
 
 	@Override

@@ -106,13 +106,13 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 		final Iterator<String> iterator = reader.getKeys(false).iterator();
 
 		while (iterator.hasNext()) {
-			//Identifier
+			//Name
 			final String identifier = iterator.next();
-			final ConfigurationSection identifierSection = reader.getConfigurationSection(iterator.next());
+			final ConfigurationSection nameSection = reader.getConfigurationSection(iterator.next());
 			//Source
-			final String initialSource = identifierSection.getString("source", "");
+			final String initialSource = nameSection.getString("source", "");
 			//Drops
-			final ConfigurationSection dropsSection = identifierSection.getConfigurationSection("drops");
+			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
 			final List<Drop> drops = new LinkedList<>();
 			final Iterator<String> dropsIterator = dropsSection.getKeys(false).iterator();
 			while (dropsIterator.hasNext()) {
@@ -122,14 +122,14 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				drops.add(new SproutDrop(dropSource, amount));
 			}
 			//Stages
-			final ConfigurationSection stagesSection = identifierSection.getConfigurationSection("stages");
+			final ConfigurationSection stagesSection = nameSection.getConfigurationSection("stages");
 			final Iterator<String> stagesIterator = stagesSection.getKeys(false).iterator();
 			final Map<Integer, Stage> stages = new HashMap<>();
 			while (stagesIterator.hasNext()) {
 				final String index = stagesIterator.next();
 				final ConfigurationSection indexSection = stagesSection.getConfigurationSection(index);
 				final String stageSource = indexSection.getString("source");
-				final int growthTicks = indexSection.getInt("growth-ticks");
+				final int growthTicks = indexSection.getInt("growth-interval");
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));
 			}
 			createdSprouts.add(new SimpleSprout(identifier, initialSource, stages, drops));
