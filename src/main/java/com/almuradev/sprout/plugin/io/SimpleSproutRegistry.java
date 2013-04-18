@@ -23,6 +23,9 @@ public class SimpleSproutRegistry implements SproutRegistry {
 
 	@Override
 	public boolean contains(String identifier) {
+		if (identifier == null || identifier.isEmpty()) {
+			throw new IllegalArgumentException("Identifier is null or empty!");
+		}
 		for (Sprout sprout : sprouts) {
 			if (sprout.getIdentifier().equals(identifier)) {
 				return true;
@@ -33,6 +36,9 @@ public class SimpleSproutRegistry implements SproutRegistry {
 
 	@Override
 	public Sprout get(String identifier) {
+		if (identifier == null || identifier.isEmpty()) {
+			throw new IllegalArgumentException("Identifier is null or empty!");
+		}
 		for (Sprout sprout : sprouts) {
 			if (sprout.getIdentifier().equals(identifier)) {
 				return sprout;
