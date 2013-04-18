@@ -6,4 +6,4 @@ website: ${project.organization.url}
 
 main: ${mainClass}
 depend: [Spout]
-load: POSTWORLD
+load: STARTUP

@@ -51,6 +51,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public final class Storage {
 	public void onEnable() {
 		try {
 			Files.createDirectories(dir.toPath());
+			Files.createFile(Paths.get(dir.getPath() + File.separator + "sprouts.yml"));
 		} catch (FileAlreadyExistsException fafe) {
 			;
 		} catch (IOException e) {
@@ -93,7 +95,7 @@ public final class Storage {
 
 	protected void load() {
 		try {
-			Files.walkFileTree(new File(dir, "sprout.yml").toPath(), new FileLoadingVisitor(plugin));
+			Files.walkFileTree(Paths.get(dir.getPath() + File.separator + "sprouts.yml"), new FileLoadingVisitor(plugin));
 		} catch (IOException ignore) {
 			plugin.getLogger().severe("Encountered a major issue while attempting to find " + dir.toPath() + ". Disabling...");
 			plugin.getServer().getPluginManager().disablePlugin(plugin);
@@ -115,14 +117,12 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 
 	@Override
 	public FileVisitResult visitFile(Path path, BasicFileAttributes attr) {
-		if (path.getFileName().toString().endsWith(".yml")) {
-			final List<Sprout> toInject = createSprouts(path.toFile());
-			if (toInject == null) {
-				plugin.getLogger().severe("Could not load: " + path.getFileName() + ". Skipping...");
-				return FileVisitResult.TERMINATE;
-			}
-			plugin.getSproutRegistry().addAll(toInject);
+		final List<Sprout> toInject = createSprouts(path.toFile());
+		if (toInject == null) {
+			plugin.getLogger().severe("Could not load: " + path.getFileName() + ". Skipping...");
+			return FileVisitResult.TERMINATE;
 		}
+		plugin.getSproutRegistry().addAll(toInject);
 		return FileVisitResult.TERMINATE;
 	}
 

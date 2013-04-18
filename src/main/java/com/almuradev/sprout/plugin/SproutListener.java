@@ -19,30 +19,65 @@
  */
 package com.almuradev.sprout.plugin;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.almuradev.sprout.plugin.task.GrowthTask;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
 public class SproutListener implements Listener {
+	private final SproutPlugin plugin;
+	private static final Map<String, Integer> ID_WORLD_MAP = new HashMap<>();
+
+	public SproutListener(SproutPlugin plugin) {
+		this.plugin = plugin;
+	}
+
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-//		Material material;
-//		Block sBlock = ((SpoutCraftBlock) event.getBlock()).getBlockType();
-//		if (sBlock instanceof GenericCustomBlock) {
-//			GenericCustomBlock customBlock = (GenericCustomBlock) sBlock;
-//
-//
-//			if (customBlock.getNotchianName().equalsIgnoreCase("CEP_RPG_Florist.CEP_Florist_rosebush")) {
-//				material = MaterialData.getMaterial("KFood_Core.strawberry");
-//				event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new SpoutItemStack(material, 4));
-//				SpoutBlock spoutBlock = (SpoutBlock) event.getBlock();
-//				spoutBlock.setType(org.bukkit.Material.AIR);
-//				spoutBlock.setTypeId(material.getRawId());
-//				SpoutBlock myBlock = (SpoutBlock) MaterialData.getMaterial("Hi");
-//				spoutBlock.setCustomBlock(null);
-//				return;
-//			}
-//
-//		}
+		//		Material material;
+		//		Block sBlock = ((SpoutCraftBlock) event.getBlock()).getBlockType();
+		//		if (sBlock instanceof GenericCustomBlock) {
+		//			GenericCustomBlock customBlock = (GenericCustomBlock) sBlock;
+		//
+		//
+		//			if (customBlock.getNotchianName().equalsIgnoreCase("CEP_RPG_Florist.CEP_Florist_rosebush")) {
+		//				material = MaterialData.getMaterial("KFood_Core.strawberry");
+		//				event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new SpoutItemStack(material, 4));
+		//				SpoutBlock spoutBlock = (SpoutBlock) event.getBlock();
+		//				spoutBlock.setType(org.bukkit.Material.AIR);
+		//				spoutBlock.setTypeId(material.getRawId());
+		//				SpoutBlock myBlock = (SpoutBlock) MaterialData.getMaterial("Hi");
+		//				spoutBlock.setCustomBlock(null);
+		//				return;
+		//			}
+		//
+		//		}
+	}
+
+	@EventHandler
+	public void onWorldLoad(WorldLoadEvent event) {
+		final String name = event.getWorld().getName();
+		System.out.println(name);
+		final Long interval = plugin.getConfiguration().getGrowthIntervalFor(name);
+		if (interval == null) {
+			return;
+		}
+		ID_WORLD_MAP.put(name, Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(plugin, name), 0, interval));
+	}
+
+	@EventHandler
+	public void onWorldUnload(WorldUnloadEvent event) {
+		System.out.println(event.getWorld().getName());
+		final Integer id = ID_WORLD_MAP.remove(event.getWorld().getName());
+		if (id != null) {
+			Bukkit.getScheduler().cancelTask(id);
+		}
 	}
 }
