@@ -28,19 +28,19 @@ import com.almuradev.sprout.api.mech.Drop;
 public interface Sprout extends Serializable {
 	public String getName();
 
-	public String getSource();
+	public String getItemSource();
+
+	public String getBlockSource();
 
 	public Stage getStage(int level);
 
 	public Stage getStage(String name);
 
-	public Stage getCurrentStage(long currentTime);
-
-	public Stage getNextStage(long currentTime);
+	public Stage getCurrentStage();
 
 	public Map<Integer, Stage> getStages();
 
 	public Collection<Drop> getDrops();
 
-	public long getDispersedTime();
+	public int getAge();
 }

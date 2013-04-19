@@ -30,9 +30,9 @@ public interface SproutRegistry {
 
 	public boolean contains(String name);
 
-	public Sprout get(String name);
+	public Sprout find(String itemSource);
 
-	public Sprout get(String sourceName, boolean ignore);
+	public Sprout get(String name);
 
 	public Sprout remove(String name);
 

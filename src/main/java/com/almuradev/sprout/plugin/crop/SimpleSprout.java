@@ -29,18 +29,20 @@ import com.almuradev.sprout.api.mech.Drop;
 
 public class SimpleSprout implements Sprout {
 	private final String name;
-	private final String source;
 	private final Map<Integer, Stage> stages;
 	private final Collection<Drop> drops;
-	private long dispersedTime;
+	private final String blockSource;
+	private final String itemSource;
+	private int age = 0;
 
-	public SimpleSprout(String name, String source, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		if (name == null || name.isEmpty() || source == null || source.isEmpty()) {
-			throw new IllegalArgumentException("Specified identifier or source is null!");
+	public SimpleSprout(String name, String blockSource, String itemSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
+		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty()|| blockSource == null || blockSource.isEmpty()) {
+			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
 
 		this.name = name;
-		this.source = source;
+		this.blockSource = blockSource;
+		this.itemSource = itemSource;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
 	}
@@ -51,8 +53,13 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
-	public String getSource() {
-		return source;
+	public String getBlockSource() {
+		return blockSource;
+	}
+
+	@Override
+	public String getItemSource() {
+		return itemSource;
 	}
 
 	@Override
@@ -73,31 +80,16 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
-	public Stage getCurrentStage(long currentTime) {
+	public Stage getCurrentStage() {
 		Stage prior = null;
-		long increment = dispersedTime;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			final Stage value = entry.getValue();
-			prior = value;
-			increment += value.getGrowthInterval();
-
-			if (increment > currentTime) {
+			if (value.getGrowthInterval() >= age) {
 				break;
 			}
+			prior = value;
 		}
 		return prior;
-	}
-
-	@Override
-	public Stage getNextStage(long currentTime) {
-		final Stage stage = getCurrentStage(currentTime);
-		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			final Stage value = entry.getValue();
-			if (stage.getName().equals(value.getName())) {
-				return getStage(entry.getKey() + 1);
-			}
-		}
-		return null;
 	}
 
 	@Override
@@ -111,12 +103,8 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
-	public long getDispersedTime() {
-		return dispersedTime;
-	}
-
-	public void setDispersedTime(long dispersedTime) {
-		this.dispersedTime = dispersedTime;
+	public int getAge() {
+		return age;
 	}
 
 	@Override
@@ -126,11 +114,15 @@ public class SimpleSprout implements Sprout {
 		}
 
 		final SimpleSprout other = (SimpleSprout) obj;
-		return other.getName().equals(name) && other.getSource().equals(source) && other.getDrops().equals(drops) && other.getStages().equals(stages);
+		return other.getName().equals(name) && other.getBlockSource().equals(blockSource) && other.getItemSource().equals(itemSource) && other.getDrops().equals(drops) && other.getStages().equals(stages);
 	}
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", source= " + source + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}}";
+	}
+
+	public void grow(int amount) {
+		age += amount;
 	}
 }

@@ -19,10 +19,13 @@
  */
 package com.almuradev.sprout.plugin;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.almuradev.sprout.api.crop.Sprout;
+import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
@@ -35,6 +38,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -55,24 +59,26 @@ public class SproutListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		//		Material material;
-		//		Block sBlock = ((SpoutCraftBlock) event.getBlock()).getBlockType();
-		//		if (sBlock instanceof GenericCustomBlock) {
-		//			GenericCustomBlock customBlock = (GenericCustomBlock) sBlock;
-		//
-		//
-		//			if (customBlock.getNotchianName().equalsIgnoreCase("CEP_RPG_Florist.CEP_Florist_rosebush")) {
-		//				material = MaterialData.getMaterial("KFood_Core.strawberry");
-		//				event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new SpoutItemStack(material, 4));
-		//				SpoutBlock spoutBlock = (SpoutBlock) event.getBlock();
-		//				spoutBlock.setType(org.bukkit.Material.AIR);
-		//				spoutBlock.setTypeId(material.getRawId());
-		//				SpoutBlock myBlock = (SpoutBlock) MaterialData.getMaterial("Hi");
-		//				spoutBlock.setCustomBlock(null);
-		//				return;
-		//			}
-		//
-		//		}
+		final Block block = event.getBlock();
+		final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+		if (sprout == null) {
+			return;
+		}
+		final Collection<Drop> drops = sprout.getDrops();
+		for (Drop drop : drops) {
+			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
+			if (customMaterial == null) {
+				final Material material = Material.getMaterial(drop.getName());
+				if (material == null) {
+					continue;
+				}
+				final ItemStack stack = new ItemStack(material, drop.getAmount());
+				block.getWorld().dropItemNaturally(block.getLocation(), stack);
+			} else {
+				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
+				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -96,11 +102,10 @@ public class SproutListener implements Listener {
 			name = held.getType().name();
 		}
 
-		plugin.getLogger().info("Interacted with: " + name);
+		//plugin.getLogger().info("Interacted with: " + name);
 		//Only manage Sprouts
-		final Sprout sprout = plugin.getSproutRegistry().get(name, false);
+		final Sprout sprout = plugin.getSproutRegistry().find(name);
 		if (sprout == null) {
-			plugin.getLogger().info("No sprout found for this item!");
 			return;
 		}
 
@@ -110,11 +115,11 @@ public class SproutListener implements Listener {
 			return;
 		}
 
-		//Place on soil. TODO Expand this concept.
-		if (interacted.getType() != Material.SOIL) {
-			event.setCancelled(true);
-			return;
-		}
+//		//Place on soil. TODO Expand this concept.
+//		if (interacted.getType() != Material.SOIL) {
+//			event.setCancelled(true);
+//			return;
+//		}
 
 		final Block where = interacted.getRelative(BlockFace.UP);
 
@@ -126,13 +131,12 @@ public class SproutListener implements Listener {
 
 		//Add Sprout to registry
 		if (sprout != null) {
-			((SimpleSprout) sprout).setDispersedTime(System.currentTimeMillis());
-			plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), sprout);
+			plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), new SimpleSprout(sprout.getName(), sprout.getBlockSource(), sprout.getItemSource(), sprout.getStages(), sprout.getDrops()));
 		}
 
 		if (stack.isCustomItem()) {
-			final CustomBlock block = MaterialData.getCustomBlock(sprout.getStage(0).getName());
-			plugin.getLogger().info("Placing stage 1 block: " + sprout.getStage(0).getName());
+			final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
+			//plugin.getLogger().info("Placing source block: " + sprout.getBlockSource());
 			((SpoutBlock) where).setCustomBlock(block);
 		} else {
 			where.setType(held.getType());

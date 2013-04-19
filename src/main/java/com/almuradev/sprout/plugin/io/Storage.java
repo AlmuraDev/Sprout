@@ -114,12 +114,18 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final String nameRaw = iterator.next();
 			final String name = replacePeriodWithBackslash(nameRaw);
 			final ConfigurationSection nameSection = reader.getConfigurationSection(nameRaw);
-			//Source
-			final String initialRawSource = nameSection.getString("source", "");
-			final String initialSource = replacePeriodWithBackslash(initialRawSource);
+			//Sources
+			final String initialRawBlockSource = nameSection.getString("block-source", "");
+			final String initialBlockSource = replacePeriodWithBackslash(initialRawBlockSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
-			if (Material.getMaterial(initialSource) == null && MaterialData.getCustomItem(initialSource) == null) {
-				plugin.getLogger().warning("The source: " + initialSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+			if (Material.getMaterial(initialBlockSource) == null && MaterialData.getCustomItem(initialBlockSource) == null) {
+				plugin.getLogger().warning("The source: " + initialBlockSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+			}
+			final String initialRawItemSource = nameSection.getString("item-source", "");
+			final String initialItemSource = replacePeriodWithBackslash(initialRawItemSource);
+			//Find out if the server has the custom/item yet. Print a warning if not.
+			if (Material.getMaterial(initialItemSource) == null && MaterialData.getCustomItem(initialItemSource) == null) {
+				plugin.getLogger().warning("The source: " + initialItemSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
 			}
 			//Drops
 			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
@@ -150,7 +156,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final int growthTicks = indexSection.getInt("growth-interval", 350);
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));
 			}
-			final SimpleSprout created = new SimpleSprout(name, initialSource, stages, drops);
+			final SimpleSprout created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops);
 			plugin.getLogger().info("Loaded " + created.toString());
 			createdSprouts.add(created);
 		}

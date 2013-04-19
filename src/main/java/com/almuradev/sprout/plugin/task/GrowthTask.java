@@ -61,12 +61,15 @@ public class GrowthTask implements Runnable {
 		if (worldRegistry == null) {
 			return;
 		}
-
-		final long localTime = System.currentTimeMillis();
+		//First tick
+		if (pastTime == 0) {
+			pastTime = System.currentTimeMillis() / 1000;
+		}
+		final long localTime = System.currentTimeMillis() / 1000;
 		final long delta = localTime - pastTime;
 		pastTime = localTime;
-		plugin.getLogger().info("Current time: " + localTime);
-		plugin.getLogger().info("Time since last tick: " + delta);
+		//plugin.getLogger().info("Current time: " + localTime);
+		//plugin.getLogger().info("Time since last tick: " + delta);
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
 			@Override
 			public boolean execute(long l, Object o) {
@@ -79,16 +82,15 @@ public class GrowthTask implements Runnable {
 					return true;
 				}
 				final Sprout sprout = (Sprout) o;
-				((SimpleSprout) sprout).setDispersedTime(sprout.getDispersedTime() + delta);
-				final Stage current = sprout.getCurrentStage(localTime);
-				final Stage next = sprout.getNextStage(localTime);
-				if (next == null) {
+				//plugin.getLogger().info("Current Age: " + sprout.getAge());
+				((SimpleSprout) sprout).grow((int) delta);
+				final Stage current = sprout.getCurrentStage();
+				//plugin.getLogger().info("Current Stage: " + current);
+				//plugin.getLogger().info("Current Age (after growth): " + sprout.getAge());
+				if (current == null) {
 					return true;
 				}
-				if (current.getName().equals(next.getName())) {
-					return true;
-				}
-				final CustomBlock customBlock = MaterialData.getCustomBlock(next.getName());
+				final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
 				if (customBlock == null) {
 					return true;
 				}

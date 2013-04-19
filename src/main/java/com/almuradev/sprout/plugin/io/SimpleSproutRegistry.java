@@ -76,13 +76,12 @@ public class SimpleSproutRegistry implements SproutRegistry {
 	}
 
 	@Override
-	public Sprout get(String sourceName, boolean ignore) {
-		if (sourceName == null || sourceName.isEmpty()) {
-			throw new IllegalArgumentException("Source is null or empty!");
+	public Sprout find(String itemSource) {
+		if (itemSource == null || itemSource.isEmpty()) {
+			throw new IllegalArgumentException("Item source is null or empty!");
 		}
 		for (Sprout sprout : sprouts) {
-			System.out.println(sprout.getSource());
-			if (sprout.getSource().contains(sourceName)) {
+			if (sprout.getItemSource().contains(itemSource)) {
 				return sprout;
 			}
 		}
