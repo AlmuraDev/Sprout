@@ -46,9 +46,7 @@ public class SproutConfiguration {
 		while (worldIterator.hasNext()) {
 			final String world = worldIterator.next();
 			final ConfigurationSection worldSection = config.getConfigurationSection(world);
-			if (worldSection.isLong("growth-interval")) {
-				growthIntervals.put(world, worldSection.getLong("growth-interval"));
-			}
+			growthIntervals.put(world, worldSection.getLong("growth-interval", 350));
 		}
 	}
 

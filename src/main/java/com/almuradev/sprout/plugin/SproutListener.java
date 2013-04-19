@@ -28,8 +28,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.event.world.WorldInitEvent;
+import org.bukkit.event.world.WorldSaveEvent;
 
 public class SproutListener implements Listener {
 	private final SproutPlugin plugin;
@@ -62,9 +62,8 @@ public class SproutListener implements Listener {
 	}
 
 	@EventHandler
-	public void onWorldLoad(WorldLoadEvent event) {
+	public void onWorldInit(WorldInitEvent event) {
 		final String name = event.getWorld().getName();
-		System.out.println(name);
 		final Long interval = plugin.getConfiguration().getGrowthIntervalFor(name);
 		if (interval == null) {
 			return;
@@ -73,8 +72,7 @@ public class SproutListener implements Listener {
 	}
 
 	@EventHandler
-	public void onWorldUnload(WorldUnloadEvent event) {
-		System.out.println(event.getWorld().getName());
+	public void onWorldSave(WorldSaveEvent event) {
 		final Integer id = ID_WORLD_MAP.remove(event.getWorld().getName());
 		if (id != null) {
 			Bukkit.getScheduler().cancelTask(id);

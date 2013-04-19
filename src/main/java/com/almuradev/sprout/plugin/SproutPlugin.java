@@ -19,15 +19,22 @@
  */
 package com.almuradev.sprout.plugin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.almuradev.sprout.api.io.SproutRegistry;
 import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.io.Storage;
+import com.almuradev.sprout.plugin.task.GrowthTask;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SproutPlugin extends JavaPlugin {
+	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
 	private final SimpleSproutRegistry sproutRegistry;
 	private final SimpleWorldRegistry worldRegistry;
 	private SproutConfiguration configuration;
@@ -39,12 +46,19 @@ public class SproutPlugin extends JavaPlugin {
 	}
 
 	@Override
+	public void onDisable() {
+		getServer().getScheduler().cancelTasks(this);
+	}
+
+	@Override
 	public void onEnable() {
 		configuration = new SproutConfiguration(this);
 		configuration.onEnable();
 		storage = new Storage(this);
 		storage.onEnable();
+		storage.load();
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
+		startGrowthThreads();
 	}
 
 	public SproutConfiguration getConfiguration() {
@@ -57,5 +71,16 @@ public class SproutPlugin extends JavaPlugin {
 
 	public WorldRegistry getWorldRegistry() {
 		return worldRegistry;
+	}
+
+	private void startGrowthThreads() {
+		for (World world : getServer().getWorlds()) {
+			final String name = world.getName();
+			final Long interval = configuration.getGrowthIntervalFor(name);
+			if (interval == null) {
+				continue;
+			}
+			WORLD_ID_MAP.put(name, Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, name), 0, interval));
+		}
 	}
 }

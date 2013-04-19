@@ -43,6 +43,9 @@ import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.mech.SproutDrop;
 
+import org.getspout.spoutapi.material.MaterialData;
+
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -67,7 +70,7 @@ public final class Storage {
 		}
 	}
 
-	protected void load() {
+	public void load() {
 		try {
 			Files.walkFileTree(Paths.get(dir.getPath() + File.separator + "sprouts.yml"), new FileLoadingVisitor(plugin));
 		} catch (IOException ignore) {
@@ -105,18 +108,26 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 		final List<Sprout> createdSprouts = new ArrayList<>();
 		final Iterator<String> iterator = reader.getKeys(false).iterator();
 
+		System.out.println("Parsing sprout.yml");
 		while (iterator.hasNext()) {
 			//Name
-			final String identifier = iterator.next();
-			final ConfigurationSection nameSection = reader.getConfigurationSection(iterator.next());
+			final String name = iterator.next();
+			final ConfigurationSection nameSection = reader.getConfigurationSection(name);
 			//Source
 			final String initialSource = nameSection.getString("source", "");
+			//Find out if the server has the custom/item yet. Print a warning if not.
+			if (Material.getMaterial(initialSource) == null && MaterialData.getCustomItem(initialSource) == null) {
+				plugin.getLogger().warning("The source: " + initialSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+			}
 			//Drops
 			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
 			final List<Drop> drops = new LinkedList<>();
 			final Iterator<String> dropsIterator = dropsSection.getKeys(false).iterator();
 			while (dropsIterator.hasNext()) {
 				final String dropSource = dropsIterator.next();
+				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
+					plugin.getLogger().warning("The source: " + dropSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+				}
 				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(dropSource);
 				final int amount = dropSection.getInt("amount", 0);
 				drops.add(new SproutDrop(dropSource, amount));
@@ -129,10 +140,13 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final String index = stagesIterator.next();
 				final ConfigurationSection indexSection = stagesSection.getConfigurationSection(index);
 				final String stageSource = indexSection.getString("source");
+				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
+					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block");
+				}
 				final int growthTicks = indexSection.getInt("growth-interval");
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));
 			}
-			createdSprouts.add(new SimpleSprout(identifier, initialSource, stages, drops));
+			createdSprouts.add(new SimpleSprout(name, initialSource, stages, drops));
 		}
 		return createdSprouts;
 	}
