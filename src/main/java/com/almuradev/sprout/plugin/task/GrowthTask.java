@@ -34,6 +34,7 @@ import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -64,37 +65,31 @@ public class GrowthTask implements Runnable {
 		final long localTime = System.currentTimeMillis();
 		final long delta = localTime - pastTime;
 		pastTime = localTime;
-
+		plugin.getLogger().info("Current time: " + localTime);
+		plugin.getLogger().info("Time since last tick: " + delta);
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
 			@Override
 			public boolean execute(long l, Object o) {
 				final int x = Int21TripleHashed.key1(l);
 				final int y = Int21TripleHashed.key2(l);
 				final int z = Int21TripleHashed.key3(l);
+				final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 				//Only replace blocks in loaded chunks
-				if (!w.getChunkAt(x, z).isLoaded()) {
+				if (!block.getChunk().isLoaded()) {
 					return true;
 				}
-				final Block block = w.getBlockAt(x, y, z);
-				//if (((SpoutBlock)block).getCustomBlock() == null) {
-				//	return true;
-				//}
-				plugin.getLogger().info("Found a Spout block at " + block.toString() + ". Gathering growth data from associated Sprout.");
 				final Sprout sprout = (Sprout) o;
 				((SimpleSprout) sprout).setDispersedTime(sprout.getDispersedTime() + delta);
 				final Stage current = sprout.getCurrentStage(localTime);
 				final Stage next = sprout.getNextStage(localTime);
 				if (next == null) {
-					plugin.getLogger().info("Spout block " + block.toString() + " has no further growth stages.");
 					return true;
 				}
 				if (current.getName().equals(next.getName())) {
-					plugin.getLogger().info("Skipping replacement of same name material (" + current.getName() + ")");
 					return true;
 				}
 				final CustomBlock customBlock = MaterialData.getCustomBlock(next.getName());
 				if (customBlock == null) {
-					plugin.getLogger().info("Could not find custom block with name: " + next.getName());
 					return true;
 				}
 				((SpoutBlock) block).setCustomBlock(customBlock);

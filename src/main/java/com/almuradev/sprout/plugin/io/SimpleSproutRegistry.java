@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.almuradev.sprout.api.crop.Sprout;
@@ -46,7 +45,7 @@ public class SimpleSproutRegistry implements SproutRegistry {
 		if (sprouts == null) {
 			throw new IllegalArgumentException("Sprouts is null!");
 		}
-		this.sprouts = (List<Sprout>) sprouts;
+		this.sprouts.addAll(sprouts);
 		return this;
 	}
 

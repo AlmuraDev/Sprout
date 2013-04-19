@@ -41,6 +41,16 @@ public class SproutDrop implements Drop {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof SproutDrop)) {
+			return false;
+		}
+
+		final SproutDrop other = (SproutDrop) obj;
+		return other.getName().equals(name);
+	}
+
+	@Override
 	public String toString() {
 		return "Drop{name= " + name + ", amount= " + amount + "}";
 	}

@@ -41,6 +41,16 @@ public class SimpleStage implements Stage {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof SimpleStage)) {
+			return false;
+		}
+
+		final SimpleStage other = (SimpleStage) obj;
+		return other.getName().equals(name) && other.getGrowthInterval() == growthInterval;
+	}
+
+	@Override
 	public String toString() {
 		return "Stage{name= " + name + ", growthInterval= " + growthInterval + "}";
 	}

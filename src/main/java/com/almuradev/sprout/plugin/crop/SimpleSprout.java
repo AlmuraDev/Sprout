@@ -77,14 +77,9 @@ public class SimpleSprout implements Sprout {
 		Stage prior = null;
 		long increment = dispersedTime;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			final Integer key = entry.getKey();
 			final Stage value = entry.getValue();
-			System.out.println("Key: " + key);
-			System.out.println("Value: " + value);
-			System.out.println(dispersedTime);
 			prior = value;
 			increment += value.getGrowthInterval();
-			System.out.println("Increment: " + increment);
 
 			if (increment > currentTime) {
 				break;
@@ -96,10 +91,8 @@ public class SimpleSprout implements Sprout {
 	@Override
 	public Stage getNextStage(long currentTime) {
 		final Stage stage = getCurrentStage(currentTime);
-		System.out.println("Current Stage: " + stage.toString());
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			final Stage value = entry.getValue();
-			System.out.println("Stage Loop: " + value.toString());
 			if (stage.getName().equals(value.getName())) {
 				return getStage(entry.getKey() + 1);
 			}
@@ -124,6 +117,16 @@ public class SimpleSprout implements Sprout {
 
 	public void setDispersedTime(long dispersedTime) {
 		this.dispersedTime = dispersedTime;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof SimpleSprout)) {
+			return false;
+		}
+
+		final SimpleSprout other = (SimpleSprout) obj;
+		return other.getName().equals(name) && other.getSource().equals(source) && other.getDrops().equals(drops) && other.getStages().equals(stages);
 	}
 
 	@Override
