@@ -39,4 +39,9 @@ public class SproutDrop implements Drop {
 	public int getAmount() {
 		return amount;
 	}
+
+	@Override
+	public String toString() {
+		return "Drop{name= " + name + ", amount= " + amount + "}";
+	}
 }

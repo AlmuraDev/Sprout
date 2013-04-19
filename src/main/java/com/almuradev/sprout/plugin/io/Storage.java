@@ -108,13 +108,15 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 		final List<Sprout> createdSprouts = new ArrayList<>();
 		final Iterator<String> iterator = reader.getKeys(false).iterator();
 
-		System.out.println("Parsing sprout.yml");
+		plugin.getLogger().info("Loading in Sprouts");
 		while (iterator.hasNext()) {
 			//Name
-			final String name = iterator.next();
-			final ConfigurationSection nameSection = reader.getConfigurationSection(name);
+			final String nameRaw = iterator.next();
+			final String name = replacePeriodWithBackslash(nameRaw);
+			final ConfigurationSection nameSection = reader.getConfigurationSection(nameRaw);
 			//Source
-			final String initialSource = nameSection.getString("source", "");
+			final String initialRawSource = nameSection.getString("source", "");
+			final String initialSource = replacePeriodWithBackslash(initialRawSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
 			if (Material.getMaterial(initialSource) == null && MaterialData.getCustomItem(initialSource) == null) {
 				plugin.getLogger().warning("The source: " + initialSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
@@ -124,11 +126,12 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final List<Drop> drops = new LinkedList<>();
 			final Iterator<String> dropsIterator = dropsSection.getKeys(false).iterator();
 			while (dropsIterator.hasNext()) {
-				final String dropSource = dropsIterator.next();
+				final String rawDropSource = dropsIterator.next();
+				final String dropSource = replacePeriodWithBackslash(rawDropSource);
 				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
 					plugin.getLogger().warning("The source: " + dropSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
 				}
-				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(dropSource);
+				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
 				final int amount = dropSection.getInt("amount", 0);
 				drops.add(new SproutDrop(dropSource, amount));
 			}
@@ -139,15 +142,22 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			while (stagesIterator.hasNext()) {
 				final String index = stagesIterator.next();
 				final ConfigurationSection indexSection = stagesSection.getConfigurationSection(index);
-				final String stageSource = indexSection.getString("source");
+				final String rawStageSource = indexSection.getString("source");
+				final String stageSource = replacePeriodWithBackslash(rawStageSource);
 				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
 					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block");
 				}
-				final int growthTicks = indexSection.getInt("growth-interval");
+				final int growthTicks = indexSection.getInt("growth-interval", 350);
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));
 			}
-			createdSprouts.add(new SimpleSprout(name, initialSource, stages, drops));
+			final SimpleSprout created = new SimpleSprout(name, initialSource, stages, drops);
+			plugin.getLogger().info("Loaded " + created.toString());
+			createdSprouts.add(created);
 		}
 		return createdSprouts;
+	}
+
+	private String replacePeriodWithBackslash(String raw) {
+		return raw.replace("\\", ".");
 	}
 }

@@ -126,4 +126,9 @@ public class SimpleSprout implements Sprout {
 	public void setDispersedTime(long dispersedTime) {
 		this.dispersedTime = dispersedTime;
 	}
+
+	@Override
+	public String toString() {
+		return "Sprout{name= " + name + ", source= " + source + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}}";
+	}
 }

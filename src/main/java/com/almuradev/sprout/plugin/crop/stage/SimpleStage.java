@@ -39,4 +39,9 @@ public class SimpleStage implements Stage {
 	public int getGrowthInterval() {
 		return growthInterval;
 	}
+
+	@Override
+	public String toString() {
+		return "Stage{name= " + name + ", growthInterval= " + growthInterval + "}";
+	}
 }

@@ -58,7 +58,7 @@ public class SproutPlugin extends JavaPlugin {
 		storage.onEnable();
 		storage.load();
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
-		startGrowthThreads();
+		startGrowthTasks();
 	}
 
 	public SproutConfiguration getConfiguration() {
@@ -73,7 +73,7 @@ public class SproutPlugin extends JavaPlugin {
 		return worldRegistry;
 	}
 
-	private void startGrowthThreads() {
+	private void startGrowthTasks() {
 		for (World world : getServer().getWorlds()) {
 			final String name = world.getName();
 			final Long interval = configuration.getGrowthIntervalFor(name);
