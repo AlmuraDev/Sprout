@@ -32,6 +32,8 @@ public interface SproutRegistry {
 
 	public Sprout get(String name);
 
+	public Sprout get(String sourceName, boolean ignore);
+
 	public Sprout remove(String name);
 
 	public Collection<Sprout> getAll();

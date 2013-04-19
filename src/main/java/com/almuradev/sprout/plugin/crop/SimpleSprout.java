@@ -79,15 +79,12 @@ public class SimpleSprout implements Sprout {
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			final Integer key = entry.getKey();
 			final Stage value = entry.getValue();
+			System.out.println("Key: " + key);
+			System.out.println("Value: " + value);
+			System.out.println(dispersedTime);
 			prior = value;
 			increment += value.getGrowthInterval();
-			if (key == 0) {
-				if (increment > currentTime) {
-					break;
-				} else {
-					continue;
-				}
-			}
+			System.out.println("Increment: " + increment);
 
 			if (increment > currentTime) {
 				break;
@@ -99,9 +96,11 @@ public class SimpleSprout implements Sprout {
 	@Override
 	public Stage getNextStage(long currentTime) {
 		final Stage stage = getCurrentStage(currentTime);
+		System.out.println("Current Stage: " + stage.toString());
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			final Stage value = entry.getValue();
-			if (stage.equals(value)) {
+			System.out.println("Stage Loop: " + value.toString());
+			if (stage.getName().equals(value.getName())) {
 				return getStage(entry.getKey() + 1);
 			}
 		}

@@ -41,6 +41,7 @@ public class GrowthTask implements Runnable {
 	private final SproutPlugin plugin;
 	private final WorldRegistry worldRegistry;
 	private final String world;
+	private long pastTime;
 
 	public GrowthTask(SproutPlugin plugin, String world) {
 		this.plugin = plugin;
@@ -61,6 +62,8 @@ public class GrowthTask implements Runnable {
 		}
 
 		final long localTime = System.currentTimeMillis();
+		final long delta = localTime - pastTime;
+		pastTime = localTime;
 
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
 			@Override
@@ -78,6 +81,7 @@ public class GrowthTask implements Runnable {
 				//}
 				plugin.getLogger().info("Found a Spout block at " + block.toString() + ". Gathering growth data from associated Sprout.");
 				final Sprout sprout = (Sprout) o;
+				((SimpleSprout) sprout).setDispersedTime(sprout.getDispersedTime() + delta);
 				final Stage current = sprout.getCurrentStage(localTime);
 				final Stage next = sprout.getNextStage(localTime);
 				if (next == null) {
@@ -94,7 +98,6 @@ public class GrowthTask implements Runnable {
 					return true;
 				}
 				((SpoutBlock) block).setCustomBlock(customBlock);
-				((SimpleSprout) sprout).setDispersedTime(sprout.getDispersedTime() + localTime);
 				return true;
 			}
 		});

@@ -23,13 +23,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.io.SproutRegistry;
 
 public class SimpleSproutRegistry implements SproutRegistry {
-	private final List<Sprout> sprouts = new ArrayList<>();
+	private List<Sprout> sprouts = new ArrayList<>();
 
 	@Override
 	public Sprout add(Sprout sprout) {
@@ -45,7 +46,7 @@ public class SimpleSproutRegistry implements SproutRegistry {
 		if (sprouts == null) {
 			throw new IllegalArgumentException("Sprouts is null!");
 		}
-		sprouts.addAll(sprouts);
+		this.sprouts = (List<Sprout>) sprouts;
 		return this;
 	}
 
@@ -69,6 +70,20 @@ public class SimpleSproutRegistry implements SproutRegistry {
 		}
 		for (Sprout sprout : sprouts) {
 			if (sprout.getName().equals(name)) {
+				return sprout;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Sprout get(String sourceName, boolean ignore) {
+		if (sourceName == null || sourceName.isEmpty()) {
+			throw new IllegalArgumentException("Source is null or empty!");
+		}
+		for (Sprout sprout : sprouts) {
+			System.out.println(sprout.getSource());
+			if (sprout.getSource().contains(sourceName)) {
 				return sprout;
 			}
 		}
