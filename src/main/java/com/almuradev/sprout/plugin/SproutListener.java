@@ -44,6 +44,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
@@ -57,6 +58,14 @@ public class SproutListener implements Listener {
 		this.plugin = plugin;
 	}
 
+	@EventHandler
+	public void onBlockFade(BlockFadeEvent event) {
+		final Block block = event.getBlock().getRelative((BlockFace.UP));
+		if (plugin.getWorldRegistry().contains(block.getWorld().getName(), block.getX(), block.getY(), block.getZ())) {
+			event.setCancelled(true);
+		}
+	}
+	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
