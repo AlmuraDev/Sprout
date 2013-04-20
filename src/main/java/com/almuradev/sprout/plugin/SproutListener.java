@@ -35,6 +35,7 @@ import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -147,6 +148,12 @@ public class SproutListener implements Listener {
 			final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
 			//plugin.getLogger().info("Placing source block: " + sprout.getBlockSource());
 			((SpoutBlock) where).setCustomBlock(block);
+			if (!(event.getPlayer().getGameMode() == GameMode.CREATIVE)) {
+				held.setAmount(held.getAmount()-1);
+				if (held.getAmount()== 0) {
+					event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
+				}
+			}
 		} else {
 			where.setType(held.getType());
 		}
