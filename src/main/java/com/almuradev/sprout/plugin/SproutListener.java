@@ -21,7 +21,6 @@ package com.almuradev.sprout.plugin;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.almuradev.sprout.api.crop.Sprout;
@@ -39,7 +38,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -106,6 +104,7 @@ public class SproutListener implements Listener {
 		final SpoutItemStack stack = new SpoutItemStack(held);
 		final String name;
 
+		//Grab the material's name
 		if (stack.isCustomItem()) {
 			name = stack.getMaterial().getNotchianName();
 		} else {
@@ -125,11 +124,11 @@ public class SproutListener implements Listener {
 			return;
 		}
 
-//		//Place on soil. TODO Expand this concept.
-//		if (interacted.getType() != Material.SOIL) {
-//			event.setCancelled(true);
-//			return;
-//		}
+		//Place on soil. TODO Expand this concept.
+		if (interacted.getType() != Material.SOIL) {
+			event.setCancelled(true);
+			return;
+		}
 
 		final Block where = interacted.getRelative(BlockFace.UP);
 
@@ -140,22 +139,21 @@ public class SproutListener implements Listener {
 		}
 
 		//Add Sprout to registry
-		if (sprout != null) {
-			plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), new SimpleSprout(sprout.getName(), sprout.getBlockSource(), sprout.getItemSource(), sprout.getStages(), sprout.getDrops()));
-		}
+		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), new SimpleSprout(sprout.getName(), sprout.getBlockSource(), sprout.getItemSource(), sprout.getStages(), sprout.getDrops()));
 
+		//Set material
 		if (stack.isCustomItem()) {
 			final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
 			//plugin.getLogger().info("Placing source block: " + sprout.getBlockSource());
 			((SpoutBlock) where).setCustomBlock(block);
+
+        	//Remove item from inventory.
 			if (!(event.getPlayer().getGameMode() == GameMode.CREATIVE)) {
 				held.setAmount(held.getAmount()-1);
 				if (held.getAmount()== 0) {
 					event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
 				}
 			}
-		} else {
-			where.setType(held.getType());
 		}
 	}
 
