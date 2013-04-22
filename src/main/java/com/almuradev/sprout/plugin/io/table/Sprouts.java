@@ -35,7 +35,6 @@ public class Sprouts {
 
 	public Sprout getSprout() {
 		return sprout;
-
 	}
 
 	public void setSprout(Sprout sprout) {
