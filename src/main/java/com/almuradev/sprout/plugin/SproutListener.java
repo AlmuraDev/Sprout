@@ -46,10 +46,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.PistonBaseMaterial;
 
 public class SproutListener implements Listener {
 	private final SproutPlugin plugin;
@@ -110,6 +112,52 @@ public class SproutListener implements Listener {
 		physics.setType(Material.AIR);
 		((SpoutBlock) physics).setCustomBlock(null);
 		disperseDrops(sprout, physics);
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPistonExtend(BlockPistonExtendEvent event) {
+		if (event.getLength() == 0) {
+			return;
+		}
+		boolean hasSprout = false;
+		//Check if any block has a sprout
+		for (Block pushable : event.getBlocks()) {
+			if (!plugin.getWorldRegistry().has(pushable.getWorld().getName(), pushable.getX(), pushable.getY(), pushable.getZ())) {
+				final Block top = pushable.getRelative(BlockFace.UP);
+				if (!plugin.getWorldRegistry().has(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
+					continue;
+				}
+			}
+			hasSprout = true;
+			break;
+		}
+		//Don't affect the piston if there is no sprouts.
+		if (!hasSprout) {
+			return;
+		}
+		event.setCancelled(true);
+		for (Block pushable : event.getBlocks()) {
+			//Check if the pushable is a Sprout
+			final Sprout current = plugin.getWorldRegistry().remove(pushable.getWorld().getName(), pushable.getX(), pushable.getY(), pushable.getZ());
+			if (current == null) {
+				//Check if the pushable has a Sprout above
+				final Block top = pushable.getRelative(BlockFace.UP);
+				final Sprout currentTop = plugin.getWorldRegistry().remove(top.getWorld().getName(), top.getX(), top.getY(), top.getZ());
+				if (currentTop == null) {
+					continue;
+				}
+				top.setType(Material.AIR);
+				((SpoutBlock) top).setCustomBlock(null);
+				disperseDrops(currentTop, top);
+			} else {
+				pushable.setType(Material.AIR);
+				((SpoutBlock) pushable).setCustomBlock(null);
+				disperseDrops(current, pushable);
+			}
+		}
+		final PistonBaseMaterial piston = (PistonBaseMaterial) event.getBlock().getState().getData();
+		piston.setPowered(true);
+		event.getBlock().setData(piston.getData(), true);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)

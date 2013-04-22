@@ -73,6 +73,15 @@ public class SimpleWorldRegistry implements WorldRegistry {
 	}
 
 	@Override
+	public boolean has(String world, int x, int y, int z) {
+		if (world == null || world.isEmpty()) {
+			throw new NullPointerException("Specified world is null!");
+		}
+		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+		return REGISTRY != null && REGISTRY.get(x, y, z) != null;
+	}
+
+	@Override
 	public Sprout remove(String world, int x, int y, int z) {
 		if (world == null || world.isEmpty()) {
 			throw new NullPointerException("Specified world is null!");

@@ -33,6 +33,8 @@ public interface WorldRegistry {
 
 	public TInt21TripleObjectHashMap get(String world);
 
+	public boolean has(String world, int x, int y, int z);
+
 	public Sprout remove(String world, int x, int y, int z);
 
 	public Map<String, TInt21TripleObjectHashMap> getAll();
