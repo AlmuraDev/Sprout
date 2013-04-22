@@ -36,7 +36,7 @@ public class SimpleSprout implements Sprout {
 	private int age = 0;
 
 	public SimpleSprout(String name, String blockSource, String itemSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty()|| blockSource == null || blockSource.isEmpty()) {
+		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
 

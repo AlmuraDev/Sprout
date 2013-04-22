@@ -71,7 +71,7 @@ public class SproutListener implements Listener {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
@@ -80,49 +80,20 @@ public class SproutListener implements Listener {
 			return;
 		}
 		((SpoutBlock) block).setCustomBlock(null);
-		final Collection<Drop> drops = sprout.getDrops();
-		for (Drop drop : drops) {
-			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
-			if (customMaterial == null) {
-				final Material material = Material.getMaterial(drop.getName());
-				if (material == null) {
-					continue;
-				}
-				final ItemStack stack = new ItemStack(material, drop.getAmount());
-				block.getWorld().dropItemNaturally(block.getLocation(), stack);
-			} else {
-				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
-				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
-			}
-		}
+		disperseDrops(sprout, block);
 	}
 
 	@EventHandler
 	public void onBlockFromTo(BlockFromToEvent event) {
 		final Block to = event.getToBlock();
-		final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(),to.getZ());
+		final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
 		if (sprout == null) {
 			return;
 		}
-		System.out.println(to.toString());
 		event.setCancelled(true);
 		to.setType(Material.AIR);
 		((SpoutBlock) to).setCustomBlock(null);
-		final Collection<Drop> drops = sprout.getDrops();
-		for (Drop drop : drops) {
-			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
-			if (customMaterial == null) {
-				final Material material = Material.getMaterial(drop.getName());
-				if (material == null) {
-					continue;
-				}
-				final ItemStack stack = new ItemStack(material, drop.getAmount());
-				to.getWorld().dropItemNaturally(to.getLocation(), stack);
-			} else {
-				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
-				to.getWorld().dropItemNaturally(to.getLocation(), spoutStack);
-			}
-		}
+		disperseDrops(sprout, to);
 	}
 
 	@EventHandler
@@ -138,21 +109,7 @@ public class SproutListener implements Listener {
 		event.setCancelled(true);
 		physics.setType(Material.AIR);
 		((SpoutBlock) physics).setCustomBlock(null);
-		final Collection<Drop> drops = sprout.getDrops();
-		for (Drop drop : drops) {
-			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
-			if (customMaterial == null) {
-				final Material material = Material.getMaterial(drop.getName());
-				if (material == null) {
-					continue;
-				}
-				final ItemStack stack = new ItemStack(material, drop.getAmount());
-				physics.getWorld().dropItemNaturally(physics.getLocation(), stack);
-			} else {
-				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
-				physics.getWorld().dropItemNaturally(physics.getLocation(), spoutStack);
-			}
-		}
+		disperseDrops(sprout, physics);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -212,10 +169,10 @@ public class SproutListener implements Listener {
 			//plugin.getLogger().info("Placing source block: " + sprout.getBlockSource());
 			((SpoutBlock) where).setCustomBlock(block);
 
-        	//Remove item from inventory.
+			//Remove item from inventory.
 			if (!(event.getPlayer().getGameMode() == GameMode.CREATIVE)) {
-				held.setAmount(held.getAmount()-1);
-				if (held.getAmount()== 0) {
+				held.setAmount(held.getAmount() - 1);
+				if (held.getAmount() == 0) {
 					event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
 				}
 			}
@@ -237,6 +194,24 @@ public class SproutListener implements Listener {
 		final Integer id = ID_WORLD_MAP.remove(event.getWorld().getName());
 		if (id != null) {
 			Bukkit.getScheduler().cancelTask(id);
+		}
+	}
+
+	private void disperseDrops(final Sprout sprout, final Block block) {
+		final Collection<Drop> drops = sprout.getDrops();
+		for (Drop drop : drops) {
+			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
+			if (customMaterial == null) {
+				final Material material = Material.getMaterial(drop.getName());
+				if (material == null) {
+					continue;
+				}
+				final ItemStack stack = new ItemStack(material, drop.getAmount());
+				block.getWorld().dropItemNaturally(block.getLocation(), stack);
+			} else {
+				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
+				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
+			}
 		}
 	}
 }
