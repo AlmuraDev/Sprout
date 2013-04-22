@@ -45,6 +45,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
@@ -120,6 +121,36 @@ public class SproutListener implements Listener {
 			} else {
 				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
 				to.getWorld().dropItemNaturally(to.getLocation(), spoutStack);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onBlockPhysics(BlockPhysicsEvent event) {
+		final Block physics = event.getBlock();
+		final Sprout sprout = plugin.getWorldRegistry().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
+		if (sprout == null) {
+			return;
+		}
+		if (physics.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
+			return;
+		}
+		event.setCancelled(true);
+		physics.setType(Material.AIR);
+		((SpoutBlock) physics).setCustomBlock(null);
+		final Collection<Drop> drops = sprout.getDrops();
+		for (Drop drop : drops) {
+			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
+			if (customMaterial == null) {
+				final Material material = Material.getMaterial(drop.getName());
+				if (material == null) {
+					continue;
+				}
+				final ItemStack stack = new ItemStack(material, drop.getAmount());
+				physics.getWorld().dropItemNaturally(physics.getLocation(), stack);
+			} else {
+				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
+				physics.getWorld().dropItemNaturally(physics.getLocation(), spoutStack);
 			}
 		}
 	}
