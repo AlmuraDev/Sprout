@@ -83,7 +83,7 @@ public class SproutListener implements Listener {
 		disperseDrops(sprout, block);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockFromTo(BlockFromToEvent event) {
 		final Block to = event.getToBlock();
 		final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
@@ -96,7 +96,7 @@ public class SproutListener implements Listener {
 		disperseDrops(sprout, to);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysics(BlockPhysicsEvent event) {
 		final Block physics = event.getBlock();
 		final Sprout sprout = plugin.getWorldRegistry().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
@@ -179,7 +179,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onWorldInit(WorldInitEvent event) {
 		final String name = event.getWorld().getName();
 		final Long interval = plugin.getConfiguration().getGrowthIntervalFor(name);
@@ -189,7 +189,7 @@ public class SproutListener implements Listener {
 		ID_WORLD_MAP.put(name, Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(plugin, name), 0, interval));
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onWorldSave(WorldSaveEvent event) {
 		final Integer id = ID_WORLD_MAP.remove(event.getWorld().getName());
 		if (id != null) {
