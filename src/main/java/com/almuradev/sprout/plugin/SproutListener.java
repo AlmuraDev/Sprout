@@ -44,6 +44,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
@@ -57,21 +58,27 @@ public class SproutListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockFade(BlockFadeEvent event) {
-		final Block block = event.getBlock().getRelative((BlockFace.UP));
-		if (plugin.getWorldRegistry().contains(block.getWorld().getName(), block.getX(), block.getY(), block.getZ())) {
+		final Block fading = event.getBlock();
+		//Don't do a lookup if it isn't soil.
+		if (fading.getType() != Material.SOIL) {
+			return;
+		}
+		final Block top = event.getBlock().getRelative((BlockFace.UP));
+		if (plugin.getWorldRegistry().contains(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
 			event.setCancelled(true);
 		}
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
 		final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 		if (sprout == null) {
 			return;
 		}
+		((SpoutBlock) block).setCustomBlock(null);
 		final Collection<Drop> drops = sprout.getDrops();
 		for (Drop drop : drops) {
 			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
@@ -85,6 +92,34 @@ public class SproutListener implements Listener {
 			} else {
 				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
 				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onBlockFromTo(BlockFromToEvent event) {
+		final Block to = event.getToBlock();
+		final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(),to.getZ());
+		if (sprout == null) {
+			return;
+		}
+		System.out.println(to.toString());
+		event.setCancelled(true);
+		to.setType(Material.AIR);
+		((SpoutBlock) to).setCustomBlock(null);
+		final Collection<Drop> drops = sprout.getDrops();
+		for (Drop drop : drops) {
+			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
+			if (customMaterial == null) {
+				final Material material = Material.getMaterial(drop.getName());
+				if (material == null) {
+					continue;
+				}
+				final ItemStack stack = new ItemStack(material, drop.getAmount());
+				to.getWorld().dropItemNaturally(to.getLocation(), stack);
+			} else {
+				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
+				to.getWorld().dropItemNaturally(to.getLocation(), spoutStack);
 			}
 		}
 	}
@@ -111,7 +146,6 @@ public class SproutListener implements Listener {
 			name = held.getType().name();
 		}
 
-		//plugin.getLogger().info("Interacted with: " + name);
 		//Only manage Sprouts
 		final Sprout sprout = plugin.getSproutRegistry().find(name);
 		if (sprout == null) {
