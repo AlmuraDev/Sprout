@@ -22,11 +22,14 @@ package com.almuradev.sprout.plugin;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.almuradev.sprout.api.io.SQLMode;
+import com.almuradev.sprout.api.io.SQLStorage;
 import com.almuradev.sprout.api.io.SproutRegistry;
 import com.almuradev.sprout.api.io.WorldRegistry;
+import com.almuradev.sprout.plugin.io.FlatFileStorage;
+import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
 import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
-import com.almuradev.sprout.plugin.io.Storage;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
 import org.bukkit.Bukkit;
@@ -38,7 +41,8 @@ public class SproutPlugin extends JavaPlugin {
 	private final SimpleSproutRegistry sproutRegistry;
 	private final SimpleWorldRegistry worldRegistry;
 	private SproutConfiguration configuration;
-	private Storage storage;
+	private FlatFileStorage flatFileStorage;
+	private SimpleSQLStorage sqlStorage;
 
 	public SproutPlugin() {
 		sproutRegistry = new SimpleSproutRegistry();
@@ -54,9 +58,12 @@ public class SproutPlugin extends JavaPlugin {
 	public void onEnable() {
 		configuration = new SproutConfiguration(this);
 		configuration.onEnable();
-		storage = new Storage(this);
-		storage.onEnable();
-		storage.load();
+		flatFileStorage = new FlatFileStorage(this);
+		flatFileStorage.onEnable();
+		flatFileStorage.load();
+		sqlStorage = new SimpleSQLStorage(this, SQLMode.H2);
+		sqlStorage.onEnable(getDataFolder());
+		worldRegistry.putAll(sqlStorage.getAll());
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
 		startGrowthTasks();
 	}
@@ -71,6 +78,10 @@ public class SproutPlugin extends JavaPlugin {
 
 	public WorldRegistry getWorldRegistry() {
 		return worldRegistry;
+	}
+
+	public SQLStorage getStorage() {
+		return sqlStorage;
 	}
 
 	private void startGrowthTasks() {

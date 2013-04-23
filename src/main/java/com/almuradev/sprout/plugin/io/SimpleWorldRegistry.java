@@ -97,4 +97,8 @@ public class SimpleWorldRegistry implements WorldRegistry {
 	public Map<String, TInt21TripleObjectHashMap> getAll() {
 		return Collections.unmodifiableMap(REGISTRIES);
 	}
+
+	public final void putAll(Map<String, TInt21TripleObjectHashMap> prebuilt) {
+		REGISTRIES.putAll(prebuilt);
+	}
 }

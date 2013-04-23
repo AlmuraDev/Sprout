@@ -41,18 +41,29 @@ import com.alta189.simplesave.h2.H2Configuration;
 import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
 
-public class SproutSQLStorage implements SQLStorage {
+public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
 	private final Configuration configuration;
-	private final Database database;
+	private Database database;
 
-	public SproutSQLStorage(SproutPlugin plugin, SQLMode mode, File loc, String dbName, String hostName, String username, String password, int port) {
+	public SimpleSQLStorage(SproutPlugin plugin, SQLMode mode) {
 		this.plugin = plugin;
 		try {
 			configuration = mode.getAssociation().newInstance();
 		} catch (Exception ignore) {
 			throw new IllegalArgumentException("Cannot create the SQL configuration object!");
 		}
+	}
+
+	public void onEnable(File loc) {
+		onEnable(loc, null, null, null, null, 1337);
+	}
+
+	public void onEnable(String dbName, String hostName, String username, String password, int port) {
+		onEnable(null, dbName, hostName, username, password, port);
+	}
+
+	public void onEnable(File loc, String dbName, String hostName, String username, String password, int port) {
 		if (configuration instanceof H2Configuration) {
 			createFile(loc);
 			((H2Configuration) configuration).setDatabase(new File(loc, "sprouts_h2_db").getAbsolutePath());
@@ -93,12 +104,12 @@ public class SproutSQLStorage implements SQLStorage {
 	}
 
 	@Override
-	public SQLStorage remove(String world, int x, int y, int z, Sprout sprout) {
-		if (world == null || world.isEmpty() || sprout == null) {
-			throw new IllegalArgumentException("World or sprout is null!");
+	public SQLStorage remove(String world, int x, int y, int z) {
+		if (world == null || world.isEmpty()) {
+			throw new IllegalArgumentException("World is null!");
 		}
 
-		final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("x", x).and().equal("y", y).and().equal("z", z).and().equal("sprout", sprout).execute().findOne();
+		final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("x", x).and().equal("y", y).and().equal("z", z).execute().findOne();
 		if (row != null) {
 			database.remove(row);
 		}

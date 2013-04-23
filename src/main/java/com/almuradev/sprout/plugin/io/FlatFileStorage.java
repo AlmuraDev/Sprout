@@ -49,11 +49,11 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public final class Storage {
+public final class FlatFileStorage {
 	private final SproutPlugin plugin;
 	private final File dir;
 
-	public Storage(SproutPlugin plugin) {
+	public FlatFileStorage(SproutPlugin plugin) {
 		this.plugin = plugin;
 		dir = plugin.getDataFolder();
 	}

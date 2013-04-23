@@ -72,6 +72,12 @@
 			<version>1.2.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.168</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- Build configuration -->
@@ -158,6 +164,43 @@
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 				</configuration>
+			</plugin>
+			<!-- Dependency addition plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<configuration>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>lib/**</exclude>
+										<exclude>templates/**</exclude>
+										<exclude>META-INF/*.xml</exclude>
+										<exclude>META-INF/*.txt</exclude>
+										<exclude>**/LICENSE</exclude>
+										<exclude>**/NOTICE</exclude>
+										<exclude>**/DEPENDENCIES</exclude>
+										<exclude>**/*.java</exclude>
+									</excludes>
+								</filter>
+								<filter>
+									<artifact>org.spout:*</artifact>
+									<includes>
+										<include>**</include>
+									</includes>
+								</filter>
+							</filters>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<!-- Reporting plugin -->
 			<plugin>

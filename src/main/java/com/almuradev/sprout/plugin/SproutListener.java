@@ -81,6 +81,7 @@ public class SproutListener implements Listener {
 		if (sprout == null) {
 			return;
 		}
+		plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 		((SpoutBlock) block).setCustomBlock(null);
 		disperseDrops(sprout, block);
 	}
@@ -92,6 +93,7 @@ public class SproutListener implements Listener {
 		if (sprout == null) {
 			return;
 		}
+		plugin.getStorage().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
 		event.setCancelled(true);
 		to.setType(Material.AIR);
 		((SpoutBlock) to).setCustomBlock(null);
@@ -101,13 +103,14 @@ public class SproutListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysics(BlockPhysicsEvent event) {
 		final Block physics = event.getBlock();
+		if (physics.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
+			return;
+		}
 		final Sprout sprout = plugin.getWorldRegistry().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
 		if (sprout == null) {
 			return;
 		}
-		if (physics.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-			return;
-		}
+		plugin.getStorage().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
 		event.setCancelled(true);
 		physics.setType(Material.AIR);
 		((SpoutBlock) physics).setCustomBlock(null);
@@ -146,10 +149,12 @@ public class SproutListener implements Listener {
 				if (currentTop == null) {
 					continue;
 				}
+				plugin.getStorage().remove(top.getWorld().getName(), top.getX(), top.getY(), top.getZ());
 				top.setType(Material.AIR);
 				((SpoutBlock) top).setCustomBlock(null);
 				disperseDrops(currentTop, top);
 			} else {
+				plugin.getStorage().remove(pushable.getWorld().getName(), pushable.getX(), pushable.getY(), pushable.getZ());
 				pushable.setType(Material.AIR);
 				((SpoutBlock) pushable).setCustomBlock(null);
 				disperseDrops(current, pushable);
@@ -208,8 +213,9 @@ public class SproutListener implements Listener {
 			return;
 		}
 
-		//Add Sprout to registry
-		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), new SimpleSprout(sprout.getName(), sprout.getBlockSource(), sprout.getItemSource(), sprout.getStages(), sprout.getDrops()));
+		final SimpleSprout toInject = new SimpleSprout(sprout.getName(), sprout.getBlockSource(), sprout.getItemSource(), sprout.getStages(), sprout.getDrops());
+		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
 
 		//Set material
 		if (stack.isCustomItem()) {
