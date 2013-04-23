@@ -28,19 +28,14 @@ import com.alta189.simplesave.Table;
 public class Sprouts {
 	@Id
 	private int id;
-
 	@Field
 	private String world;
-
 	@Field
 	private int x;
-
 	@Field
 	private int y;
-
 	@Field
 	private int z;
-
 	@Field
 	private Sprout sprout;
 

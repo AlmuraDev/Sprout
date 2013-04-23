@@ -19,12 +19,15 @@
  */
 package com.almuradev.sprout.api.io;
 
+import java.util.Map;
+
 import com.almuradev.sprout.api.crop.Sprout;
+import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 
 public interface SQLStorage {
 	public SQLStorage add(String world, int x, int y, int z, Sprout sprout);
 
 	public SQLStorage remove(String world, int x, int y, int z, Sprout sprout);
 
-	public SQLStorage clear(String world);
+	public Map<String, TInt21TripleObjectHashMap> getAll();
 }

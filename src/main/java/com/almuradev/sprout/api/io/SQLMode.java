@@ -28,7 +28,6 @@ public enum SQLMode {
 	H2("H2", H2Configuration.class),
 	SQLITE("SQLite", SQLiteConfiguration.class),
 	MYSQL("MySQL", MySQLConfiguration.class);
-
 	private final String identifier;
 	private final Class<? extends Configuration> configuration;
 

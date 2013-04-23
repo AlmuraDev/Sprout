@@ -23,14 +23,20 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.almuradev.sprout.api.crop.Sprout;
-import com.almuradev.sprout.api.io.SQLStorage;
 import com.almuradev.sprout.api.io.SQLMode;
+import com.almuradev.sprout.api.io.SQLStorage;
+import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.plugin.SproutPlugin;
+import com.almuradev.sprout.plugin.io.table.Sprouts;
 import com.alta189.simplesave.Configuration;
 import com.alta189.simplesave.Database;
 import com.alta189.simplesave.DatabaseFactory;
+import com.alta189.simplesave.exceptions.ConnectionException;
+import com.alta189.simplesave.exceptions.TableRegistrationException;
 import com.alta189.simplesave.h2.H2Configuration;
 import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
@@ -62,21 +68,55 @@ public class SproutSQLStorage implements SQLStorage {
 					.setPort(port);
 		}
 		database = DatabaseFactory.createNewDatabase(configuration);
+
+		try {
+			database.registerTable(Sprouts.class);
+		} catch (TableRegistrationException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			database.connect();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public SQLStorage add(String world, int x, int y, int z, Sprout sprout) {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
+		if (world == null || world.isEmpty() || sprout == null) {
+			throw new IllegalArgumentException("World or sprout is null!");
+		}
+
+		database.save(new Sprouts(world, x, y, z, sprout));
+		return this;
 	}
 
 	@Override
 	public SQLStorage remove(String world, int x, int y, int z, Sprout sprout) {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
+		if (world == null || world.isEmpty() || sprout == null) {
+			throw new IllegalArgumentException("World or sprout is null!");
+		}
+
+		final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("x", x).and().equal("y", y).and().equal("z", z).and().equal("sprout", sprout).execute().findOne();
+		if (row != null) {
+			database.remove(row);
+		}
+		return this;
 	}
 
 	@Override
-	public SQLStorage clear(String world) {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
+	public Map<String, TInt21TripleObjectHashMap> getAll() {
+		final HashMap<String, TInt21TripleObjectHashMap> registry = new HashMap<>();
+		for (Sprouts row : database.select(Sprouts.class).execute().find()) {
+			TInt21TripleObjectHashMap worldRegistry = registry.get(row.getWorld());
+			if (worldRegistry == null) {
+				worldRegistry = new TInt21TripleObjectHashMap();
+				registry.put(row.getWorld(), worldRegistry);
+			}
+			worldRegistry.put(row.getX(), row.getY(), row.getZ(), row.getSprout());
+		}
+		return registry;
 	}
 
 	private void createFile(final File dir) {
