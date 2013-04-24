@@ -28,6 +28,7 @@ import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
+import org.apache.commons.lang.SerializationUtils;
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
@@ -213,9 +214,9 @@ public class SproutListener implements Listener {
 			return;
 		}
 
-		final SimpleSprout toInject = new SimpleSprout(sprout.getName(), sprout.getBlockSource(), sprout.getItemSource(), sprout.getStages(), sprout.getDrops());
+		final Sprout toInject = (Sprout) SerializationUtils.clone(sprout);
 		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject.getName(), 0);
 
 		//Set material
 		if (stack.isCustomItem()) {

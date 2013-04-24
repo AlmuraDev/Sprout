@@ -19,7 +19,6 @@
  */
 package com.almuradev.sprout.plugin.io.table;
 
-import com.almuradev.sprout.api.crop.Sprout;
 import com.alta189.simplesave.Field;
 import com.alta189.simplesave.Id;
 import com.alta189.simplesave.Table;
@@ -31,24 +30,21 @@ public class Sprouts {
 	@Field
 	private String world;
 	@Field
-	private int x;
+	private long location;
 	@Field
-	private int y;
+	private String sprout;
 	@Field
-	private int z;
-	@Field
-	private Sprout sprout;
+	private int age;
 
 	public Sprouts() {
 
 	}
 
-	public Sprouts(String world, int x, int y, int z, Sprout sprout) {
+	public Sprouts(String world, long location, String sprout, int age) {
 		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.location = location;
 		this.sprout = sprout;
+		this.age = age;
 	}
 
 	public int getId() {
@@ -59,19 +55,23 @@ public class Sprouts {
 		return world;
 	}
 
-	public int getX() {
-		return x;
+	public long getLocation() {
+		return location;
 	}
 
-	public int getY() {
-		return y;
+	public void setSprout(String sprout) {
+		this.sprout = sprout;
 	}
 
-	public int getZ() {
-		return z;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
-	public Sprout getSprout() {
+	public String getSprout() {
 		return sprout;
+	}
+
+	public int getAge() {
+		return age;
 	}
 }

@@ -21,11 +21,10 @@ package com.almuradev.sprout.api.io;
 
 import java.util.Map;
 
-import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 
 public interface SQLStorage {
-	public SQLStorage add(String world, int x, int y, int z, Sprout sprout);
+	public SQLStorage add(String world, int x, int y, int z, String sprout, int age);
 
 	public SQLStorage remove(String world, int x, int y, int z);
 

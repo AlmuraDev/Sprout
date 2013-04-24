@@ -81,7 +81,7 @@ public class SimpleSproutRegistry implements SproutRegistry {
 			throw new IllegalArgumentException("Item source is null or empty!");
 		}
 		for (Sprout sprout : sprouts) {
-			if (sprout.getItemSource().contains(itemSource)) {
+			if (sprout.getItemSource().endsWith(itemSource)) {
 				return sprout;
 			}
 		}

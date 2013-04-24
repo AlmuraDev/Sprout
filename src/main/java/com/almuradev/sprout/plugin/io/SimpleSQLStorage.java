@@ -29,8 +29,10 @@ import java.util.Map;
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.io.SQLMode;
 import com.almuradev.sprout.api.io.SQLStorage;
+import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.plugin.SproutPlugin;
+import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.io.table.Sprouts;
 import com.alta189.simplesave.Configuration;
 import com.alta189.simplesave.Database;
@@ -40,6 +42,10 @@ import com.alta189.simplesave.exceptions.TableRegistrationException;
 import com.alta189.simplesave.h2.H2Configuration;
 import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
+
+import gnu.trove.procedure.TLongObjectProcedure;
+
+import org.apache.commons.lang.SerializationUtils;
 
 public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
@@ -94,12 +100,12 @@ public class SimpleSQLStorage implements SQLStorage {
 	}
 
 	@Override
-	public SQLStorage add(String world, int x, int y, int z, Sprout sprout) {
+	public SQLStorage add(String world, int x, int y, int z, String sprout, int age) {
 		if (world == null || world.isEmpty() || sprout == null) {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
 
-		database.save(new Sprouts(world, x, y, z, sprout));
+		database.save(new Sprouts(world, Int21TripleHashed.key(x, y, z), sprout, age));
 		return this;
 	}
 
@@ -125,9 +131,41 @@ public class SimpleSQLStorage implements SQLStorage {
 				worldRegistry = new TInt21TripleObjectHashMap();
 				registry.put(row.getWorld(), worldRegistry);
 			}
-			worldRegistry.put(row.getX(), row.getY(), row.getZ(), row.getSprout());
+			final Sprout sprout = plugin.getSproutRegistry().get(row.getSprout());
+			if (sprout == null) {
+				plugin.getLogger().info("Attempting to place non-existent \"" + row.getSprout() + "\" sprout into the world. Skipping...");
+				continue;
+			}
+			final Sprout toInject = (Sprout) SerializationUtils.clone(sprout);
+			((SimpleSprout) toInject).grow(row.getAge());
+			worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
 		}
 		return registry;
+	}
+
+	public void dropAll() {
+		for (Map.Entry<String, TInt21TripleObjectHashMap> entry : plugin.getWorldRegistry().getAll().entrySet()) {
+			final String world = entry.getKey();
+			entry.getValue().getInternalMap().forEachEntry(new TLongObjectProcedure() {
+				@Override
+				public boolean execute(long l, Object o) {
+					final int x = Int21TripleHashed.key1(l);
+					final int y = Int21TripleHashed.key2(l);
+					final int z = Int21TripleHashed.key3(l);
+					final Sprout sprout = (Sprout) o;
+
+					final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("x", x).and().equal("y", y).and().equal("z", z).execute().findOne();
+					if (row == null) {
+						add(world, x, y, z, sprout.getName(), sprout.getAge());
+					} else {
+						row.setSprout(sprout.getName());
+						row.setAge(sprout.getAge());
+					}
+					database.save(row);
+					return true;
+				}
+			});
+		}
 	}
 
 	private void createFile(final File dir) {

@@ -52,6 +52,8 @@ public class SproutPlugin extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		getServer().getScheduler().cancelTasks(this);
+		//TODO I bet this is insane...
+		sqlStorage.dropAll();
 	}
 
 	@Override
