@@ -19,6 +19,9 @@
  */
 package com.almuradev.sprout.plugin.task;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.io.WorldRegistry;
@@ -36,8 +39,10 @@ import org.getspout.spoutapi.material.MaterialData;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
 
 public class GrowthTask implements Runnable {
+	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
 	private final SproutPlugin plugin;
 	private final WorldRegistry worldRegistry;
 	private final String world;
@@ -97,5 +102,32 @@ public class GrowthTask implements Runnable {
 				return true;
 			}
 		});
+	}
+
+	public static void schedule(Plugin plugin, World... worlds) {
+		final SproutPlugin sproutPlugin = (SproutPlugin) plugin;
+		for (World world : worlds) {
+			if (world == null) {
+				continue;
+			}
+			final Long l = sproutPlugin.getConfiguration().getGrowthIntervalFor(world.getName());
+			if (l == null) {
+				continue;
+			}
+			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
+		}
+	}
+
+	public static void unschedule(World... worlds) {
+		for (World world : worlds) {
+			final Integer id = WORLD_ID_MAP.remove(world.getName());
+			if (id != null) {
+				Bukkit.getScheduler().cancelTask(id);
+			}
+		}
+	}
+
+	public static void stop(Plugin plugin) {
+		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 }

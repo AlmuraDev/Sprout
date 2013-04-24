@@ -19,9 +19,6 @@
  */
 package com.almuradev.sprout.plugin;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.almuradev.sprout.api.io.SQLMode;
 import com.almuradev.sprout.api.io.SQLStorage;
 import com.almuradev.sprout.api.io.SproutRegistry;
@@ -37,37 +34,36 @@ import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SproutPlugin extends JavaPlugin {
-	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
+	private final FlatFileStorage flatFileStorage;
+	private final SproutConfiguration configuration;
 	private final SimpleSproutRegistry sproutRegistry;
+	private final SimpleSQLStorage sqlStorage;
 	private final SimpleWorldRegistry worldRegistry;
-	private SproutConfiguration configuration;
-	private FlatFileStorage flatFileStorage;
-	private SimpleSQLStorage sqlStorage;
 
 	public SproutPlugin() {
+		configuration = new SproutConfiguration(this);
+		flatFileStorage = new FlatFileStorage(this);
 		sproutRegistry = new SimpleSproutRegistry();
+		sqlStorage = new SimpleSQLStorage(this);
 		worldRegistry = new SimpleWorldRegistry();
 	}
 
 	@Override
 	public void onDisable() {
-		getServer().getScheduler().cancelTasks(this);
 		//TODO I bet this is insane...
+		GrowthTask.stop(this);
 		sqlStorage.dropAll();
 	}
 
 	@Override
 	public void onEnable() {
-		configuration = new SproutConfiguration(this);
 		configuration.onEnable();
-		flatFileStorage = new FlatFileStorage(this);
-		flatFileStorage.onEnable();
+		flatFileStorage.onEnable(getDataFolder());
 		flatFileStorage.load();
-		sqlStorage = new SimpleSQLStorage(this, SQLMode.H2);
-		sqlStorage.onEnable(getDataFolder());
+		sqlStorage.onEnable(SQLMode.H2, getDataFolder());
 		worldRegistry.putAll(sqlStorage.getAll());
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
-		startGrowthTasks();
+		GrowthTask.schedule(this, Bukkit.getWorlds().toArray(new World[Bukkit.getWorlds().size()]));
 	}
 
 	public SproutConfiguration getConfiguration() {
@@ -78,22 +74,11 @@ public class SproutPlugin extends JavaPlugin {
 		return sproutRegistry;
 	}
 
-	public WorldRegistry getWorldRegistry() {
-		return worldRegistry;
-	}
-
 	public SQLStorage getStorage() {
 		return sqlStorage;
 	}
 
-	private void startGrowthTasks() {
-		for (World world : getServer().getWorlds()) {
-			final String name = world.getName();
-			final Long interval = configuration.getGrowthIntervalFor(name);
-			if (interval == null) {
-				continue;
-			}
-			WORLD_ID_MAP.put(name, Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new GrowthTask(this, name), 0, interval));
-		}
+	public WorldRegistry getWorldRegistry() {
+		return worldRegistry;
 	}
 }

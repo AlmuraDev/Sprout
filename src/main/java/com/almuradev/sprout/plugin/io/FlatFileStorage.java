@@ -51,14 +51,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public final class FlatFileStorage {
 	private final SproutPlugin plugin;
-	private final File dir;
+	private File dir;
 
 	public FlatFileStorage(SproutPlugin plugin) {
 		this.plugin = plugin;
-		dir = plugin.getDataFolder();
 	}
 
-	public void onEnable() {
+	public void onEnable(final File dir) {
+		this.dir = dir;
 		try {
 			Files.createDirectories(dir.toPath());
 			Files.createFile(Paths.get(dir.getPath() + File.separator + "sprouts.yml"));

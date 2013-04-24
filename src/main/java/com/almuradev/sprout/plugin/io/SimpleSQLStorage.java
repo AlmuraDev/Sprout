@@ -49,27 +49,27 @@ import org.apache.commons.lang.SerializationUtils;
 
 public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
-	private final Configuration configuration;
+	private Configuration configuration;
 	private Database database;
 
-	public SimpleSQLStorage(SproutPlugin plugin, SQLMode mode) {
+	public SimpleSQLStorage(SproutPlugin plugin) {
 		this.plugin = plugin;
+	}
+
+	public void onEnable(SQLMode mode, File loc) {
+		onEnable(mode, loc, null, null, null, null, 1337);
+	}
+
+	public void onEnable(SQLMode mode, String dbName, String hostName, String username, String password, int port) {
+		onEnable(mode, null, dbName, hostName, username, password, port);
+	}
+
+	public void onEnable(SQLMode mode, File loc, String dbName, String hostName, String username, String password, int port) {
 		try {
 			configuration = mode.getAssociation().newInstance();
 		} catch (Exception ignore) {
 			throw new IllegalArgumentException("Cannot create the SQL configuration object!");
 		}
-	}
-
-	public void onEnable(File loc) {
-		onEnable(loc, null, null, null, null, 1337);
-	}
-
-	public void onEnable(String dbName, String hostName, String username, String password, int port) {
-		onEnable(null, dbName, hostName, username, password, port);
-	}
-
-	public void onEnable(File loc, String dbName, String hostName, String username, String password, int port) {
 		if (configuration instanceof H2Configuration) {
 			createFile(loc);
 			((H2Configuration) configuration).setDatabase(new File(loc, "sprouts_h2_db").getAbsolutePath());
@@ -133,7 +133,6 @@ public class SimpleSQLStorage implements SQLStorage {
 			}
 			final Sprout sprout = plugin.getSproutRegistry().get(row.getSprout());
 			if (sprout == null) {
-				plugin.getLogger().severe("Attempting to place non-existent \"" + row.getSprout() + "\" sprout into the world. Skipping...");
 				continue;
 			}
 			final Sprout toInject = (Sprout) SerializationUtils.clone(sprout);

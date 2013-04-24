@@ -20,12 +20,9 @@
 package com.almuradev.sprout.plugin;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.mech.Drop;
-import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
 import org.apache.commons.lang.SerializationUtils;
@@ -34,7 +31,6 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -56,7 +52,6 @@ import org.bukkit.material.PistonBaseMaterial;
 
 public class SproutListener implements Listener {
 	private final SproutPlugin plugin;
-	private static final Map<String, Integer> ID_WORLD_MAP = new HashMap<>();
 
 	public SproutListener(SproutPlugin plugin) {
 		this.plugin = plugin;
@@ -236,20 +231,12 @@ public class SproutListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onWorldInit(WorldInitEvent event) {
-		final String name = event.getWorld().getName();
-		final Long interval = plugin.getConfiguration().getGrowthIntervalFor(name);
-		if (interval == null) {
-			return;
-		}
-		ID_WORLD_MAP.put(name, Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(plugin, name), 0, interval));
+		GrowthTask.schedule(plugin, event.getWorld());
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onWorldSave(WorldSaveEvent event) {
-		final Integer id = ID_WORLD_MAP.remove(event.getWorld().getName());
-		if (id != null) {
-			Bukkit.getScheduler().cancelTask(id);
-		}
+		GrowthTask.unschedule(event.getWorld());
 	}
 
 	private void disperseDrops(final Sprout sprout, final Block block) {
