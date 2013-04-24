@@ -9,5 +9,3 @@
 #          what works for you.
 world:
     growth-interval: 300
-world_nether:
-    growth-interval: 325

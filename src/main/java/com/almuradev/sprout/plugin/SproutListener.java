@@ -23,7 +23,9 @@ import java.util.Collection;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.mech.Drop;
+import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
+import com.rits.cloning.Cloner;
 
 import org.apache.commons.lang.SerializationUtils;
 import org.getspout.spoutapi.block.SpoutBlock;
@@ -52,6 +54,7 @@ import org.bukkit.material.PistonBaseMaterial;
 
 public class SproutListener implements Listener {
 	private final SproutPlugin plugin;
+	private final Cloner cloner = new Cloner();
 
 	public SproutListener(SproutPlugin plugin) {
 		this.plugin = plugin;
@@ -209,7 +212,7 @@ public class SproutListener implements Listener {
 			return;
 		}
 
-		final Sprout toInject = (Sprout) SerializationUtils.clone(sprout);
+		final Sprout toInject = cloner.deepClone(sprout);
 		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
 		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject.getName(), 0);
 

@@ -56,15 +56,11 @@ public class GrowthTask implements Runnable {
 
 	@Override
 	public void run() {
-		plugin.getLogger().info("Commencing tick of Growth task.");
-		final World w = Bukkit.getWorld(world);
-		if (w == null) {
-			return;
-		}
 		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.get(world);
 		if (worldRegistry == null) {
 			return;
 		}
+		plugin.getLogger().info("Executing Growth Tick for [" + world + "]");
 		//First tick
 		if (pastTime == 0) {
 			pastTime = System.currentTimeMillis() / 1000;

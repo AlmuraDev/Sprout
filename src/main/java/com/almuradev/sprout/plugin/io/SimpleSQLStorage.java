@@ -42,6 +42,7 @@ import com.alta189.simplesave.exceptions.TableRegistrationException;
 import com.alta189.simplesave.h2.H2Configuration;
 import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
+import com.rits.cloning.Cloner;
 
 import gnu.trove.procedure.TLongObjectProcedure;
 
@@ -49,6 +50,7 @@ import org.apache.commons.lang.SerializationUtils;
 
 public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
+	private final Cloner cloner = new Cloner();
 	private Configuration configuration;
 	private Database database;
 
@@ -101,21 +103,29 @@ public class SimpleSQLStorage implements SQLStorage {
 
 	@Override
 	public SQLStorage add(String world, int x, int y, int z, String sprout, int age) {
+		return add(world, Int21TripleHashed.key(x, y, z), sprout, age);
+	}
+
+	public SQLStorage add(String world, long loc, String sprout, int age) {
 		if (world == null || world.isEmpty() || sprout == null) {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
 
-		database.save(new Sprouts(world, Int21TripleHashed.key(x, y, z), sprout, age));
+		database.save(new Sprouts(world, loc, sprout, age));
 		return this;
 	}
 
 	@Override
 	public SQLStorage remove(String world, int x, int y, int z) {
+		return remove(world, Int21TripleHashed.key(x, y, z));
+	}
+
+	public SQLStorage remove(String world, long loc) {
 		if (world == null || world.isEmpty()) {
 			throw new IllegalArgumentException("World is null!");
 		}
 
-		final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("x", x).and().equal("y", y).and().equal("z", z).execute().findOne();
+		final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
 		if (row != null) {
 			database.remove(row);
 		}
@@ -135,7 +145,7 @@ public class SimpleSQLStorage implements SQLStorage {
 			if (sprout == null) {
 				continue;
 			}
-			final Sprout toInject = (Sprout) SerializationUtils.clone(sprout);
+			final Sprout toInject = cloner.deepClone(sprout);
 			((SimpleSprout) toInject).grow(row.getAge());
 			worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
 		}
@@ -148,14 +158,10 @@ public class SimpleSQLStorage implements SQLStorage {
 			entry.getValue().getInternalMap().forEachEntry(new TLongObjectProcedure() {
 				@Override
 				public boolean execute(long l, Object o) {
-					final int x = Int21TripleHashed.key1(l);
-					final int y = Int21TripleHashed.key2(l);
-					final int z = Int21TripleHashed.key3(l);
 					final Sprout sprout = (Sprout) o;
-
-					final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("x", x).and().equal("y", y).and().equal("z", z).execute().findOne();
+					final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("location", l).execute().findOne();
 					if (row == null) {
-						add(world, x, y, z, sprout.getName(), sprout.getAge());
+						add(world, l, sprout.getName(), sprout.getAge());
 					} else {
 						row.setSprout(sprout.getName());
 						row.setAge(sprout.getAge());
