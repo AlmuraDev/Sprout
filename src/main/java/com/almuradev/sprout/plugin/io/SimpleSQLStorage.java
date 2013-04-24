@@ -133,7 +133,7 @@ public class SimpleSQLStorage implements SQLStorage {
 			}
 			final Sprout sprout = plugin.getSproutRegistry().get(row.getSprout());
 			if (sprout == null) {
-				plugin.getLogger().info("Attempting to place non-existent \"" + row.getSprout() + "\" sprout into the world. Skipping...");
+				plugin.getLogger().severe("Attempting to place non-existent \"" + row.getSprout() + "\" sprout into the world. Skipping...");
 				continue;
 			}
 			final Sprout toInject = (Sprout) SerializationUtils.clone(sprout);
@@ -160,8 +160,8 @@ public class SimpleSQLStorage implements SQLStorage {
 					} else {
 						row.setSprout(sprout.getName());
 						row.setAge(sprout.getAge());
+						database.save(row);
 					}
-					database.save(row);
 					return true;
 				}
 			});
