@@ -76,6 +76,11 @@ public class SimpleSproutRegistry implements SproutRegistry {
 	}
 
 	@Override
+	public int size() {
+		return sprouts.size();
+	}
+
+	@Override
 	public Sprout find(String itemSource) {
 		if (itemSource == null || itemSource.isEmpty()) {
 			throw new IllegalArgumentException("Item source is null or empty!");
@@ -86,6 +91,15 @@ public class SimpleSproutRegistry implements SproutRegistry {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public Sprout get(int index) {
+		if (index > sprouts.size()) {
+			return null;
+		}
+
+		return sprouts.get(index);
 	}
 
 	@Override

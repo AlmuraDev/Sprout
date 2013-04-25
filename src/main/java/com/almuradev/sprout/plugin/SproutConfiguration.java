@@ -61,9 +61,9 @@ public class SproutConfiguration {
 	 */
 
 	public SQLMode getMode() {
-		final String raw = config.getString("sql.mode", "h2");
+		final String raw = config.getString("sql.mode", "H2");
 		try {
-			return SQLMode.valueOf(raw);
+			return SQLMode.valueOf(raw.toUpperCase());
 		} catch (Exception e) {
 			return null;
 		}

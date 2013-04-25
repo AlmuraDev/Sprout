@@ -20,6 +20,7 @@
 package com.almuradev.sprout.plugin;
 
 import java.util.Collection;
+import java.util.Random;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.mech.Drop;
@@ -52,6 +53,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.PistonBaseMaterial;
 
 public class SproutListener implements Listener {
+	private static final Random RANDOM = new Random();
 	private final SproutPlugin plugin;
 	private final Cloner cloner = new Cloner();
 
@@ -75,15 +77,26 @@ public class SproutListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
-		final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
-		if (sprout == null) {
-			return;
+		//Handle random seed drops. To preserve a possible LongGrass base block, make sure it isn't a custom block
+		//TODO Configurable.
+		if (event.getBlock().getType() == Material.LONG_GRASS && !(((SpoutBlock) block).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10-1) + 1 == 7) { //10% chance for a drop.
+			final Sprout sprout = plugin.getSproutRegistry().get(RANDOM.nextInt(plugin.getSproutRegistry().size()));
+			if (sprout == null) {
+				return;
+			}
+			disperseSeeds(event.getPlayer(), sprout, block);
+		} else {
+			//Handle breaking of Sprouts
+			final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+			if (sprout == null) {
+				return;
+			}
+			event.setCancelled(true);
+			block.setType(Material.AIR);
+			((SpoutBlock) block).setCustomBlock(null);
+			plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+			disperseDrops(event.getPlayer(), sprout, block);
 		}
-		event.setCancelled(true);
-		block.setType(Material.AIR);
-		((SpoutBlock) block).setCustomBlock(null);
-		plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
-		disperseDrops(event.getPlayer(), sprout, block);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -115,54 +128,6 @@ public class SproutListener implements Listener {
 		physics.setType(Material.AIR);
 		((SpoutBlock) physics).setCustomBlock(null);
 		disperseDrops(sprout, physics);
-	}
-
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPistonExtend(BlockPistonExtendEvent event) {
-		if (event.getLength() == 0) {
-			return;
-		}
-		boolean hasSprout = false;
-		//Check if any block has a sprout
-		for (Block pushable : event.getBlocks()) {
-			if (!plugin.getWorldRegistry().has(pushable.getWorld().getName(), pushable.getX(), pushable.getY(), pushable.getZ())) {
-				final Block top = pushable.getRelative(BlockFace.UP);
-				if (!plugin.getWorldRegistry().has(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
-					continue;
-				}
-			}
-			hasSprout = true;
-			break;
-		}
-		//Don't affect the piston if there is no sprouts.
-		if (!hasSprout) {
-			return;
-		}
-		event.setCancelled(true);
-		for (Block pushable : event.getBlocks()) {
-			//Check if the pushable is a Sprout
-			final Sprout current = plugin.getWorldRegistry().remove(pushable.getWorld().getName(), pushable.getX(), pushable.getY(), pushable.getZ());
-			if (current == null) {
-				//Check if the pushable has a Sprout above
-				final Block top = pushable.getRelative(BlockFace.UP);
-				final Sprout currentTop = plugin.getWorldRegistry().remove(top.getWorld().getName(), top.getX(), top.getY(), top.getZ());
-				if (currentTop == null) {
-					continue;
-				}
-				plugin.getStorage().remove(top.getWorld().getName(), top.getX(), top.getY(), top.getZ());
-				top.setType(Material.AIR);
-				((SpoutBlock) top).setCustomBlock(null);
-				disperseDrops(currentTop, top);
-			} else {
-				plugin.getStorage().remove(pushable.getWorld().getName(), pushable.getX(), pushable.getY(), pushable.getZ());
-				pushable.setType(Material.AIR);
-				((SpoutBlock) pushable).setCustomBlock(null);
-				disperseDrops(current, pushable);
-			}
-		}
-		final PistonBaseMaterial piston = (PistonBaseMaterial) event.getBlock().getState().getData();
-		piston.setPowered(true);
-		event.getBlock().setData(piston.getData(), true);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -268,6 +233,25 @@ public class SproutListener implements Listener {
 				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
 				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
 			}
+		}
+	}
+
+	private void disperseSeeds(final Player cause, final Sprout sprout, final Block block) {
+		if (cause != null && cause.getGameMode() == GameMode.CREATIVE) {
+			return;
+		}
+		final String seedName = sprout.getItemSource();
+		final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(seedName);
+		if (customMaterial == null) {
+			final Material material = Material.getMaterial(seedName);
+			if (material == null) {
+				return;
+			}
+			final ItemStack stack = new ItemStack(material); //TODO Configurable amounts
+			block.getWorld().dropItemNaturally(block.getLocation(), stack);
+		} else {
+			final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial);
+			block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
 		}
 	}
 }

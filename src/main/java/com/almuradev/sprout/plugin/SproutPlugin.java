@@ -71,7 +71,7 @@ public class SproutPlugin extends JavaPlugin {
 				sqlStorage.onEnable(mode, getDataFolder());
 				break;
 			case MYSQL:
-				sqlStorage.onEnable(mode, configuration.getAddress(), configuration.getDatabase(), configuration.getPort(), configuration.getUsername(), configuration.getPassword());
+				sqlStorage.onEnable(mode, configuration.getHost(), configuration.getDatabase(), configuration.getPort(), configuration.getUsername(), configuration.getPassword());
 		}
 		worldRegistry.putAll(sqlStorage.getAll());
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);

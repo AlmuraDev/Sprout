@@ -32,7 +32,11 @@ public interface SproutRegistry {
 
 	public Sprout find(String itemSource);
 
+	public Sprout get(int index);
+
 	public Sprout get(String name);
+
+	public int size();
 
 	public Sprout remove(String name);
 
