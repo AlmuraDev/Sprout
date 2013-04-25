@@ -19,7 +19,6 @@
  */
 package com.almuradev.sprout.api.crop;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 

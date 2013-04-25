@@ -62,7 +62,6 @@ public class GrowthTask implements Runnable {
 		if (worldRegistry == null) {
 			return;
 		}
-		plugin.getLogger().info("Executing Growth Tick for [" + world + "]");
 		//First tick
 		if (pastTime == 0) {
 			pastTime = System.currentTimeMillis() / 1000;
@@ -78,7 +77,7 @@ public class GrowthTask implements Runnable {
 					return true;
 				}
 				//You have a 1/10 chance to perform a growth update.
-				if (RANDOM.nextInt(10-1) + 1 != 7) {
+				if (RANDOM.nextInt(10 - 1) + 1 != 7) {
 					return true;
 				}
 				final int x = Int21TripleHashed.key1(l);
@@ -114,6 +113,7 @@ public class GrowthTask implements Runnable {
 			if (l == null) {
 				continue;
 			}
+			plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every " + l / 20 + " second(s).");
 			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
 		}
 	}

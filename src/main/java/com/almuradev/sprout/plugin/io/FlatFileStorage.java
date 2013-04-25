@@ -29,7 +29,6 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -109,7 +108,6 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 		final List<Sprout> createdSprouts = new ArrayList<>();
 		final Iterator<String> iterator = reader.getKeys(false).iterator();
 
-		plugin.getLogger().info("Loading in Sprouts");
 		while (iterator.hasNext()) {
 			//Name
 			final String nameRaw = iterator.next();
@@ -154,11 +152,11 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
 					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block");
 				}
-				final int growthTicks = indexSection.getInt("growth-interval", 350);
+				final int growthTicks = indexSection.getInt("growth-required", 350);
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));
 			}
 			final SimpleSprout created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops);
-			plugin.getLogger().info("Loaded " + created.toString());
+			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);
 		}
 		return createdSprouts;

@@ -19,8 +19,6 @@
  */
 package com.almuradev.sprout.api.crop;
 
-import java.io.Serializable;
-
 public interface Stage {
 	public String getName();
 
