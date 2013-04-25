@@ -102,15 +102,23 @@ public class SproutListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockFromTo(BlockFromToEvent event) {
 		final Block to = event.getToBlock();
-		final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
-		if (sprout == null) {
-			return;
+		if (to.getType() == Material.LONG_GRASS && !(((SpoutBlock) to).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10-1) + 1 == 7) { //10% chance for a drop.
+			final Sprout sprout = plugin.getSproutRegistry().get(RANDOM.nextInt(plugin.getSproutRegistry().size()));
+			if (sprout == null) {
+				return;
+			}
+			disperseSeeds(sprout, to);
+		} else {
+			final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
+			if (sprout == null) {
+				return;
+			}
+			plugin.getStorage().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
+			event.setCancelled(true);
+			to.setType(Material.AIR);
+			((SpoutBlock) to).setCustomBlock(null);
+			disperseDrops(sprout, to);
 		}
-		plugin.getStorage().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
-		event.setCancelled(true);
-		to.setType(Material.AIR);
-		((SpoutBlock) to).setCustomBlock(null);
-		disperseDrops(sprout, to);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -234,6 +242,10 @@ public class SproutListener implements Listener {
 				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
 			}
 		}
+	}
+
+	private void disperseSeeds(final Sprout sprout, final Block block) {
+		disperseSeeds(null, sprout, block);
 	}
 
 	private void disperseSeeds(final Player cause, final Sprout sprout, final Block block) {
