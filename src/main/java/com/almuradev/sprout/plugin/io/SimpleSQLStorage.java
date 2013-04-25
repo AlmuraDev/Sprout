@@ -50,21 +50,21 @@ public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
 	private final Cloner cloner = new Cloner();
 	private Configuration configuration;
-	private Database database;
+	private Database db;
 
 	public SimpleSQLStorage(SproutPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	public void onEnable(SQLMode mode, File loc) {
-		onEnable(mode, loc, null, null, null, null, 1337);
+		onEnable(mode, loc, null, null, 25566, null, null);
 	}
 
-	public void onEnable(SQLMode mode, String dbName, String hostName, String username, String password, int port) {
-		onEnable(mode, null, dbName, hostName, username, password, port);
+	public void onEnable(SQLMode mode, String host, String database, int port, String username, String password) {
+		onEnable(mode, null, host, database, port, username, password);
 	}
 
-	public void onEnable(SQLMode mode, File loc, String dbName, String hostName, String username, String password, int port) {
+	public void onEnable(SQLMode mode, File loc, String host, String database, int port, String username, String password) {
 		try {
 			configuration = mode.getAssociation().newInstance();
 		} catch (Exception ignore) {
@@ -78,22 +78,22 @@ public class SimpleSQLStorage implements SQLStorage {
 			((SQLiteConfiguration) configuration).setPath(new File(loc, "sprouts_sqlite_db").getAbsolutePath());
 		} else {
 			((MySQLConfiguration) configuration)
-					.setDatabase(dbName)
-					.setHost(hostName)
+					.setHost(host)
+					.setDatabase(database)
+					.setPort(port)
 					.setUser(username)
-					.setPassword(password)
-					.setPort(port);
+					.setPassword(password);
 		}
-		database = DatabaseFactory.createNewDatabase(configuration);
+		db = DatabaseFactory.createNewDatabase(configuration);
 
 		try {
-			database.registerTable(Sprouts.class);
+			db.registerTable(Sprouts.class);
 		} catch (TableRegistrationException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			database.connect();
+			db.connect();
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
@@ -109,7 +109,7 @@ public class SimpleSQLStorage implements SQLStorage {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
 
-		database.save(new Sprouts(world, loc, sprout, age));
+		db.save(new Sprouts(world, loc, sprout, age));
 		return this;
 	}
 
@@ -123,9 +123,9 @@ public class SimpleSQLStorage implements SQLStorage {
 			throw new IllegalArgumentException("World is null!");
 		}
 
-		final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
+		final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
 		if (row != null) {
-			database.remove(row);
+			db.remove(row);
 		}
 		return this;
 	}
@@ -133,7 +133,7 @@ public class SimpleSQLStorage implements SQLStorage {
 	@Override
 	public Map<String, TInt21TripleObjectHashMap> getAll() {
 		final HashMap<String, TInt21TripleObjectHashMap> registry = new HashMap<>();
-		for (Sprouts row : database.select(Sprouts.class).execute().find()) {
+		for (Sprouts row : db.select(Sprouts.class).execute().find()) {
 			TInt21TripleObjectHashMap worldRegistry = registry.get(row.getWorld());
 			if (worldRegistry == null) {
 				worldRegistry = new TInt21TripleObjectHashMap();
@@ -157,13 +157,13 @@ public class SimpleSQLStorage implements SQLStorage {
 				@Override
 				public boolean execute(long l, Object o) {
 					final Sprout sprout = (Sprout) o;
-					final Sprouts row = database.select(Sprouts.class).where().equal("world", world).and().equal("location", l).execute().findOne();
+					final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", l).execute().findOne();
 					if (row == null) {
 						add(world, l, sprout.getName(), sprout.getAge());
 					} else {
 						row.setSprout(sprout.getName());
 						row.setAge(sprout.getAge());
-						database.save(row);
+						db.save(row);
 					}
 					return true;
 				}

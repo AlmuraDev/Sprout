@@ -25,9 +25,9 @@ import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
 
 public enum SQLMode {
-	H2("H2", H2Configuration.class),
-	SQLITE("SQLite", SQLiteConfiguration.class),
-	MYSQL("MySQL", MySQLConfiguration.class);
+	H2("h2", H2Configuration.class),
+	SQLITE("sqlite", SQLiteConfiguration.class),
+	MYSQL("mysql", MySQLConfiguration.class);
 	private final String name;
 	private final Class<? extends Configuration> configuration;
 

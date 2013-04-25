@@ -118,13 +118,13 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final String initialBlockSource = replacePeriodWithBackslash(initialRawBlockSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
 			if (Material.getMaterial(initialBlockSource) == null && MaterialData.getCustomItem(initialBlockSource) == null) {
-				plugin.getLogger().warning("The source: " + initialBlockSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+				plugin.getLogger().warning("The source: " + initialBlockSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
 			}
 			final String initialRawItemSource = nameSection.getString("item-source", "");
 			final String initialItemSource = replacePeriodWithBackslash(initialRawItemSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
 			if (Material.getMaterial(initialItemSource) == null && MaterialData.getCustomItem(initialItemSource) == null) {
-				plugin.getLogger().warning("The source: " + initialItemSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+				plugin.getLogger().warning("The source: " + initialItemSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
 			}
 			//Drops
 			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
@@ -134,7 +134,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final String rawDropSource = dropsIterator.next();
 				final String dropSource = replacePeriodWithBackslash(rawDropSource);
 				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
-					plugin.getLogger().warning("The source: " + dropSource + " is not a Minecraft material or a SpoutPlugin Custom Item");
+					plugin.getLogger().warning("The source: " + dropSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
 				}
 				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
 				final int amount = dropSection.getInt("amount", 0);
@@ -150,7 +150,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final String rawStageSource = indexSection.getString("source");
 				final String stageSource = replacePeriodWithBackslash(rawStageSource);
 				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
-					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block");
+					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
 				}
 				final int growthTicks = indexSection.getInt("growth-required", 350);
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));

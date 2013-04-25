@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.almuradev.sprout.api.io.SQLMode;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -52,5 +54,38 @@ public class SproutConfiguration {
 
 	public Long getGrowthIntervalFor(String world) {
 		return growthIntervals.get(world);
+	}
+
+	/*
+	 * SQL Configuration Options
+	 */
+
+	public SQLMode getMode() {
+		final String raw = config.getString("sql.mode", "h2");
+		try {
+			return SQLMode.valueOf(raw);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getHost() {
+		return config.getString("sql.host", "localhost");
+	}
+
+	public String getDatabase() {
+		return config.getString("sql.database", "minecraft");
+	}
+
+	public int getPort() {
+		return config.getInt("sql.port", 25566);
+	}
+
+	public String getUsername() {
+		return config.getString("sql.username", "minecraft");
+	}
+
+	public String getPassword() {
+		return config.getString("sql.password", "minecraft");
 	}
 }

@@ -57,9 +57,22 @@ public class SproutPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		configuration.onEnable();
+		final SQLMode mode = configuration.getMode();
+		if (mode == null) {
+			getLogger().severe("SQL mode within config.yml is not a valid SQL mode (h2, sqlite, mysql). Disabling...");
+			getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
 		flatFileStorage.onEnable(getDataFolder());
 		flatFileStorage.load();
-		sqlStorage.onEnable(SQLMode.H2, getDataFolder());
+		switch (mode) {
+			case H2:
+			case SQLITE:
+				sqlStorage.onEnable(mode, getDataFolder());
+				break;
+			case MYSQL:
+				sqlStorage.onEnable(mode, configuration.getAddress(), configuration.getDatabase(), configuration.getPort(), configuration.getUsername(), configuration.getPassword());
+		}
 		worldRegistry.putAll(sqlStorage.getAll());
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
 		GrowthTask.schedule(this, Bukkit.getWorlds().toArray(new World[Bukkit.getWorlds().size()]));
