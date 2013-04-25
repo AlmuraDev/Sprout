@@ -37,6 +37,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -80,9 +81,11 @@ public class SproutListener implements Listener {
 		if (sprout == null) {
 			return;
 		}
-		plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+		event.setCancelled(true);
+		block.setType(Material.AIR);
 		((SpoutBlock) block).setCustomBlock(null);
-		disperseDrops(sprout, block);
+		plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+		disperseDrops(event.getPlayer(), sprout, block);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -243,6 +246,13 @@ public class SproutListener implements Listener {
 	}
 
 	private void disperseDrops(final Sprout sprout, final Block block) {
+		disperseDrops(null, sprout, block);
+	}
+
+	private void disperseDrops(final Player cause, final Sprout sprout, final Block block) {
+		if (cause != null && cause.getGameMode() == GameMode.CREATIVE) {
+			return;
+		}
 		final Collection<Drop> drops = sprout.getDrops();
 		for (Drop drop : drops) {
 			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
