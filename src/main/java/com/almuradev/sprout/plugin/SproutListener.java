@@ -77,6 +77,7 @@ public class SproutListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
+		Player sPlayer = ((Player) event).getPlayer();
 		//Handle random seed drops. To preserve a possible LongGrass base block, make sure it isn't a custom block
 		//TODO Configurable.
 		if (event.getBlock().getType() == Material.LONG_GRASS && !(((SpoutBlock) block).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10-1) + 1 == 7) { //10% chance for a drop.
@@ -84,7 +85,9 @@ public class SproutListener implements Listener {
 			if (sprout == null) {
 				return;
 			}
-			disperseSeeds(event.getPlayer(), sprout, block);
+			if (sPlayer.hasPermission("sprout.seed")) {
+				disperseSeeds(event.getPlayer(), sprout, block);
+			}
 		} else {
 			//Handle breaking of Sprouts
 			final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
@@ -92,22 +95,30 @@ public class SproutListener implements Listener {
 				return;
 			}
 			event.setCancelled(true);
-			block.setType(Material.AIR);
-			((SpoutBlock) block).setCustomBlock(null);
-			plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
-			disperseDrops(event.getPlayer(), sprout, block);
+			
+			// Check for Permission to harvest.
+			if (sPlayer.hasPermission("sprout.harvest")) {
+				block.setType(Material.AIR);
+				((SpoutBlock) block).setCustomBlock(null);
+				plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+				disperseDrops(event.getPlayer(), sprout, block);
+			}
 		}
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockFromTo(BlockFromToEvent event) {
 		final Block to = event.getToBlock();
+		Player sPlayer = ((Player) event).getPlayer();
 		if (to.getType() == Material.LONG_GRASS && !(((SpoutBlock) to).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10-1) + 1 == 7) { //10% chance for a drop.
 			final Sprout sprout = plugin.getSproutRegistry().get(RANDOM.nextInt(plugin.getSproutRegistry().size()));
 			if (sprout == null) {
 				return;
 			}
-			disperseSeeds(sprout, to);
+			// Check for Permission to drop seeds on Grass_Long break.
+			if (sPlayer.hasPermission("sprout.seed")) {
+				disperseSeeds(sprout, to);
+			}
 		} else {
 			final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
 			if (sprout == null) {
@@ -115,15 +126,20 @@ public class SproutListener implements Listener {
 			}
 			plugin.getStorage().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
 			event.setCancelled(true);
-			to.setType(Material.AIR);
-			((SpoutBlock) to).setCustomBlock(null);
-			disperseDrops(sprout, to);
+			
+			// Check for Permission to harvest.
+			if (sPlayer.hasPermission("sprout.harvest")) {
+				to.setType(Material.AIR);
+				((SpoutBlock) to).setCustomBlock(null);
+				disperseDrops(sprout, to);
+			}
 		}
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysics(BlockPhysicsEvent event) {
 		final Block physics = event.getBlock();
+		Player sPlayer = ((Player) event).getPlayer();
 		if (physics.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
 			return;
 		}
@@ -133,13 +149,16 @@ public class SproutListener implements Listener {
 		}
 		plugin.getStorage().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
 		event.setCancelled(true);
-		physics.setType(Material.AIR);
-		((SpoutBlock) physics).setCustomBlock(null);
-		disperseDrops(sprout, physics);
+		if (sPlayer.hasPermission("sprout.harvest")) {
+			physics.setType(Material.AIR);
+			((SpoutBlock) physics).setCustomBlock(null);
+			disperseDrops(sprout, physics);
+		}
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		Player sPlayer = ((Player) event).getPlayer();
 		//Only allow right clicks
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			return;
@@ -182,6 +201,12 @@ public class SproutListener implements Listener {
 
 		//Make sure where we are setting the block won't be already obstructed.
 		if (where.getType() != Material.AIR) {
+			event.setCancelled(true);
+			return;
+		}
+		
+		// Make sure user has permissions to plant sprouts.
+		if (!sPlayer.hasPermission("sprout.plant")) {
 			event.setCancelled(true);
 			return;
 		}
