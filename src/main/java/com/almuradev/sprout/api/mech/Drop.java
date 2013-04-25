@@ -21,7 +21,7 @@ package com.almuradev.sprout.api.mech;
 
 import java.io.Serializable;
 
-public interface Drop extends Serializable {
+public interface Drop {
 	public String getName();
 
 	public int getAmount();

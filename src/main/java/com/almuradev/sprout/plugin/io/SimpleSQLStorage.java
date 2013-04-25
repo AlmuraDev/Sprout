@@ -46,8 +46,6 @@ import com.rits.cloning.Cloner;
 
 import gnu.trove.procedure.TLongObjectProcedure;
 
-import org.apache.commons.lang.SerializationUtils;
-
 public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
 	private final Cloner cloner = new Cloner();

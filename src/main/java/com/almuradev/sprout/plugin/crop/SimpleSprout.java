@@ -84,12 +84,23 @@ public class SimpleSprout implements Sprout {
 		Stage prior = null;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			final Stage value = entry.getValue();
-			if (value.getGrowthInterval() >= age) {
+			if (value.getGrowthRequired() >= age) {
 				break;
 			}
 			prior = value;
 		}
 		return prior;
+	}
+
+	@Override
+	public boolean isFullyGrown() {
+		//Figure out last stage
+		Stage last = null;
+		//Our map is a linked map so order is preserved on insertion. We can safely assume the last iteration is indeed the last stage.
+		for (Map.Entry<Integer, Stage> stage : stages.entrySet()) {
+			last = stage.getValue();
+		}
+		return last != null && last.getGrowthRequired() <= age;
 	}
 
 	@Override

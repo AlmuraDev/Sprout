@@ -50,7 +50,6 @@ public class SproutPlugin extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		//TODO I bet this is insane...
 		GrowthTask.stop(this);
 		sqlStorage.dropAll();
 	}

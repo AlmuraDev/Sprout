@@ -8,4 +8,4 @@
 #          Three hundred is typically a good compromise but feel free to experiment and see
 #          what works for you.
 world:
-    growth-interval: 300
+    growth-interval: 200

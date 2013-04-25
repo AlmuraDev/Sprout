@@ -31,6 +31,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -144,7 +145,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			//Stages
 			final ConfigurationSection stagesSection = nameSection.getConfigurationSection("stages");
 			final Iterator<String> stagesIterator = stagesSection.getKeys(false).iterator();
-			final Map<Integer, Stage> stages = new HashMap<>();
+			final Map<Integer, Stage> stages = new LinkedHashMap<>();
 			while (stagesIterator.hasNext()) {
 				final String index = stagesIterator.next();
 				final ConfigurationSection indexSection = stagesSection.getConfigurationSection(index);

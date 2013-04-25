@@ -28,16 +28,16 @@ public enum SQLMode {
 	H2("H2", H2Configuration.class),
 	SQLITE("SQLite", SQLiteConfiguration.class),
 	MYSQL("MySQL", MySQLConfiguration.class);
-	private final String identifier;
+	private final String name;
 	private final Class<? extends Configuration> configuration;
 
-	private SQLMode(String identifier, Class<? extends Configuration> configuration) {
-		this.identifier = identifier;
+	private SQLMode(String name, Class<? extends Configuration> configuration) {
+		this.name = name;
 		this.configuration = configuration;
 	}
 
-	public String getIdentifier() {
-		return identifier;
+	public String getName() {
+		return name;
 	}
 
 	public Class<? extends Configuration> getAssociation() {

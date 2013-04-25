@@ -21,8 +21,8 @@ package com.almuradev.sprout.api.crop;
 
 import java.io.Serializable;
 
-public interface Stage extends Serializable {
+public interface Stage {
 	public String getName();
 
-	public int getGrowthInterval();
+	public int getGrowthRequired();
 }

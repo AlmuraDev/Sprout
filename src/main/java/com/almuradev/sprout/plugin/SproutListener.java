@@ -23,11 +23,9 @@ import java.util.Collection;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.mech.Drop;
-import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.rits.cloning.Cloner;
 
-import org.apache.commons.lang.SerializationUtils;
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
@@ -251,6 +249,9 @@ public class SproutListener implements Listener {
 
 	private void disperseDrops(final Player cause, final Sprout sprout, final Block block) {
 		if (cause != null && cause.getGameMode() == GameMode.CREATIVE) {
+			return;
+		}
+		if (!sprout.isFullyGrown()) {
 			return;
 		}
 		final Collection<Drop> drops = sprout.getDrops();

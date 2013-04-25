@@ -25,7 +25,7 @@ import java.util.Map;
 
 import com.almuradev.sprout.api.mech.Drop;
 
-public interface Sprout extends Serializable {
+public interface Sprout {
 	public String getName();
 
 	public String getItemSource();
@@ -37,6 +37,8 @@ public interface Sprout extends Serializable {
 	public Stage getStage(String name);
 
 	public Stage getCurrentStage();
+
+	public boolean isFullyGrown();
 
 	public Map<Integer, Stage> getStages();
 

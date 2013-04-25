@@ -21,6 +21,7 @@ package com.almuradev.sprout.plugin.task;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
@@ -43,6 +44,7 @@ import org.bukkit.plugin.Plugin;
 
 public class GrowthTask implements Runnable {
 	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
+	private static final Random RANDOM = new Random();
 	private final SproutPlugin plugin;
 	private final WorldRegistry worldRegistry;
 	private final String world;
@@ -68,11 +70,17 @@ public class GrowthTask implements Runnable {
 		final long localTime = System.currentTimeMillis() / 1000;
 		final long delta = localTime - pastTime;
 		pastTime = localTime;
-		//plugin.getLogger().info("Current time: " + localTime);
-		//plugin.getLogger().info("Time since last tick: " + delta);
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
 			@Override
 			public boolean execute(long l, Object o) {
+				final Sprout sprout = (Sprout) o;
+				if (sprout.isFullyGrown()) {
+					return true;
+				}
+				//You have a 1/10 chance to perform a growth update.
+				if (RANDOM.nextInt(10-1) + 1 != 7) {
+					return true;
+				}
 				final int x = Int21TripleHashed.key1(l);
 				final int y = Int21TripleHashed.key2(l);
 				final int z = Int21TripleHashed.key3(l);
@@ -81,12 +89,8 @@ public class GrowthTask implements Runnable {
 				if (!block.getChunk().isLoaded()) {
 					return true;
 				}
-				final Sprout sprout = (Sprout) o;
-				//plugin.getLogger().info("Current Age: " + sprout.getAge());
 				((SimpleSprout) sprout).grow((int) delta);
 				final Stage current = sprout.getCurrentStage();
-				//plugin.getLogger().info("Current Stage: " + current);
-				//plugin.getLogger().info("Current Age (after growth): " + sprout.getAge());
 				if (current == null) {
 					return true;
 				}
