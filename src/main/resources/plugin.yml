@@ -10,7 +10,7 @@ softdepend: [MoreMaterials]
 load: POSTWORLD
 permissions:
     sprout.*:
-        description: Gives access to all infoguide abilities
+        description: Gives access to all sprout abilities
         children:
             sprout.seed: true
             sprout.plant: true
