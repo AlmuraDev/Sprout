@@ -8,19 +8,3 @@ main: ${mainClass}
 depend: [Spout]
 softdepend: [MoreMaterials]
 load: POSTWORLD
-permissions:
-    sprout.*:
-        description: Gives access to all sprout abilities
-        children:
-            sprout.seed: true
-            sprout.plant: true
-            sprout.harvest: true            
-    sprout.seed:
-        description: Allows users to be to receive seed drops when breaking Long_Grass
-        default: false
-    sprout.plant:
-        description: Allows users to be to plant crops.
-        default: false        
-    sprout.harvest:
-        description: Allows users to be to harvest crops.
-        default: false
