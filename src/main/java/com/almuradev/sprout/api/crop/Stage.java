@@ -19,10 +19,14 @@
  */
 package com.almuradev.sprout.api.crop;
 
+import com.almuradev.sprout.api.mech.Fertilizer;
+
 public interface Stage {
 	public String getName();
 
 	public int getGrowthRequired();
 
 	public int getGrowthChance();
+
+	public Fertilizer getFertilizer();
 }

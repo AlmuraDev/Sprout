@@ -23,7 +23,11 @@ import java.util.Collection;
 import java.util.Random;
 
 import com.almuradev.sprout.api.crop.Sprout;
+import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Drop;
+import com.almuradev.sprout.api.mech.Fertilizer;
+import com.almuradev.sprout.plugin.crop.SimpleSprout;
+import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.rits.cloning.Cloner;
 
@@ -82,7 +86,7 @@ public class SproutListener implements Listener {
 			if (sprout == null) {
 				return;
 			}
-			if (!sprout.shouldDropItemSourceOnGrassBreak()) {
+			if (!sprout.getVariables().dropItemSourceOnGrassBreak()) {
 				return;
 			}
 			disperseSeeds(event.getPlayer(), sprout, block);
@@ -109,7 +113,7 @@ public class SproutListener implements Listener {
 			if (sprout == null) {
 				return;
 			}
-			if (!sprout.shouldDropItemSourceOnGrassBreak()) {
+			if (!sprout.getVariables().dropItemSourceOnGrassBreak()) {
 				return;
 			}
 			disperseSeeds(sprout, to);
@@ -150,7 +154,7 @@ public class SproutListener implements Listener {
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			return;
 		}
-
+		final Player interacter = event.getPlayer();
 		final ItemStack held = event.getItem();
 		if (held == null) {
 			return;
@@ -166,18 +170,92 @@ public class SproutListener implements Listener {
 			name = held.getType().name();
 		}
 
-		//Only manage Sprouts
+		//Fertilizer logic
+		final Sprout dispersed = plugin.getWorldRegistry().get(interacted.getWorld().getName(), interacted.getX(), interacted.getY(), interacted.getZ());
+		if (dispersed != null && !dispersed.isFullyGrown() && dispersed.getVariables().allowFertilization()) {
+			final Stage current = dispersed.getCurrentStage();
+			final Fertilizer fertilizer;
+			if (current == null) {
+				fertilizer = dispersed.getFertilizerSource();
+			} else {
+				fertilizer = current.getFertilizer();
+			}
+
+			boolean toContinue = false;
+
+			//Bonemeal
+			if ((fertilizer.getName().equals("bonemeal") && name.equals("INK_SACK"))) {
+				toContinue = true;
+			//Custom Block
+			} else if (fertilizer.getName().endsWith(name)) {
+				toContinue = true;
+			//Material
+			} else if (fertilizer.getName().equals(name.toLowerCase())) {
+				toContinue = true;
+			}
+			if (!toContinue) {
+				return;
+			}
+			event.setCancelled(true);
+			decrementInventory(interacter, held);
+			//Stage 0
+			if (current == null) {
+				final Stage initial = dispersed.getStage(1);
+				//Grow to stage 1
+				((SimpleSprout) dispersed).grow(initial);
+
+				//Hotswap to next stage
+				final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(initial.getName());
+				if (customMaterial == null) {
+					final Material material = Material.getMaterial(initial.getName().toUpperCase());
+					if (material == null) {
+						return;
+					}
+					((SpoutBlock) interacted).setCustomBlock(null);
+					interacted.setType(material);
+					return;
+				} else {
+					((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+					return;
+				}
+			//Stage 1+
+			} else {
+				((SimpleSprout) dispersed).incrementFertilizerCount(current);
+				if (((SimpleSprout) dispersed).getFertilizerCount(current)  >= fertilizer.getAmount()) {
+					((SimpleSprout) dispersed).grow(current);
+					//Hotswap to next stage
+					final Stage next = ((SimpleSprout) dispersed).getNextStage();
+					final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(next.getName());
+					if (customMaterial == null) {
+						final Material material = Material.getMaterial(next.getName().toUpperCase());
+						if (material == null) {
+							event.setCancelled(true);
+							return;
+						}
+						((SpoutBlock) interacted).setCustomBlock(null);
+						interacted.setType(material);
+						return;
+					} else {
+						((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+						return;
+					}
+				}
+			}
+		}
+
+		//Non-fertilizer logic
 		final Sprout sprout = plugin.getSproutRegistry().find(name);
 		if (sprout == null) {
 			return;
 		}
 
-		//Place on top of Block. TODO Keep this?
+		//Block face logic. TODO Customizable?
 		if (event.getBlockFace() != BlockFace.UP) {
 			event.setCancelled(true);
 			return;
 		}
 
+		//Soil logic
 		final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
 		if (customMaterial == null) {
 			final Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
@@ -207,16 +285,8 @@ public class SproutListener implements Listener {
 		//Set material
 		if (stack.isCustomItem()) {
 			final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
-			//plugin.getLogger().info("Placing source block: " + sprout.getBlockSource());
 			((SpoutBlock) where).setCustomBlock(block);
-
-			//Remove item from inventory.
-			if (!(event.getPlayer().getGameMode() == GameMode.CREATIVE)) {
-				held.setAmount(held.getAmount() - 1);
-				if (held.getAmount() == 0) {
-					event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-				}
-			}
+			decrementInventory(interacter, held);
 		}
 	}
 
@@ -278,6 +348,16 @@ public class SproutListener implements Listener {
 		} else {
 			final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial);
 			block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
+		}
+	}
+
+	private void decrementInventory(final Player source, final ItemStack held) {
+		//Remove item from inventory.
+		if (source.getGameMode() != GameMode.CREATIVE) {
+			held.setAmount(held.getAmount() - 1);
+			if (held.getAmount() == 0) {
+				source.setItemInHand(new ItemStack(Material.AIR));
+			}
 		}
 	}
 }

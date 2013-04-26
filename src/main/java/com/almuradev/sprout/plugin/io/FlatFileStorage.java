@@ -42,6 +42,8 @@ import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.mech.SproutDrop;
+import com.almuradev.sprout.plugin.mech.SproutFertilizer;
+import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
 
 import org.getspout.spoutapi.material.MaterialData;
 
@@ -118,20 +120,28 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final String initialBlockSource = replacePeriodWithBackslash(initialRawBlockSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
 			if (Material.getMaterial(initialBlockSource.toUpperCase()) == null && MaterialData.getCustomItem(initialBlockSource) == null) {
-				plugin.getLogger().warning("The block source: " + initialBlockSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
+				plugin.getLogger().warning("The block source [" + initialBlockSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 			}
 			final String initialRawItemSource = nameSection.getString("item-source", "");
 			final String initialItemSource = replacePeriodWithBackslash(initialRawItemSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
 			if (Material.getMaterial(initialItemSource.toUpperCase()) == null && MaterialData.getCustomItem(initialItemSource) == null) {
-				plugin.getLogger().warning("The item source: " + initialItemSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
+				plugin.getLogger().warning("The item source [" + initialItemSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
 			}
-			final String intiialRawPlacementSource = nameSection.getString("placement-source", "soil");
-			final String initialPlacementSource = replacePeriodWithBackslash(intiialRawPlacementSource);
+			final String initialRawPlacementSource = nameSection.getString("placement-source", "soil");
+			final String initialPlacementSource = replacePeriodWithBackslash(initialRawPlacementSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
 			if (Material.getMaterial(initialPlacementSource.toUpperCase()) == null && MaterialData.getCustomItem(initialPlacementSource) == null) {
-				plugin.getLogger().warning("The placement source: " + initialPlacementSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
+				plugin.getLogger().warning("The placement source [" + initialPlacementSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 			}
+			//Fertilizer
+			final String fertilizerRawSource = nameSection.getString("fertilizer-source", "bonemeal");
+			final String fertilizerSource = replacePeriodWithBackslash(fertilizerRawSource);
+			//Find out if the server has the custom/item yet. Print a warning if not.
+			if (!fertilizerSource.equals("bonemeal") && Material.getMaterial(fertilizerSource.toUpperCase()) == null && MaterialData.getCustomItem(fertilizerSource) == null) {
+				plugin.getLogger().warning("The fertilizer source [" + fertilizerSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+			}
+			final int fertilizerAmount = nameSection.getInt("fertilizer-amount", 1);
 			//Drops
 			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
 			final List<Drop> drops = new LinkedList<>();
@@ -140,7 +150,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final String rawDropSource = dropsIterator.next();
 				final String dropSource = replacePeriodWithBackslash(rawDropSource);
 				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
-					plugin.getLogger().warning("The source: " + dropSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
+					plugin.getLogger().warning("The drop source [" + dropSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
 				}
 				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
 				final int amount = dropSection.getInt("amount", 0);
@@ -156,20 +166,29 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final String rawStageSource = indexSection.getString("source");
 				final String stageSource = replacePeriodWithBackslash(rawStageSource);
 				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
-					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
+					plugin.getLogger().warning("The stage [" + index + "] source [" + stageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 				}
+				//Fertilizer
+				final String fertilizerRawStageSource = indexSection.getString("fertilizer-source", "bonemeal");
+				final String fertilizerStageSource = replacePeriodWithBackslash(fertilizerRawStageSource);
+				//Find out if the server has the custom/item yet. Print a warning if not.
+				if (!fertilizerSource.equals("bonemeal") && Material.getMaterial(fertilizerStageSource.toUpperCase()) == null && MaterialData.getCustomItem(fertilizerStageSource) == null) {
+					plugin.getLogger().warning("The stage fertilizer [" + index + "] source [" + fertilizerStageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+				}
+				final int fertilizerStageAmount = indexSection.getInt("fertilizer-amount", 1);
 				final int growthTicks = indexSection.getInt("growth-required", 350);
 				final int growthChance = indexSection.getInt("growth-chance", 10);
-				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance));
+				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount)));
 			}
 			//Variables
 			final ConfigurationSection variablesSection = nameSection.getConfigurationSection("variables");
 			final SimpleSprout created;
 			if (variablesSection != null) {
+				final boolean allowFertilization = variablesSection.getBoolean("allow-fertilization", true);
 				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, stages, drops, dropItemSourceOnGrassBreak);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, new SproutFertilizer(fertilizerSource, fertilizerAmount), stages, drops, new SproutVariableHolder(allowFertilization, dropItemSourceOnGrassBreak));
 			} else {
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, stages, drops);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, new SproutFertilizer(fertilizerSource, fertilizerAmount), stages, drops);
 			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);

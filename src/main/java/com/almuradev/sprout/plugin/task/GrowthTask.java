@@ -73,7 +73,7 @@ public class GrowthTask implements Runnable {
 			@Override
 			public boolean execute(long l, Object o) {
 				final Sprout sprout = (Sprout) o;
-				final Stage current = sprout.getCurrentStage();
+				Stage current = sprout.getCurrentStage();
 				if (current == null) {
 					((SimpleSprout) sprout).grow((int) delta);
 					return true;
@@ -82,6 +82,7 @@ public class GrowthTask implements Runnable {
 					return true;
 				}
 				((SimpleSprout) sprout).grow((int) delta);
+				current = sprout.getCurrentStage();
 				final int x = Int21TripleHashed.key1(l);
 				final int y = Int21TripleHashed.key2(l);
 				final int z = Int21TripleHashed.key3(l);

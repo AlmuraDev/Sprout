@@ -17,39 +17,10 @@
  * You should have received a copy of the GNU General Public License. If not,
  * see <http://www.gnu.org/licenses/> for the GNU General Public License.
  */
-package com.almuradev.sprout.api.crop;
+package com.almuradev.sprout.api.mech;
 
-import java.util.Collection;
-import java.util.Map;
-
-import com.almuradev.sprout.api.mech.Drop;
-import com.almuradev.sprout.api.mech.Fertilizer;
-import com.almuradev.sprout.api.mech.VariableHolder;
-
-public interface Sprout {
+public interface Fertilizer {
 	public String getName();
 
-	public String getItemSource();
-
-	public String getBlockSource();
-
-	public String getPlacementSource();
-
-	public Fertilizer getFertilizerSource();
-
-	public Stage getStage(int level);
-
-	public Stage getStage(String name);
-
-	public Stage getCurrentStage();
-
-	public boolean isFullyGrown();
-
-	public Map<Integer, Stage> getStages();
-
-	public Collection<Drop> getDrops();
-
-	public int getAge();
-
-	public VariableHolder getVariables();
+	public int getAmount();
 }

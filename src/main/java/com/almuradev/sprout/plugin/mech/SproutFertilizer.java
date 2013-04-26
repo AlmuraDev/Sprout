@@ -17,39 +17,41 @@
  * You should have received a copy of the GNU General Public License. If not,
  * see <http://www.gnu.org/licenses/> for the GNU General Public License.
  */
-package com.almuradev.sprout.api.crop;
+package com.almuradev.sprout.plugin.mech;
 
-import java.util.Collection;
-import java.util.Map;
-
-import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
-import com.almuradev.sprout.api.mech.VariableHolder;
 
-public interface Sprout {
-	public String getName();
+public class SproutFertilizer implements Fertilizer {
+	private final String name;
+	private final int amount;
 
-	public String getItemSource();
+	public SproutFertilizer(final String name, final int amount) {
+		this.name = name;
+		this.amount = amount;
+	}
 
-	public String getBlockSource();
+	@Override
+	public String getName() {
+		return name;
+	}
 
-	public String getPlacementSource();
+	@Override
+	public int getAmount() {
+		return amount;
+	}
 
-	public Fertilizer getFertilizerSource();
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof SproutFertilizer)) {
+			return false;
+		}
 
-	public Stage getStage(int level);
+		final SproutFertilizer other = (SproutFertilizer) obj;
+		return other.getName().equals(name);
+	}
 
-	public Stage getStage(String name);
-
-	public Stage getCurrentStage();
-
-	public boolean isFullyGrown();
-
-	public Map<Integer, Stage> getStages();
-
-	public Collection<Drop> getDrops();
-
-	public int getAge();
-
-	public VariableHolder getVariables();
+	@Override
+	public String toString() {
+		return "Fertilizer{name= " + name + ", amount= " + amount + "}";
+	}
 }
