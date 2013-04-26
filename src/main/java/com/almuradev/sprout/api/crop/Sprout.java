@@ -44,4 +44,6 @@ public interface Sprout {
 	public Collection<Drop> getDrops();
 
 	public int getAge();
+
+	public boolean shouldDropItemSourceOnGrassBreak();
 }

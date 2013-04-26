@@ -34,8 +34,14 @@ public class SimpleSprout implements Sprout {
 	private final String blockSource;
 	private final String itemSource;
 	private int age = 0;
+	//Variables
+	private boolean shouldDropItemSourceOnGrassBreak;
 
 	public SimpleSprout(String name, String blockSource, String itemSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
+		this(name, blockSource, itemSource, stages, drops, true);
+	}
+
+	public SimpleSprout(String name, String blockSource, String itemSource, Map<Integer, Stage> stages, Collection<Drop> drops, boolean shouldDropItemSourceOnGrassBreak) {
 		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
@@ -45,6 +51,9 @@ public class SimpleSprout implements Sprout {
 		this.itemSource = itemSource;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
+
+		//Variables
+		this.shouldDropItemSourceOnGrassBreak = shouldDropItemSourceOnGrassBreak;
 	}
 
 	@Override
@@ -119,6 +128,11 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
+	public boolean shouldDropItemSourceOnGrassBreak() {
+		return shouldDropItemSourceOnGrassBreak;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof SimpleSprout)) {
 			return false;
@@ -130,7 +144,7 @@ public class SimpleSprout implements Sprout {
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}, variables= {shouldDropItemSourceOnGrassBreak= " + shouldDropItemSourceOnGrassBreak + "}";
 	}
 
 	public void grow(int amount) {

@@ -82,6 +82,9 @@ public class SproutListener implements Listener {
 			if (sprout == null) {
 				return;
 			}
+			if (!sprout.shouldDropItemSourceOnGrassBreak()) {
+				return;
+			}
 			disperseSeeds(event.getPlayer(), sprout, block);
 		} else {
 			//Handle breaking of Sprouts
@@ -104,6 +107,9 @@ public class SproutListener implements Listener {
 		if (to.getType() == Material.LONG_GRASS && !(((SpoutBlock) to).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10 - 1) + 1 == 7) { //10% chance for a drop.
 			final Sprout sprout = plugin.getSproutRegistry().get(RANDOM.nextInt(plugin.getSproutRegistry().size()));
 			if (sprout == null) {
+				return;
+			}
+			if (!sprout.shouldDropItemSourceOnGrassBreak()) {
 				return;
 			}
 			disperseSeeds(sprout, to);

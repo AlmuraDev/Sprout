@@ -156,7 +156,15 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final int growthChance = indexSection.getInt("growth-chance", 10);
 				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance));
 			}
-			final SimpleSprout created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops);
+			//Variables
+			final ConfigurationSection variablesSection = nameSection.getConfigurationSection("variables");
+			final SimpleSprout created;
+			if (variablesSection != null) {
+				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops, dropItemSourceOnGrassBreak);
+			} else {
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops);
+			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);
 		}
