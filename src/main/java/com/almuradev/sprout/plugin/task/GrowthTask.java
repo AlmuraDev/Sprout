@@ -73,9 +73,6 @@ public class GrowthTask implements Runnable {
 			@Override
 			public boolean execute(long l, Object o) {
 				final Sprout sprout = (Sprout) o;
-				if (sprout.isFullyGrown()) {
-					return true;
-				}
 				final Stage current = sprout.getCurrentStage();
 				if (current == null) {
 					((SimpleSprout) sprout).grow((int) delta);
