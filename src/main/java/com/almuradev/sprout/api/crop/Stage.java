@@ -23,4 +23,6 @@ public interface Stage {
 	public String getName();
 
 	public int getGrowthRequired();
+
+	public int getGrowthChance();
 }

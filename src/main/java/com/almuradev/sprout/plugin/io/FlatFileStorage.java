@@ -153,7 +153,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 					plugin.getLogger().warning("The source: " + stageSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
 				}
 				final int growthTicks = indexSection.getInt("growth-required", 350);
-				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks));
+				final int growthChance = indexSection.getInt("growth-chance", 10);
+				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance));
 			}
 			final SimpleSprout created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops);
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");

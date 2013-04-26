@@ -76,21 +76,21 @@ public class GrowthTask implements Runnable {
 				if (sprout.isFullyGrown()) {
 					return true;
 				}
-				//You have a 1/10 chance to perform a growth update.
-				if (RANDOM.nextInt(10 - 1) + 1 != 7) {
+				final Stage current = sprout.getCurrentStage();
+				if (current == null) {
+					((SimpleSprout) sprout).grow((int) delta);
 					return true;
 				}
+				if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 != current.getGrowthChance()) {
+					return true;
+				}
+				((SimpleSprout) sprout).grow((int) delta);
 				final int x = Int21TripleHashed.key1(l);
 				final int y = Int21TripleHashed.key2(l);
 				final int z = Int21TripleHashed.key3(l);
 				final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 				//Only replace blocks in loaded chunks
 				if (!block.getChunk().isLoaded()) {
-					return true;
-				}
-				((SimpleSprout) sprout).grow((int) delta);
-				final Stage current = sprout.getCurrentStage();
-				if (current == null) {
 					return true;
 				}
 				final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());

@@ -24,10 +24,12 @@ import com.almuradev.sprout.api.crop.Stage;
 public class SimpleStage implements Stage {
 	private final String name;
 	private final int growthRequired;
+	private final int growthChance;
 
-	public SimpleStage(final String name, final int growthRequired) {
+	public SimpleStage(final String name, final int growthRequired, final int growthChance) {
 		this.name = name;
 		this.growthRequired = growthRequired;
+		this.growthChance = growthChance;
 	}
 
 	@Override
@@ -41,17 +43,22 @@ public class SimpleStage implements Stage {
 	}
 
 	@Override
+	public int getGrowthChance() {
+		return growthChance;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof SimpleStage)) {
 			return false;
 		}
 
 		final SimpleStage other = (SimpleStage) obj;
-		return other.getName().equals(name) && other.getGrowthRequired() == growthRequired;
+		return other.getName().equals(name) && other.getGrowthRequired() == growthRequired && other.getGrowthChance() == growthChance;
 	}
 
 	@Override
 	public String toString() {
-		return "Stage{name= " + name + ", growthRequired= " + growthRequired + "}";
+		return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + "}";
 	}
 }
