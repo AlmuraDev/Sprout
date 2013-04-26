@@ -59,7 +59,7 @@ public class SproutListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onBlockFade(BlockFadeEvent event) {
 		final Block fading = event.getBlock();
 		//Don't do a lookup if it isn't soil.
@@ -72,7 +72,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
 		//Handle random seed drops. To preserve a possible LongGrass base block, make sure it isn't a custom block
@@ -98,7 +98,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onBlockFromTo(BlockFromToEvent event) {
 		final Block to = event.getToBlock();
 		if (to.getType() == Material.LONG_GRASS && !(((SpoutBlock) to).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10 - 1) + 1 == 7) { //10% chance for a drop.
@@ -121,7 +121,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onBlockPhysics(BlockPhysicsEvent event) {
 		final Block physics = event.getBlock();
 		if (physics.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
@@ -138,7 +138,7 @@ public class SproutListener implements Listener {
 		disperseDrops(sprout, physics);
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		//Only allow right clicks
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
