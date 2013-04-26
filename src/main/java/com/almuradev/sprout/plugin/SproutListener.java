@@ -221,10 +221,13 @@ public class SproutListener implements Listener {
 			//Stage 1+
 			} else {
 				((SimpleSprout) dispersed).incrementFertilizerCount(current);
-				if (((SimpleSprout) dispersed).getFertilizerCount(current)  >= fertilizer.getAmount()) {
+				if (((SimpleSprout) dispersed).getFertilizerCount(current) >= fertilizer.getAmount()) {
 					((SimpleSprout) dispersed).grow(current);
 					//Hotswap to next stage
 					final Stage next = ((SimpleSprout) dispersed).getNextStage();
+					if (next == null) {
+						System.out.println(dispersed.getAge());
+					}
 					final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(next.getName());
 					if (customMaterial == null) {
 						final Material material = Material.getMaterial(next.getName().toUpperCase());

@@ -112,11 +112,13 @@ public class SimpleSprout implements Sprout {
 	public Stage getCurrentStage() {
 		Stage prior = null;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			final Stage value = entry.getValue();
-			if (value.getGrowthRequired() > age) {
+			if (entry.getKey().intValue() == 1 && entry.getValue().getGrowthRequired() > age) {
 				break;
 			}
-			prior = value;
+			prior = entry.getValue();
+			if (prior.getGrowthRequired() > age) {
+				break;
+			}
 		}
 		return prior;
 	}
@@ -129,7 +131,7 @@ public class SimpleSprout implements Sprout {
 		for (Map.Entry<Integer, Stage> stage : stages.entrySet()) {
 			last = stage.getValue();
 		}
-		return last != null && last.getGrowthRequired() < age;
+		return last != null && last.getGrowthRequired() <= age;
 	}
 
 	@Override
@@ -177,6 +179,7 @@ public class SimpleSprout implements Sprout {
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			if (entry.getValue().equals(current)) {
 				id = entry.getKey();
+				break;
 			}
 		}
 		if (id == null) {
@@ -184,7 +187,7 @@ public class SimpleSprout implements Sprout {
 		}
 		//Find the next id
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (entry.getKey() == (id + 1)) {
+			if (entry.getKey().intValue() == (id.intValue() + 1)) {
 				return entry.getValue();
 			}
 		}
