@@ -33,15 +33,16 @@ public class SimpleSprout implements Sprout {
 	private final Collection<Drop> drops;
 	private final String blockSource;
 	private final String itemSource;
+	private final String placementSource;
 	private int age = 0;
 	//Variables
 	private boolean shouldDropItemSourceOnGrassBreak;
 
-	public SimpleSprout(String name, String blockSource, String itemSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		this(name, blockSource, itemSource, stages, drops, true);
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
+		this(name, blockSource, itemSource, placementSource, stages, drops, true);
 	}
 
-	public SimpleSprout(String name, String blockSource, String itemSource, Map<Integer, Stage> stages, Collection<Drop> drops, boolean shouldDropItemSourceOnGrassBreak) {
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Map<Integer, Stage> stages, Collection<Drop> drops, boolean shouldDropItemSourceOnGrassBreak) {
 		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
@@ -49,6 +50,7 @@ public class SimpleSprout implements Sprout {
 		this.name = name;
 		this.blockSource = blockSource;
 		this.itemSource = itemSource;
+		this.placementSource = placementSource;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
 
@@ -64,6 +66,11 @@ public class SimpleSprout implements Sprout {
 	@Override
 	public String getBlockSource() {
 		return blockSource;
+	}
+
+	@Override
+	public String getPlacementSource() {
+		return placementSource;
 	}
 
 	@Override
@@ -139,12 +146,12 @@ public class SimpleSprout implements Sprout {
 		}
 
 		final SimpleSprout other = (SimpleSprout) obj;
-		return other.getName().equals(name) && other.getBlockSource().equals(blockSource) && other.getItemSource().equals(itemSource) && other.getDrops().equals(drops) && other.getStages().equals(stages);
+		return other.getName().equals(name) && other.getBlockSource().equals(blockSource) && other.getItemSource().equals(itemSource) && other.getPlacementSource().equals(placementSource) && other.getDrops().equals(drops) && other.getStages().equals(stages);
 	}
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}, variables= {shouldDropItemSourceOnGrassBreak= " + shouldDropItemSourceOnGrassBreak + "}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}, variables= {shouldDropItemSourceOnGrassBreak= " + shouldDropItemSourceOnGrassBreak + "}";
 	}
 
 	public void grow(int amount) {

@@ -31,6 +31,8 @@ public interface Sprout {
 
 	public String getBlockSource();
 
+	public String getPlacementSource();
+
 	public Stage getStage(int level);
 
 	public Stage getStage(String name);

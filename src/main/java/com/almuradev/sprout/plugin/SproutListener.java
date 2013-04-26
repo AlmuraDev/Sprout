@@ -178,10 +178,18 @@ public class SproutListener implements Listener {
 			return;
 		}
 
-		//Place on soil. TODO Expand this concept.
-		if (interacted.getType() != Material.SOIL) {
-			event.setCancelled(true);
-			return;
+		final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
+		if (customMaterial == null) {
+			final Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
+			if (material == null || !interacted.getType().equals(material)) {
+				event.setCancelled(true);
+				return;
+			}
+		} else {
+			if (((SpoutBlock) interacted).getBlockType() instanceof CustomBlock && !((SpoutBlock) interacted).getCustomBlock().getNotchianName().equals(customMaterial)) {
+				event.setCancelled(true);
+				return;
+			}
 		}
 
 		final Block where = interacted.getRelative(BlockFace.UP);
@@ -237,7 +245,7 @@ public class SproutListener implements Listener {
 		for (Drop drop : drops) {
 			final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
 			if (customMaterial == null) {
-				final Material material = Material.getMaterial(drop.getName());
+				final Material material = Material.getMaterial(drop.getName().toUpperCase());
 				if (material == null) {
 					continue;
 				}

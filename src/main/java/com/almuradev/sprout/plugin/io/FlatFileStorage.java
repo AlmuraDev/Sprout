@@ -117,14 +117,20 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final String initialRawBlockSource = nameSection.getString("block-source", "");
 			final String initialBlockSource = replacePeriodWithBackslash(initialRawBlockSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
-			if (Material.getMaterial(initialBlockSource) == null && MaterialData.getCustomItem(initialBlockSource) == null) {
-				plugin.getLogger().warning("The source: " + initialBlockSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
+			if (Material.getMaterial(initialBlockSource.toUpperCase()) == null && MaterialData.getCustomItem(initialBlockSource) == null) {
+				plugin.getLogger().warning("The block source: " + initialBlockSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
 			}
 			final String initialRawItemSource = nameSection.getString("item-source", "");
 			final String initialItemSource = replacePeriodWithBackslash(initialRawItemSource);
 			//Find out if the server has the custom/item yet. Print a warning if not.
-			if (Material.getMaterial(initialItemSource) == null && MaterialData.getCustomItem(initialItemSource) == null) {
-				plugin.getLogger().warning("The source: " + initialItemSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
+			if (Material.getMaterial(initialItemSource.toUpperCase()) == null && MaterialData.getCustomItem(initialItemSource) == null) {
+				plugin.getLogger().warning("The item source: " + initialItemSource + " is not a Minecraft material or a SpoutPlugin Custom Item.");
+			}
+			final String intiialRawPlacementSource = nameSection.getString("placement-source", "soil");
+			final String initialPlacementSource = replacePeriodWithBackslash(intiialRawPlacementSource);
+			//Find out if the server has the custom/item yet. Print a warning if not.
+			if (Material.getMaterial(initialPlacementSource.toUpperCase()) == null && MaterialData.getCustomItem(initialPlacementSource) == null) {
+				plugin.getLogger().warning("The placement source: " + initialPlacementSource + " is not a Minecraft material or a SpoutPlugin Custom Block.");
 			}
 			//Drops
 			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
@@ -161,9 +167,9 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final SimpleSprout created;
 			if (variablesSection != null) {
 				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops, dropItemSourceOnGrassBreak);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, stages, drops, dropItemSourceOnGrassBreak);
 			} else {
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, stages, drops);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, stages, drops);
 			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);
