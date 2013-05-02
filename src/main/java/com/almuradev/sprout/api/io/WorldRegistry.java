@@ -38,4 +38,6 @@ public interface WorldRegistry {
 	public Sprout remove(String world, int x, int y, int z);
 
 	public Map<String, TInt21TripleObjectHashMap> getAll();
+
+	public Integer getSize(String world);
 }

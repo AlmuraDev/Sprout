@@ -104,7 +104,8 @@ public class SimpleSQLStorage implements SQLStorage {
 		return add(world, Int21TripleHashed.key(x, y, z), sprout, age);
 	}
 
-	public SQLStorage add(String world, long loc, String sprout, int age) {
+	public SQLStorage add(String world, long loc
+			, String sprout, int age) {
 		if (world == null || world.isEmpty() || sprout == null) {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
@@ -153,6 +154,7 @@ public class SimpleSQLStorage implements SQLStorage {
 	public void dropAll() {
 		for (Map.Entry<String, TInt21TripleObjectHashMap> entry : plugin.getWorldRegistry().getAll().entrySet()) {
 			final String world = entry.getKey();
+			plugin.getLogger().info("Saving [" + entry.getValue().size() + "] sprout(s) for [" + world + "]. Please wait as this may take some time...");
 			entry.getValue().getInternalMap().forEachEntry(new TLongObjectProcedure() {
 				@Override
 				public boolean execute(long l, Object o) {

@@ -98,6 +98,12 @@ public class SimpleWorldRegistry implements WorldRegistry {
 		return Collections.unmodifiableMap(REGISTRIES);
 	}
 
+	@Override
+	public Integer getSize(String world) {
+		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+		return REGISTRY != null ? REGISTRY.size() : null;
+	}
+
 	public final void putAll(Map<String, TInt21TripleObjectHashMap> prebuilt) {
 		REGISTRIES.putAll(prebuilt);
 	}
