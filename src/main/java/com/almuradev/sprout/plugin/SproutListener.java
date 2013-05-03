@@ -27,7 +27,6 @@ import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
-import com.almuradev.sprout.plugin.crop.stage.SimpleStage;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.rits.cloning.Cloner;
 
@@ -186,10 +185,10 @@ public class SproutListener implements Listener {
 			//Bonemeal
 			if ((fertilizer.getName().equals("bonemeal") && name.equals("INK_SACK"))) {
 				toContinue = true;
-			//Custom Block
+				//Custom Block
 			} else if (fertilizer.getName().endsWith(name)) {
 				toContinue = true;
-			//Material
+				//Material
 			} else if (fertilizer.getName().equals(name.toLowerCase())) {
 				toContinue = true;
 			}
@@ -218,7 +217,7 @@ public class SproutListener implements Listener {
 					((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
 					return;
 				}
-			//Stage 1+
+				//Stage 1+
 			} else {
 				((SimpleSprout) dispersed).incrementFertilizerCount(current);
 				if (((SimpleSprout) dispersed).getFertilizerCount(current) >= fertilizer.getAmount()) {
@@ -280,7 +279,7 @@ public class SproutListener implements Listener {
 
 		final Sprout toInject = cloner.deepClone(sprout);
 		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject.getName(), 0);
+		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
 
 		//Set material
 		if (stack.isCustomItem()) {

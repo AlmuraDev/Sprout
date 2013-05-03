@@ -22,6 +22,8 @@ package com.almuradev.sprout.plugin.crop;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import com.almuradev.sprout.api.crop.Sprout;
@@ -30,8 +32,6 @@ import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.VariableHolder;
 import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
-
-import gnu.trove.TObjectIntHashMap;
 
 public class SimpleSprout implements Sprout {
 	private final String name;
@@ -45,6 +45,8 @@ public class SimpleSprout implements Sprout {
 	private final VariableHolder variable;
 	//Fertilization
 	private final Map<Stage, Integer> fertilizerUsed;
+	//Optimizations
+	private boolean fullyGrown;
 
 	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
 		this(name, blockSource, itemSource, placementSource, fertilizerSource, stages, drops, new SproutVariableHolder());
@@ -64,6 +66,7 @@ public class SimpleSprout implements Sprout {
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
 		this.variable = variable;
 		this.fertilizerUsed = new LinkedHashMap<>();
+		fullyGrown = false;
 	}
 
 	@Override
@@ -110,28 +113,27 @@ public class SimpleSprout implements Sprout {
 
 	@Override
 	public Stage getCurrentStage() {
-		Stage prior = null;
-		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (entry.getKey().intValue() == 1 && entry.getValue().getGrowthRequired() > age) {
-				break;
-			}
-			prior = entry.getValue();
-			if (prior.getGrowthRequired() > age) {
-				break;
-			}
+		final Stage first = getFirstStage();
+		if (age < first.getGrowthRequired()) {
+			return null;
 		}
-		return prior;
+		final Stage last = getLastStage();
+		if (age >= last.getGrowthRequired()) {
+			return last;
+		}
+		Stage middle = null;
+		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
+			if (age <= entry.getValue().getGrowthRequired()) {
+				break;
+			}
+			middle = entry.getValue();
+		}
+		return middle;
 	}
 
 	@Override
 	public boolean isFullyGrown() {
-		//Figure out last stage
-		Stage last = null;
-		//Our map is a linked map so order is preserved on insertion. We can safely assume the last iteration is indeed the last stage.
-		for (Map.Entry<Integer, Stage> stage : stages.entrySet()) {
-			last = stage.getValue();
-		}
-		return last != null && last.getGrowthRequired() <= age;
+		return fullyGrown;
 	}
 
 	@Override
@@ -161,12 +163,16 @@ public class SimpleSprout implements Sprout {
 		}
 
 		final SimpleSprout other = (SimpleSprout) obj;
-		return other.getName().equals(name) && other.getBlockSource().equals(blockSource) && other.getItemSource().equals(itemSource) && other.getPlacementSource().equals(placementSource) && other.getDrops().equals(drops) && other.getStages().equals(stages);
+		return other.getName().equals(name);
 	}
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}, " + variable.toString() + "}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}, " + variable.toString() + ", fullyGrown= " + fullyGrown + "}";
+	}
+
+	public void setFullyGrown(boolean fullyGrown) {
+		this.fullyGrown = fullyGrown;
 	}
 
 	public Stage getNextStage() {
@@ -182,17 +188,33 @@ public class SimpleSprout implements Sprout {
 				break;
 			}
 		}
-		if (id == null) {
-			return null;
-		}
 		//Find the next id
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (entry.getKey().intValue() == (id.intValue() + 1)) {
+			if (entry.getKey() == (id + 1)) {
 				return entry.getValue();
 			}
 		}
 
 		return null;
+	}
+
+	public Stage getFirstStage() {
+		List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+		return entryList.get(0).getValue();
+	}
+
+	public Stage getLastStage() {
+		List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+		return entryList.get(entryList.size() - 1).getValue();
+	}
+
+	public boolean isOnLastStage() {
+		final Stage current = getCurrentStage();
+		if (current == null) {
+			return false;
+		}
+
+		return getLastStage().equals(current);
 	}
 
 	public void grow(int amount) {

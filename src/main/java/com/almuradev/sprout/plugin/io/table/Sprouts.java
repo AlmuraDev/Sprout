@@ -35,16 +35,18 @@ public class Sprouts {
 	private String sprout;
 	@Field
 	private int age;
+	@Field
+	private boolean stillGrowing;
 
 	public Sprouts() {
-
 	}
 
-	public Sprouts(String world, long location, String sprout, int age) {
+	public Sprouts(String world, long location, String sprout, int age, boolean stillGrowing) {
 		this.world = world;
 		this.location = location;
 		this.sprout = sprout;
 		this.age = age;
+		this.stillGrowing = stillGrowing;
 	}
 
 	public int getId() {
@@ -59,19 +61,27 @@ public class Sprouts {
 		return location;
 	}
 
+	public String getSprout() {
+		return sprout;
+	}
+
 	public void setSprout(String sprout) {
 		this.sprout = sprout;
+	}
+
+	public int getAge() {
+		return age;
 	}
 
 	public void setAge(int age) {
 		this.age = age;
 	}
 
-	public String getSprout() {
-		return sprout;
+	public boolean isStillGrowing() {
+		return stillGrowing;
 	}
 
-	public int getAge() {
-		return age;
+	public void setStillGrowing(boolean stillGrowing) {
+		this.stillGrowing = stillGrowing;
 	}
 }

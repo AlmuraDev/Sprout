@@ -100,17 +100,16 @@ public class SimpleSQLStorage implements SQLStorage {
 	}
 
 	@Override
-	public SQLStorage add(String world, int x, int y, int z, String sprout, int age) {
-		return add(world, Int21TripleHashed.key(x, y, z), sprout, age);
+	public SQLStorage add(String world, int x, int y, int z,Sprout sprout) {
+		return add(world, Int21TripleHashed.key(x, y, z), sprout);
 	}
 
-	public SQLStorage add(String world, long loc
-			, String sprout, int age) {
+	public SQLStorage add(String world, long loc, Sprout sprout) {
 		if (world == null || world.isEmpty() || sprout == null) {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
 
-		db.save(new Sprouts(world, loc, sprout, age));
+		db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
 		return this;
 	}
 
@@ -146,6 +145,7 @@ public class SimpleSQLStorage implements SQLStorage {
 			}
 			final Sprout toInject = cloner.deepClone(sprout);
 			((SimpleSprout) toInject).grow(row.getAge());
+			((SimpleSprout) toInject).setFullyGrown(!row.isStillGrowing());
 			worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
 		}
 		return registry;
@@ -161,10 +161,15 @@ public class SimpleSQLStorage implements SQLStorage {
 					final Sprout sprout = (Sprout) o;
 					final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", l).execute().findOne();
 					if (row == null) {
-						add(world, l, sprout.getName(), sprout.getAge());
+						add(world, l, sprout);
 					} else {
+						//Check to see if we need to do a save
+						if (row.getSprout().equals(sprout.getName()) && !row.isStillGrowing()) {
+							return true;
+						}
 						row.setSprout(sprout.getName());
 						row.setAge(sprout.getAge());
+						row.setStillGrowing(!sprout.isFullyGrown());
 						db.save(row);
 					}
 					return true;

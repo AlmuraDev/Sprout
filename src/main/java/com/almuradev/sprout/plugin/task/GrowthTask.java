@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
@@ -72,20 +71,29 @@ public class GrowthTask implements Runnable {
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
 			@Override
 			public boolean execute(long l, Object o) {
-				final Sprout sprout = (Sprout) o;
+				final SimpleSprout sprout = (SimpleSprout) o;
 				Stage current = sprout.getCurrentStage();
-				if (current == null) {
-					((SimpleSprout) sprout).grow((int) delta);
-				} else {
-					if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
-						((SimpleSprout) sprout).grow((int) delta);
-						current = sprout.getCurrentStage();
-						final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
-						if (customBlock != null) {
-							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
-							if (block.getChunk().isLoaded()) {
-								((SpoutBlock) block).setCustomBlock(customBlock);
+				if (!sprout.isFullyGrown()) {
+					if (current != null) {
+						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
+							final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
+							if (customBlock != null) {
+								final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
+								if (block.getChunk().isLoaded()) {
+									((SpoutBlock) block).setCustomBlock(customBlock);
+									if (sprout.isOnLastStage()) {
+										sprout.setFullyGrown(true);
+									} else {
+										sprout.grow((int) delta);
+									}
+								}
 							}
+						}
+					} else {
+						if (sprout.isOnLastStage()) {
+							sprout.setFullyGrown(true);
+						} else {
+							sprout.grow((int) delta);
 						}
 					}
 				}
