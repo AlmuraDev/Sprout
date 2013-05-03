@@ -76,26 +76,19 @@ public class GrowthTask implements Runnable {
 				Stage current = sprout.getCurrentStage();
 				if (current == null) {
 					((SimpleSprout) sprout).grow((int) delta);
-					return true;
+				} else {
+					if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
+						((SimpleSprout) sprout).grow((int) delta);
+						current = sprout.getCurrentStage();
+						final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
+						if (customBlock != null) {
+							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
+							if (block.getChunk().isLoaded()) {
+								((SpoutBlock) block).setCustomBlock(customBlock);
+							}
+						}
+					}
 				}
-				if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 != current.getGrowthChance()) {
-					return true;
-				}
-				((SimpleSprout) sprout).grow((int) delta);
-				current = sprout.getCurrentStage();
-				final int x = Int21TripleHashed.key1(l);
-				final int y = Int21TripleHashed.key2(l);
-				final int z = Int21TripleHashed.key3(l);
-				final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
-				//Only replace blocks in loaded chunks
-				if (!block.getChunk().isLoaded()) {
-					return true;
-				}
-				final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
-				if (customBlock == null) {
-					return true;
-				}
-				((SpoutBlock) block).setCustomBlock(customBlock);
 				return true;
 			}
 		});
@@ -111,7 +104,7 @@ public class GrowthTask implements Runnable {
 			if (l == null) {
 				continue;
 			}
-			plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every " + l / 20 + " second(s).");
+			plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
 			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
 		}
 	}
