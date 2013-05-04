@@ -100,7 +100,7 @@ public class SimpleSQLStorage implements SQLStorage {
 	}
 
 	@Override
-	public SQLStorage add(String world, int x, int y, int z,Sprout sprout) {
+	public SQLStorage add(String world, int x, int y, int z, Sprout sprout) {
 		return add(world, Int21TripleHashed.key(x, y, z), sprout);
 	}
 
