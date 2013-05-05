@@ -39,6 +39,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,6 +50,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
@@ -148,11 +151,36 @@ public class SproutListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onEntityInteract(EntityInteractEvent event){
+		// Prevent trampling from other Entities
+		Block block = event.getBlock();
+		Material mat = block.getType();
+		Entity entity = event.getEntity();	    
+		if(!(entity.getType() == EntityType.FALLING_BLOCK) && (mat == Material.SOIL || mat == Material.SOUL_SAND)){
+			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		// Prevent trampling
+		if (event.getAction() == Action.PHYSICAL) {
+			final Block top = event.getClickedBlock().getRelative((BlockFace.UP));
+			if (plugin.getWorldRegistry().contains(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
+				event.setCancelled(true);
+				return;
+			}
+		}
 		//Only allow right clicks
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			return;
 		}
+		
+		// Exit this method if player clicking on chest, door, button, etc.
+		if (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.WOOD_BUTTON || event.getClickedBlock().getType() == Material.STONE_BUTTON || event.getClickedBlock().getType() == Material.WOOD_DOOR || event.getClickedBlock().getType() == Material.IRON_DOOR || event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK || event.getClickedBlock().getType() == Material.FENCE_GATE || event.getClickedBlock().getType() == Material.BREWING_STAND || event.getClickedBlock().getType() == Material.FURNACE) {
+			return;
+		}
+		
 		final Player interacter = event.getPlayer();
 		final ItemStack held = event.getItem();
 		if (held == null) {
