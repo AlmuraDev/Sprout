@@ -199,12 +199,12 @@ public class SimpleSprout implements Sprout {
 	}
 
 	public Stage getFirstStage() {
-		List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
 		return entryList.get(0).getValue();
 	}
 
 	public Stage getLastStage() {
-		List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
 		return entryList.get(entryList.size() - 1).getValue();
 	}
 

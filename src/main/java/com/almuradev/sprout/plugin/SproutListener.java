@@ -41,11 +41,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFromToEvent;
@@ -151,12 +151,11 @@ public class SproutListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void onEntityInteract(EntityInteractEvent event){
+	public void onEntityInteract(EntityInteractEvent event) {
 		// Prevent trampling from other Entities
-		Block block = event.getBlock();
-		Material mat = block.getType();
-		Entity entity = event.getEntity();	    
-		if(!(entity.getType() == EntityType.FALLING_BLOCK) && (mat == Material.SOIL || mat == Material.SOUL_SAND)){
+		final Material mat = event.getBlock().getType();
+		final Entity entity = event.getEntity();
+		if (entity instanceof LivingEntity && (mat == Material.SOIL || mat == Material.SOUL_SAND)) {
 			event.setCancelled(true);
 		}
 	}
@@ -164,156 +163,162 @@ public class SproutListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		// Prevent trampling
-		if (event.getAction() == Action.PHYSICAL) {
-			final Block top = event.getClickedBlock().getRelative((BlockFace.UP));
-			if (plugin.getWorldRegistry().contains(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
-				event.setCancelled(true);
-				return;
-			}
-		}
-		//Only allow right clicks
-		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-			return;
-		}
-		
-		// Exit this method if player clicking on chest, door, button, etc.
-		if (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.WOOD_BUTTON || event.getClickedBlock().getType() == Material.STONE_BUTTON || event.getClickedBlock().getType() == Material.WOOD_DOOR || event.getClickedBlock().getType() == Material.IRON_DOOR || event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK || event.getClickedBlock().getType() == Material.FENCE_GATE || event.getClickedBlock().getType() == Material.BREWING_STAND || event.getClickedBlock().getType() == Material.FURNACE) {
-			return;
-		}
-		
-		final Player interacter = event.getPlayer();
-		final ItemStack held = event.getItem();
-		if (held == null) {
-			return;
-		}
-		final Block interacted = event.getClickedBlock();
-		final SpoutItemStack stack = new SpoutItemStack(held);
-		final String name;
-
-		//Grab the material's name
-		if (stack.isCustomItem()) {
-			name = stack.getMaterial().getNotchianName();
-		} else {
-			name = held.getType().name();
-		}
-
-		//Fertilizer logic
-		final Sprout dispersed = plugin.getWorldRegistry().get(interacted.getWorld().getName(), interacted.getX(), interacted.getY(), interacted.getZ());
-		if (dispersed != null && !dispersed.isFullyGrown() && dispersed.getVariables().allowFertilization()) {
-			final Stage current = dispersed.getCurrentStage();
-			final Fertilizer fertilizer;
-			if (current == null) {
-				fertilizer = dispersed.getFertilizerSource();
-			} else {
-				fertilizer = current.getFertilizer();
-			}
-
-			boolean toContinue = false;
-
-			//Bonemeal
-			if ((fertilizer.getName().equals("bonemeal") && name.equals("INK_SACK"))) {
-				toContinue = true;
-				//Custom Block
-			} else if (fertilizer.getName().endsWith(name)) {
-				toContinue = true;
-				//Material
-			} else if (fertilizer.getName().equals(name.toLowerCase())) {
-				toContinue = true;
-			}
-			if (!toContinue) {
-				return;
-			}
-			event.setCancelled(true);
-			decrementInventory(interacter, held);
-			//Stage 0
-			if (current == null) {
-				final Stage initial = dispersed.getStage(1);
-				//Grow to stage 1
-				((SimpleSprout) dispersed).grow(initial);
-
-				//Hotswap to next stage
-				final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(initial.getName());
-				if (customMaterial == null) {
-					final Material material = Material.getMaterial(initial.getName().toUpperCase());
-					if (material == null) {
+		switch (event.getAction()) {
+			case PHYSICAL:
+				final Block top = event.getClickedBlock().getRelative((BlockFace.UP));
+				if (plugin.getWorldRegistry().contains(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
+					event.setCancelled(true);
+					break;
+				}
+			case RIGHT_CLICK_BLOCK:
+				// Exit this method if player clicking on chest, door, button, etc.
+				switch (event.getClickedBlock().getType()) {
+					case CHEST:
+					case WOOD_BUTTON:
+					case STONE_BUTTON:
+					case WOOD_DOOR:
+					case IRON_DOOR:
+					case IRON_DOOR_BLOCK:
+					case FENCE_GATE:
+					case BREWING_STAND:
+					case FURNACE:
+					case BURNING_FURNACE:
 						return;
-					}
-					((SpoutBlock) interacted).setCustomBlock(null);
-					interacted.setType(material);
-					return;
-				} else {
-					((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+				}
+				final Player interacter = event.getPlayer();
+				final ItemStack held = event.getItem();
+				if (held == null) {
 					return;
 				}
-				//Stage 1+
-			} else {
-				((SimpleSprout) dispersed).incrementFertilizerCount(current);
-				if (((SimpleSprout) dispersed).getFertilizerCount(current) >= fertilizer.getAmount()) {
-					((SimpleSprout) dispersed).grow(current);
-					//Hotswap to next stage
-					final Stage next = ((SimpleSprout) dispersed).getNextStage();
-					final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(next.getName());
-					if (customMaterial == null) {
-						final Material material = Material.getMaterial(next.getName().toUpperCase());
-						if (material == null) {
-							event.setCancelled(true);
+				final Block interacted = event.getClickedBlock();
+				final SpoutItemStack stack = new SpoutItemStack(held);
+				final String name;
+
+				//Grab the material's name
+				if (stack.isCustomItem()) {
+					name = stack.getMaterial().getNotchianName();
+				} else {
+					name = held.getType().name();
+				}
+
+				//Fertilizer logic
+				final Sprout dispersed = plugin.getWorldRegistry().get(interacted.getWorld().getName(), interacted.getX(), interacted.getY(), interacted.getZ());
+				if (dispersed != null && !dispersed.isFullyGrown() && dispersed.getVariables().allowFertilization()) {
+					final Stage current = dispersed.getCurrentStage();
+					final Fertilizer fertilizer;
+					if (current == null) {
+						fertilizer = dispersed.getFertilizerSource();
+					} else {
+						fertilizer = current.getFertilizer();
+					}
+
+					boolean toContinue = false;
+
+					//Bonemeal
+					if ((fertilizer.getName().equals("bonemeal") && name.equals("INK_SACK"))) {
+						toContinue = true;
+						//Custom Block
+					} else if (fertilizer.getName().endsWith(name)) {
+						toContinue = true;
+						//Material
+					} else if (fertilizer.getName().equals(name.toLowerCase())) {
+						toContinue = true;
+					}
+					if (!toContinue) {
+						return;
+					}
+					event.setCancelled(true);
+					decrementInventory(interacter, held);
+					//Stage 0
+					if (current == null) {
+						final Stage initial = dispersed.getStage(1);
+						//Grow to stage 1
+						((SimpleSprout) dispersed).grow(initial);
+
+						//Hotswap to next stage
+						final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(initial.getName());
+						if (customMaterial == null) {
+							final Material material = Material.getMaterial(initial.getName().toUpperCase());
+							if (material == null) {
+								return;
+							}
+							((SpoutBlock) interacted).setCustomBlock(null);
+							interacted.setType(material);
+							return;
+						} else {
+							((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
 							return;
 						}
-						((SpoutBlock) interacted).setCustomBlock(null);
-						interacted.setType(material);
-						return;
+						//Stage 1+
 					} else {
-						((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+						((SimpleSprout) dispersed).incrementFertilizerCount(current);
+						if (((SimpleSprout) dispersed).getFertilizerCount(current) >= fertilizer.getAmount()) {
+							((SimpleSprout) dispersed).grow(current);
+							//Hotswap to next stage
+							final Stage next = ((SimpleSprout) dispersed).getNextStage();
+							final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(next.getName());
+							if (customMaterial == null) {
+								final Material material = Material.getMaterial(next.getName().toUpperCase());
+								if (material == null) {
+									event.setCancelled(true);
+									return;
+								}
+								((SpoutBlock) interacted).setCustomBlock(null);
+								interacted.setType(material);
+								return;
+							} else {
+								((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+								return;
+							}
+						}
+					}
+				}
+
+				//Non-fertilizer logic
+				final Sprout sprout = plugin.getSproutRegistry().find(name);
+				if (sprout == null) {
+					return;
+				}
+
+				//Block face logic. TODO Customizable?
+				if (event.getBlockFace() != BlockFace.UP) {
+					event.setCancelled(true);
+					return;
+				}
+
+				//Soil logic
+				final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
+				if (customMaterial == null) {
+					final Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
+					if (material == null || !interacted.getType().equals(material)) {
+						event.setCancelled(true);
+						return;
+					}
+				} else {
+					if (((SpoutBlock) interacted).getBlockType() instanceof CustomBlock && !((SpoutBlock) interacted).getCustomBlock().getNotchianName().equals(customMaterial)) {
+						event.setCancelled(true);
 						return;
 					}
 				}
-			}
-		}
 
-		//Non-fertilizer logic
-		final Sprout sprout = plugin.getSproutRegistry().find(name);
-		if (sprout == null) {
-			return;
-		}
+				final Block where = interacted.getRelative(BlockFace.UP);
 
-		//Block face logic. TODO Customizable?
-		if (event.getBlockFace() != BlockFace.UP) {
-			event.setCancelled(true);
-			return;
-		}
+				//Make sure where we are setting the block won't be already obstructed.
+				if (where.getType() != Material.AIR) {
+					event.setCancelled(true);
+					return;
+				}
 
-		//Soil logic
-		final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
-		if (customMaterial == null) {
-			final Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
-			if (material == null || !interacted.getType().equals(material)) {
-				event.setCancelled(true);
-				return;
-			}
-		} else {
-			if (((SpoutBlock) interacted).getBlockType() instanceof CustomBlock && !((SpoutBlock) interacted).getCustomBlock().getNotchianName().equals(customMaterial)) {
-				event.setCancelled(true);
-				return;
-			}
-		}
+				final Sprout toInject = cloner.deepClone(sprout);
+				plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+				plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
 
-		final Block where = interacted.getRelative(BlockFace.UP);
-
-		//Make sure where we are setting the block won't be already obstructed.
-		if (where.getType() != Material.AIR) {
-			event.setCancelled(true);
-			return;
-		}
-
-		final Sprout toInject = cloner.deepClone(sprout);
-		plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-		plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-
-		//Set material
-		if (stack.isCustomItem()) {
-			final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
-			((SpoutBlock) where).setCustomBlock(block);
-			decrementInventory(interacter, held);
+				//Set material
+				if (stack.isCustomItem()) {
+					final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
+					((SpoutBlock) where).setCustomBlock(block);
+					decrementInventory(interacter, held);
+				}
 		}
 	}
 
