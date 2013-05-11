@@ -19,6 +19,8 @@
  */
 package com.almuradev.sprout.plugin;
 
+import java.io.File;
+
 import com.almuradev.sprout.api.io.SQLMode;
 import com.almuradev.sprout.api.io.SQLStorage;
 import com.almuradev.sprout.api.io.SproutRegistry;
@@ -39,6 +41,7 @@ public class SproutPlugin extends JavaPlugin {
 	private final SimpleSproutRegistry sproutRegistry;
 	private final SimpleSQLStorage sqlStorage;
 	private final SimpleWorldRegistry worldRegistry;
+    private File customConfigFile = null;
 
 	public SproutPlugin() {
 		configuration = new SproutConfiguration(this);
@@ -57,6 +60,7 @@ public class SproutPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		configuration.onEnable();
+		saveDefaultSproutConfig();
 		final SQLMode mode = configuration.getMode();
 		if (mode == null) {
 			getLogger().severe("SQL mode within config.yml is not a valid SQL mode (h2, sqlite, mysql). Disabling...");
@@ -93,4 +97,13 @@ public class SproutPlugin extends JavaPlugin {
 	public WorldRegistry getWorldRegistry() {
 		return worldRegistry;
 	}
+	
+    public void saveDefaultSproutConfig() {
+        if (customConfigFile == null) {
+            customConfigFile = new File(getDataFolder(), "sprouts.yml");
+        }
+        if (!customConfigFile.exists()) {            
+             this.saveResource("sprouts.yml", false);             
+         }
+    }   
 }
