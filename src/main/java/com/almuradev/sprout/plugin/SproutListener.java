@@ -66,7 +66,7 @@ public class SproutListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockFade(BlockFadeEvent event) {
 		final Block fading = event.getBlock();
 		//Don't do a lookup if it isn't soil.
@@ -79,7 +79,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
 		final Block block = event.getBlock();
 		//Handle random seed drops. To preserve a possible LongGrass base block, make sure it isn't a custom block
@@ -108,7 +108,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockFromTo(BlockFromToEvent event) {
 		final Block to = event.getToBlock();
 		if (to.getType() == Material.LONG_GRASS && !(((SpoutBlock) to).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10 - 1) + 1 == 7) { //10% chance for a drop.
@@ -134,7 +134,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockPhysics(BlockPhysicsEvent event) {
 		final Block physics = event.getBlock();
 		if (physics.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
@@ -151,7 +151,7 @@ public class SproutListener implements Listener {
 		disperseDrops(sprout, physics);
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityInteract(EntityInteractEvent event) {
 		// Prevent trampling from other Entities
 		final Material mat = event.getBlock().getType();
@@ -161,7 +161,7 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		// Prevent trampling
 		switch (event.getAction()) {
@@ -324,12 +324,12 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onWorldInit(WorldInitEvent event) {
 		GrowthTask.schedule(plugin, event.getWorld());
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onWorldSave(WorldSaveEvent event) {
 		GrowthTask.unschedule(event.getWorld());
 	}
