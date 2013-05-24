@@ -180,6 +180,7 @@
 				<executions>
 					<execution>
 						<configuration>
+                            <minimizeJar>true</minimizeJar>
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
@@ -195,7 +196,7 @@
 									</excludes>
 								</filter>
 								<filter>
-									<artifact>org.spout:*</artifact>
+									<artifact>com.h2database:h2</artifact>
 									<includes>
 										<include>**</include>
 									</includes>
