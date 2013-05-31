@@ -20,6 +20,7 @@
 package com.almuradev.sprout.plugin;
 
 import java.io.File;
+import java.io.IOException;
 
 import com.almuradev.sprout.api.io.SQLMode;
 import com.almuradev.sprout.api.io.SQLStorage;
@@ -34,6 +35,7 @@ import com.almuradev.sprout.plugin.task.GrowthTask;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 public class SproutPlugin extends JavaPlugin {
 	private final FlatFileStorage flatFileStorage;
@@ -80,6 +82,11 @@ public class SproutPlugin extends JavaPlugin {
 		worldRegistry.putAll(sqlStorage.getAll());
 		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
 		GrowthTask.schedule(this, Bukkit.getWorlds().toArray(new World[Bukkit.getWorlds().size()]));
+		try {
+			MetricsLite metrics = new MetricsLite(this);
+			metrics.start();
+		} catch (IOException e) {
+		}
 	}
 
 	public SproutConfiguration getConfiguration() {
