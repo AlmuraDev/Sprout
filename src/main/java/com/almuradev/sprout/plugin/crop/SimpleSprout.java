@@ -116,19 +116,26 @@ public class SimpleSprout implements Sprout {
 	@Override
 	public Stage getCurrentStage() {
 		final Stage first = getFirstStage();
+		//Stage 0 (initial)
 		if (age < first.getGrowthRequired()) {
 			return null;
 		}
 		final Stage last = getLastStage();
+		//Stage n (last stage)
 		if (age >= last.getGrowthRequired()) {
 			return last;
 		}
 		Stage middle = null;
+		//Stage 0-n (some middle stage)
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (age <= entry.getValue().getGrowthRequired()) {
-				break;
+			if (entry.getValue().equals(first) || entry.getValue().equals(last)) {
+				continue;
+			}
+			if (age >= entry.getValue().getGrowthRequired()) {
+				continue;
 			}
 			middle = entry.getValue();
+			break;
 		}
 		return middle;
 	}
