@@ -159,14 +159,10 @@ public class SimpleSQLStorage implements SQLStorage {
 				@Override
 				public boolean execute(long l, Object o) {
 					final Sprout sprout = (Sprout) o;
-					final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", l).execute().findOne();
+					final Sprouts row = db.select(Sprouts.class).where().equal("sprout", sprout.getName()).and().equal("world", world).and().equal("location", l).and().equal("stillGrowing", true).execute().findOne();
 					if (row == null) {
 						add(world, l, sprout);
 					} else {
-						//Check to see if we need to do a save
-						if (row.getSprout().equals(sprout.getName()) && !row.isStillGrowing()) {
-							return true;
-						}
 						row.setSprout(sprout.getName());
 						row.setAge(sprout.getAge());
 						row.setStillGrowing(!sprout.isFullyGrown());
