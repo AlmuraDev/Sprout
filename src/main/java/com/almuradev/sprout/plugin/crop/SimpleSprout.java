@@ -33,6 +33,8 @@ import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.VariableHolder;
 import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
 
+import org.bukkit.Bukkit;
+
 public class SimpleSprout implements Sprout {
 	private final String name;
 	private final Map<Integer, Stage> stages;
@@ -183,14 +185,18 @@ public class SimpleSprout implements Sprout {
 		//Find the current id
 		Integer id = null;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
+			Bukkit.getLogger().info("Stage ID: " + id);
 			if (entry.getValue().equals(current)) {
-				id = entry.getKey();
+				id = entry.getKey().intValue();
+				Bukkit.getLogger().info("Current Stage ID: " + id);
 				break;
 			}
 		}
+
 		//Find the next id
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (entry.getKey() == (id + 1)) {
+			if (entry.getKey().intValue() == (id + 1)) {
+				Bukkit.getLogger().info("Next Stage ID: " + (id + 1));
 				return entry.getValue();
 			}
 		}
