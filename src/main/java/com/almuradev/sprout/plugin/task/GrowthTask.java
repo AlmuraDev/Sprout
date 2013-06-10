@@ -44,6 +44,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public class GrowthTask implements Runnable {
 	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
@@ -108,15 +109,16 @@ public class GrowthTask implements Runnable {
 			}
 		});
 
+
 		if (toAdd.size() != 0) {
-			Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+			Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
 				@Override
 				public void run() {
 					for (Map.Entry<Long, Sprout> entry : toAdd.entrySet()) {
 						((SimpleSQLStorage) plugin.getStorage()).add(world, entry.getKey(), entry.getValue());
 					}
 				}
-			}, 0);
+			});
 		}
 	}
 
