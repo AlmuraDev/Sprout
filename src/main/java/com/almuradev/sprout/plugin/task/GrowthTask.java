@@ -125,7 +125,7 @@ public class GrowthTask implements Runnable {
 			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
 
 			//Async saving
-			ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName()));
+			ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName())).start();
 		}
 	}
 

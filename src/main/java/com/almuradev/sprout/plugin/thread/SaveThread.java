@@ -42,7 +42,9 @@ public class SaveThread extends Thread {
 		while (!this.isInterrupted()) {
 			try {
 				final GrowthTask.SproutInfo sprout = QUEUE.take();
-				((SimpleSQLStorage) plugin.getStorage()).add(world, sprout.getLocation(), sprout.getSprout());
+				if (sprout != null) {
+					((SimpleSQLStorage) plugin.getStorage()).add(world, sprout.getLocation(), sprout.getSprout());
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

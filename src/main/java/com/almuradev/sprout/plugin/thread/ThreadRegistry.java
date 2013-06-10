@@ -29,8 +29,9 @@ public class ThreadRegistry {
 
 	}
 
-	public static void add(Thread thread) {
+	public static Thread add(Thread thread) {
 		THREADS.add(thread);
+		return thread;
 	}
 
 	public static Thread get(final String world) {
