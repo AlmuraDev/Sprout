@@ -203,7 +203,7 @@ public class SproutListener implements Listener {
 
 				//Fertilizer logic
 				final Sprout dispersed = plugin.getWorldRegistry().get(interacted.getWorld().getName(), interacted.getX(), interacted.getY(), interacted.getZ());
-				if (dispersed != null && !dispersed.isFullyGrown() && dispersed.getVariables().allowFertilization()) {
+				if (dispersed != null && !((SimpleSprout) dispersed).isOnLastStage() && dispersed.getVariables().allowFertilization()) {
 					final Stage current = dispersed.getCurrentStage();
 					final Fertilizer fertilizer;
 					if (current == null) {
@@ -238,14 +238,16 @@ public class SproutListener implements Listener {
 						stage = dispersed.getStage(1);
 						customMaterial = MaterialData.getCustomBlock(stage.getName());
 						material = Material.getMaterial(stage.getName().toUpperCase());
-						//Grow to stage 1
-						((SimpleSprout) dispersed).grow(stage);
 
 						if (customMaterial == null) {
 							if (material == null) {
 								return;
 							}
 						}
+
+						//Grow to stage 1
+						((SimpleSprout) dispersed).grow(stage);
+
 						if (customMaterial != null) {
 							((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
 						} else {
@@ -254,10 +256,11 @@ public class SproutListener implements Listener {
 						}
 					} else {
 						stage = ((SimpleSprout) dispersed).getNextStage();
+						if (stage == null) {
+							return;
+						}
 						customMaterial = MaterialData.getCustomBlock(stage.getName());
 						material = Material.getMaterial(stage.getName().toUpperCase());
-						//Grow to stage 1
-						((SimpleSprout) dispersed).grow(stage);
 
 						if (customMaterial == null) {
 							if (material == null) {
@@ -273,6 +276,7 @@ public class SproutListener implements Listener {
 								((SpoutBlock) interacted).setCustomBlock(null);
 								interacted.setType(material);
 							}
+							((SimpleSprout) dispersed).grow(stage);
 						}
 					}
 					decrementInventory(interacter, interacter.getItemInHand());

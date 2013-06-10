@@ -128,10 +128,7 @@ public class SimpleSprout implements Sprout {
 		Stage middle = null;
 		//Stage 0-n (some middle stage)
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (entry.getValue().equals(first) || entry.getValue().equals(last)) {
-				continue;
-			}
-			if (age >= entry.getValue().getGrowthRequired()) {
+			if (age <= entry.getValue().getGrowthRequired()) {
 				continue;
 			}
 			middle = entry.getValue();
@@ -192,10 +189,8 @@ public class SimpleSprout implements Sprout {
 		//Find the current id
 		Integer id = null;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			Bukkit.getLogger().info("Stage ID: " + id);
 			if (entry.getValue().equals(current)) {
 				id = entry.getKey().intValue();
-				Bukkit.getLogger().info("Current Stage ID: " + id);
 				break;
 			}
 		}
@@ -203,7 +198,6 @@ public class SimpleSprout implements Sprout {
 		//Find the next id
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			if (entry.getKey().intValue() == (id + 1)) {
-				Bukkit.getLogger().info("Next Stage ID: " + (id + 1));
 				return entry.getValue();
 			}
 		}
@@ -235,7 +229,7 @@ public class SimpleSprout implements Sprout {
 	}
 
 	public void grow(Stage stage) {
-		age = stage.getGrowthRequired();
+		age = stage.getGrowthRequired() + 1;
 	}
 
 	public void incrementFertilizerCount(Stage stage) {
