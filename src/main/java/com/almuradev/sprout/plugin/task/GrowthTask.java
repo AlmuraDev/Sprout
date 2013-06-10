@@ -19,20 +19,22 @@
  */
 package com.almuradev.sprout.plugin.task;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.io.WorldRegistry;
+import com.almuradev.sprout.api.mech.Drop;
+import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
-import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
+import com.almuradev.sprout.plugin.thread.SaveThread;
+import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 
 import gnu.trove.procedure.TLongObjectProcedure;
 
@@ -44,7 +46,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public class GrowthTask implements Runnable {
 	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
@@ -90,7 +91,7 @@ public class GrowthTask implements Runnable {
 									((SpoutBlock) block).setCustomBlock(customBlock);
 									if (sprout.isOnLastStage()) {
 										sprout.setFullyGrown(true);
-										toAdd.put(l, sprout);
+										((SaveThread) ThreadRegistry.get(world)).QUEUE.offer(new SproutInfo(l, sprout));
 									} else {
 										sprout.grow((int) delta);
 									}
@@ -108,18 +109,6 @@ public class GrowthTask implements Runnable {
 				return true;
 			}
 		});
-
-
-		if (toAdd.size() != 0) {
-			Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-				@Override
-				public void run() {
-					for (Map.Entry<Long, Sprout> entry : toAdd.entrySet()) {
-						((SimpleSQLStorage) plugin.getStorage()).add(world, entry.getKey(), entry.getValue());
-					}
-				}
-			});
-		}
 	}
 
 	public static void schedule(Plugin plugin, World... worlds) {
@@ -134,6 +123,9 @@ public class GrowthTask implements Runnable {
 			}
 			plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
 			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
+
+			//Async saving
+			ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName()));
 		}
 	}
 
@@ -143,10 +135,30 @@ public class GrowthTask implements Runnable {
 			if (id != null) {
 				Bukkit.getScheduler().cancelTask(id);
 			}
+			ThreadRegistry.remove(world.getName());
 		}
 	}
 
 	public static void stop(Plugin plugin) {
 		Bukkit.getScheduler().cancelTasks(plugin);
+	}
+
+
+	public static class SproutInfo {
+		private final long location;
+		private final Sprout sprout;
+
+		public SproutInfo(final long location, final SimpleSprout sprout) {
+			this.location = location;
+			this.sprout = sprout;
+		}
+
+		public long getLocation() {
+			return location;
+		}
+
+		public Sprout getSprout() {
+			return sprout;
+		}
 	}
 }
