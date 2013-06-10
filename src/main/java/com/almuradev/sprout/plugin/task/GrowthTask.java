@@ -158,6 +158,10 @@ public class GrowthTask implements Runnable {
 			this.sprout = sprout;
 		}
 
+		public SproutInfo(final int x, final int y, final int z, final SimpleSprout sprout) {
+			this(Int21TripleHashed.key(x, y, z), sprout);
+		}
+
 		public long getLocation() {
 			return location;
 		}

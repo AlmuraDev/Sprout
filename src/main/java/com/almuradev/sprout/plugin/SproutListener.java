@@ -28,6 +28,8 @@ import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
+import com.almuradev.sprout.plugin.thread.SaveThread;
+import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 import com.rits.cloning.Cloner;
 
 import org.getspout.spoutapi.block.SpoutBlock;
@@ -277,6 +279,10 @@ public class SproutListener implements Listener {
 								interacted.setType(material);
 							}
 							((SimpleSprout) dispersed).grow(stage);
+						}
+						if (((SimpleSprout) dispersed).isOnLastStage()) {
+							((SimpleSprout) dispersed).setFullyGrown(true);
+							((SaveThread) ThreadRegistry.get(interacter.getWorld().getName())).QUEUE.offer(new GrowthTask.SproutInfo(interacted.getX(), interacted.getY(), interacted.getZ(), (SimpleSprout) dispersed));
 						}
 					}
 					decrementInventory(interacter, interacter.getItemInHand());
