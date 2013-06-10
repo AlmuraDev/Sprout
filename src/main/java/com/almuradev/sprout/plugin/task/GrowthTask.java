@@ -29,6 +29,7 @@ import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
+import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
 
 import gnu.trove.procedure.TLongObjectProcedure;
 
@@ -83,6 +84,7 @@ public class GrowthTask implements Runnable {
 									((SpoutBlock) block).setCustomBlock(customBlock);
 									if (sprout.isOnLastStage()) {
 										sprout.setFullyGrown(true);
+										((SimpleSQLStorage) plugin.getStorage()).add(world, l, sprout);
 									} else {
 										sprout.grow((int) delta);
 									}
