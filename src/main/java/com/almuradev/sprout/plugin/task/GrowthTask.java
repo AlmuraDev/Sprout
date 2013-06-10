@@ -91,6 +91,7 @@ public class GrowthTask implements Runnable {
 		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.get(world);
@@ -118,28 +119,30 @@ public class GrowthTask implements Runnable {
 					if (current == null) {
 						sprout.grow((int) delta);
 					} else {
-						final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
-						final Material material = Material.getMaterial(current.getName());
+						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) { 
+							final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
+							final Material material = Material.getMaterial(current.getName());
 
-						if (customBlock == null) {
-							if (material == null) {
-								return true;
+							if (customBlock == null) {
+								if (material == null) {
+									return true;
+								}
 							}
-						}
 
-						final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
-						if (block.getChunk().isLoaded()) {
-							if (customBlock != null) {
-								((SpoutBlock) block).setCustomBlock(customBlock);
-							} else {
-								((SpoutBlock) block).setCustomBlock(null);
-								block.setType(material);
-							}
-							if (sprout.isOnLastStage()) {
-								sprout.setFullyGrown(true);
-								((SaveThread) ThreadRegistry.get(world)).QUEUE.offer(new SproutInfo(l, sprout));
-							} else {
-								sprout.grow((int) delta);
+							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
+							if (block.getChunk().isLoaded()) {
+								if (customBlock != null) {
+									((SpoutBlock) block).setCustomBlock(customBlock);
+								} else {
+									((SpoutBlock) block).setCustomBlock(null);
+									block.setType(material);
+								}
+								if (sprout.isOnLastStage()) {
+									sprout.setFullyGrown(true);
+									((SaveThread) ThreadRegistry.get(world)).QUEUE.offer(new SproutInfo(l, sprout));
+								} else {
+									sprout.grow((int) delta);
+								}
 							}
 						}
 					}
