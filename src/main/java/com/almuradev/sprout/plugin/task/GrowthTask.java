@@ -19,10 +19,13 @@
  */
 package com.almuradev.sprout.plugin.task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
@@ -69,6 +72,8 @@ public class GrowthTask implements Runnable {
 		final long localTime = System.currentTimeMillis() / 1000;
 		final long delta = localTime - pastTime;
 		pastTime = localTime;
+		final Map<Long, Sprout> toAdd = new HashMap<>();
+
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
 			@Override
 			public boolean execute(long l, Object o) {
@@ -84,7 +89,7 @@ public class GrowthTask implements Runnable {
 									((SpoutBlock) block).setCustomBlock(customBlock);
 									if (sprout.isOnLastStage()) {
 										sprout.setFullyGrown(true);
-										((SimpleSQLStorage) plugin.getStorage()).add(world, l, sprout);
+										toAdd.put(l, sprout);
 									} else {
 										sprout.grow((int) delta);
 									}
@@ -102,6 +107,17 @@ public class GrowthTask implements Runnable {
 				return true;
 			}
 		});
+
+		if (toAdd.size() != 0) {
+			Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+				@Override
+				public void run() {
+					for (Map.Entry<Long, Sprout> entry : toAdd.entrySet()) {
+						((SimpleSQLStorage) plugin.getStorage()).add(world, entry.getKey(), entry.getValue());
+					}
+				}
+			}, 0);
+		}
 	}
 
 	public static void schedule(Plugin plugin, World... worlds) {
