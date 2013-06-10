@@ -41,7 +41,6 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -229,97 +228,95 @@ public class SproutListener implements Listener {
 						return;
 					}
 					event.setCancelled(true);
-					decrementInventory(interacter, held);
+
+					Stage stage;
+					org.getspout.spoutapi.material.Material customMaterial;
+					Material material;
+
 					//Stage 0
 					if (current == null) {
-						final Stage initial = dispersed.getStage(1);
+						stage = dispersed.getStage(1);
+						customMaterial = MaterialData.getCustomBlock(stage.getName());
+						material = Material.getMaterial(stage.getName().toUpperCase());
 						//Grow to stage 1
-						((SimpleSprout) dispersed).grow(initial);
+						((SimpleSprout) dispersed).grow(stage);
 
-						//Hotswap to next stage
-						final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(initial.getName());
 						if (customMaterial == null) {
-							final Material material = Material.getMaterial(initial.getName().toUpperCase());
 							if (material == null) {
 								return;
 							}
+						}
+						if (customMaterial != null) {
+							((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+						} else {
 							((SpoutBlock) interacted).setCustomBlock(null);
 							interacted.setType(material);
-							return;
-						} else {
-							((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
-							return;
 						}
-						//Stage 1+
 					} else {
-						((SimpleSprout) dispersed).incrementFertilizerCount(current);
-						if (((SimpleSprout) dispersed).getFertilizerCount(current) >= fertilizer.getAmount()) {
-							((SimpleSprout) dispersed).grow(current);
-							//Hotswap to next stage
-							final Stage next = ((SimpleSprout) dispersed).getNextStage();
-							final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomBlock(next.getName());
-							if (customMaterial == null) {
-								final Material material = Material.getMaterial(next.getName().toUpperCase());
-								if (material == null) {
-									event.setCancelled(true);
-									return;
-								}
-								((SpoutBlock) interacted).setCustomBlock(null);
-								interacted.setType(material);
-								return;
-							} else {
-								((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+						stage = ((SimpleSprout) dispersed).getNextStage();
+						customMaterial = MaterialData.getCustomBlock(stage.getName());
+						material = Material.getMaterial(stage.getName().toUpperCase());
+						//Grow to stage 1
+						((SimpleSprout) dispersed).grow(stage);
+
+						if (customMaterial == null) {
+							if (material == null) {
 								return;
 							}
 						}
+
+						((SimpleSprout) dispersed).incrementFertilizerCount(stage);
+						if (((SimpleSprout) dispersed).getFertilizerCount(stage) >= fertilizer.getAmount()) {
+							if (customMaterial != null) {
+								((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
+							} else {
+								((SpoutBlock) interacted).setCustomBlock(null);
+								interacted.setType(material);
+							}
+						}
 					}
-				}
-
-				//Non-fertilizer logic
-				final Sprout sprout = plugin.getSproutRegistry().find(name);
-				if (sprout == null) {
-					return;
-				}
-
-				//Block face logic. TODO Customizable?
-				if (event.getBlockFace() != BlockFace.UP) {
-					event.setCancelled(true);
-					return;
-				}
-
-				//Soil logic
-				final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
-				if (customMaterial == null) {
-					final Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
-					if (material == null || !interacted.getType().equals(material)) {
-						event.setCancelled(true);
-						return;
-					}
+					decrementInventory(interacter, interacter.getItemInHand());
 				} else {
-					if (((SpoutBlock) interacted).getBlockType() instanceof CustomBlock && !((SpoutBlock) interacted).getCustomBlock().getNotchianName().equals(customMaterial)) {
-						event.setCancelled(true);
+					//Non-fertilizer logic
+					final Sprout sprout = plugin.getSproutRegistry().find(name);
+					if (sprout == null) {
 						return;
 					}
-				}
 
-				final Block where = interacted.getRelative(BlockFace.UP);
-
-				//Make sure where we are setting the block won't be already obstructed.
-				if (where.getType() != Material.AIR) {
 					event.setCancelled(true);
-					return;
-				}
 
-				final Sprout toInject = cloner.deepClone(sprout);
-				plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-				plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+					//Block face logic. TODO Customizable?
+					if (event.getBlockFace() != BlockFace.UP) {
+						return;
+					}
 
-				//Set material
-				if (stack.isCustomItem()) {
-					final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
-					((SpoutBlock) where).setCustomBlock(block);
-					interacter.playSound(interacter.getLocation(), Sound.DIG_GRASS, 1.0F, 0.7936508F);
-					decrementInventory(interacter, held);
+					//Soil logic
+					org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
+					Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
+					if (customMaterial == null || !(((SpoutBlock) interacted).getBlockType() instanceof CustomBlock) || !((CustomBlock) ((SpoutBlock) interacted).getBlockType()).getFullName().equalsIgnoreCase(customMaterial.getName())) {
+						if (material == null || !interacted.getType().equals(material)) {
+							return;
+						}
+					}
+
+					final Block where = interacted.getRelative(BlockFace.UP);
+
+					//Make sure where we are setting the block won't be already obstructed.
+					if (where.getType() != Material.AIR) {
+						return;
+					}
+
+					final Sprout toInject = cloner.deepClone(sprout);
+					plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+					plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+
+					//Set material
+					if (stack.isCustomItem()) {
+						final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
+						((SpoutBlock) where).setCustomBlock(block);
+						interacter.playSound(interacter.getLocation(), Sound.DIG_GRASS, 1.0F, 0.7936508F);
+						decrementInventory(interacter, held);
+					}
 				}
 		}
 	}
