@@ -167,7 +167,7 @@ public class SimpleSQLStorage implements SQLStorage {
 						add(world, l, sprout);
 					} else {
 						//Check to see if we need to do a save
-						if (sprout.getName().equalsIgnoreCase(row.getSprout())) {
+						if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge())) {
 							 return true;
 						}
 						row.setSprout(sprout.getName());
