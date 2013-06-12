@@ -115,25 +115,30 @@ public class SimpleSprout implements Sprout {
 
 	@Override
 	public Stage getCurrentStage() {
-		final Stage first = getFirstStage();
-		//Stage 0 (initial)
-		if (age < first.getGrowthRequired()) {
-			return null;
-		}
+
 		final Stage last = getLastStage();
 		//Stage n (last stage)
 		if (age >= last.getGrowthRequired()) {
 			return last;
 		}
+		
 		Stage middle = null;
+		
 		//Stage 0-n (some middle stage)
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (age <= entry.getValue().getGrowthRequired()) {
+				
+			if (age >= entry.getValue().getGrowthRequired()) {		
 				continue;
 			}
-			middle = entry.getValue();
+		
+			if (entry.getKey()>=2) {
+				middle = getPreviousStage(entry.getKey());  
+			} else {
+				middle = entry.getValue();
+			}
 			break;
-		}
+			
+		}	
 		return middle;
 	}
 
@@ -210,6 +215,11 @@ public class SimpleSprout implements Sprout {
 		return entryList.get(0).getValue();
 	}
 
+	public Stage getPreviousStage(int current) {
+		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());		
+		return entryList.get(current-2).getValue();
+	}
+	
 	public Stage getLastStage() {
 		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
 		return entryList.get(entryList.size() - 1).getValue();

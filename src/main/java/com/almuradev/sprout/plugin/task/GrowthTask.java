@@ -117,7 +117,7 @@ public class GrowthTask implements Runnable {
 				if (!sprout.isFullyGrown()) {
 					final Stage current = sprout.getCurrentStage();
 					if (current == null) {
-						sprout.grow((int) delta);
+						// TODO: Throw Error.
 					} else {
 						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) { 
 							final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
@@ -132,7 +132,9 @@ public class GrowthTask implements Runnable {
 							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
 							if (block.getChunk().isLoaded()) {
 								if (customBlock != null) {
-									((SpoutBlock) block).setCustomBlock(customBlock);
+									if (((SpoutBlock) block).getCustomBlock() != customBlock) {
+										((SpoutBlock) block).setCustomBlock(customBlock);
+									}
 								} else {
 									((SpoutBlock) block).setCustomBlock(null);
 									block.setType(material);
