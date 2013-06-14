@@ -1,6 +1,6 @@
 bellpepper:
     item-source: MoreMaterials\KFood_Core\bellpepper_seed
-    block-source: MoreMaterials\KFood_Core\bellpepper1 
+    block-source: MoreMaterials\KFood_Core\plantedseed 
     drops: 
         MoreMaterials\KFood_Core\bellpepper:
             amount: 1        
@@ -8,16 +8,24 @@ bellpepper:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\bellpepper2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\bellpepper1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\bellpepper2
+            growth-required: 180
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\bellpepper3
-            growth-required: 75
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 bambooshoot:
     item-source: MoreMaterials\KFood_Core\bambooshoot_seed
-    block-source: MoreMaterials\KFood_Core\bambooshoot1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\bambooshoot:
             amount: 1        
@@ -25,16 +33,24 @@ bambooshoot:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\bambooshoot2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\bambooshoot1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\bambooshoot2
+            growth-required: 180            
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\bambooshoot3
-            growth-required: 75            
-            growth-chance: 20
+            growth-required: 240            
+            growth-chance: 3
 broccoli:
     item-source: MoreMaterials\KFood_Core\broccoli_seed
-    block-source: MoreMaterials\KFood_Core\broccoli1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\broccoli:
             amount: 1        
@@ -42,16 +58,24 @@ broccoli:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\broccoli2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\broccoli1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\broccoli2
+            growth-required: 180
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\broccoli3
-            growth-required: 75
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 cabbage:
     item-source: MoreMaterials\KFood_Core\cabbage_seed
-    block-source: MoreMaterials\KFood_Core\cabbage1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\cabbage:
             amount: 1        
@@ -59,16 +83,24 @@ cabbage:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\cabbage2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3       
         2:
+            source: MoreMaterials\KFood_Core\cabbage1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\cabbage2
+            growth-required: 180            
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\cabbage3
-            growth-required: 75            
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 celery:
     item-source: MoreMaterials\KFood_Core\celery_seed
-    block-source: MoreMaterials\KFood_Core\celery1 
+    block-source: MoreMaterials\KFood_Core\plantedseed 
     drops: 
         MoreMaterials\KFood_Core\celery:
             amount: 1        
@@ -76,16 +108,24 @@ celery:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\celery2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\celery1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\celery2
+            growth-required: 180            
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\celery3
-            growth-required: 75            
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 chilipepper:
     item-source: MoreMaterials\KFood_Core\chilipepper_seed
-    block-source: MoreMaterials\KFood_Core\chilipepper1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\chilipepper:
             amount: 1        
@@ -93,16 +133,24 @@ chilipepper:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\chilipepper2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\chilipepper1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\chilipepper2
+            growth-required: 180          
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\chilipepper3
-            growth-required: 75          
-            growth-chance: 20
+            growth-required: 240          
+            growth-chance: 3
 corn:
     item-source: MoreMaterials\KFood_Core\corn_seed
-    block-source: MoreMaterials\KFood_Core\corn1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\corn:
             amount: 1        
@@ -110,16 +158,24 @@ corn:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\corn2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\corn1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\corn2
+            growth-required: 180          
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\corn3
-            growth-required: 75            
-            growth-chance: 20
+            growth-required: 240           
+            growth-chance: 3
 cucumber:
     item-source: MoreMaterials\KFood_Core\cucumber_seed
-    block-source: MoreMaterials\KFood_Core\cucumber1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\cucumber:
             amount: 1        
@@ -127,16 +183,24 @@ cucumber:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\cucumber2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\cucumber1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\cucumber2
+            growth-required: 180    
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\cucumber3
-            growth-required: 75    
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 daikon:
     item-source: MoreMaterials\KFood_Core\daikon_seed
-    block-source: MoreMaterials\KFood_Core\daikon1 
+    block-source: MoreMaterials\KFood_Core\plantedseed 
     drops: 
         MoreMaterials\KFood_Core\daikon:
             amount: 1        
@@ -144,16 +208,24 @@ daikon:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\daikon2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\daikon1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\daikon2
+            growth-required: 180                        
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\daikon3
-            growth-required: 75                        
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 eggplant:
     item-source: MoreMaterials\KFood_Core\eggplant_seed
-    block-source: MoreMaterials\KFood_Core\eggplant1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\eggplant:
             amount: 1        
@@ -161,16 +233,24 @@ eggplant:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\eggplant2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\eggplant1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\eggplant2
+            growth-required: 180                       
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\eggplant3
-            growth-required: 75                       
-            growth-chance: 20
+            growth-required: 240                       
+            growth-chance: 3
 fargreens:
     item-source: MoreMaterials\KFood_Core\fargreens_seed
-    block-source: MoreMaterials\KFood_Core\fargreens1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\fargreens:
             amount: 1        
@@ -178,33 +258,49 @@ fargreens:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\fargreens2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\fargreens1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\fargreens2
+            growth-required: 180
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\fargreens3
-            growth-required: 75
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 garlic:
     item-source: MoreMaterials\KFood_Core\garlic_seed
-    block-source: MoreMaterials\KFood_Core\garlic1 
+    block-source: MoreMaterials\KFood_Core\plantedseed 
     drops: 
         MoreMaterials\KFood_Core\garlic:
             amount: 1        
         MoreMaterials\KFood_Core\garlic_seed:
             amount: 2    
-    stages:
+    stages:        
         1:
-            source: MoreMaterials\KFood_Core\garlic2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\garlic1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\garlic2
+            growth-required: 180                    
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\garlic3
-            growth-required: 75                    
-            growth-chance: 20
+            growth-required: 240                    
+            growth-chance: 3
 leek:
     item-source: MoreMaterials\KFood_Core\leek_seed
-    block-source: MoreMaterials\KFood_Core\leek1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\leek:
             amount: 1        
@@ -212,16 +308,24 @@ leek:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\leek2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\leek1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\leek2
+            growth-required: 180                
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\leek3
-            growth-required: 75                 
-            growth-chance: 20
+            growth-required: 240                 
+            growth-chance: 3
 lettuce:
     item-source: MoreMaterials\KFood_Core\lettuce_seed
-    block-source: MoreMaterials\KFood_Core\lettuce1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\lettuce:
             amount: 1        
@@ -229,16 +333,24 @@ lettuce:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\lettuce2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\lettuce1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\lettuce2
+            growth-required: 180
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\lettuce3
-            growth-required: 75                        
-            growth-chance: 20
+            growth-required: 240                        
+            growth-chance: 3
 luffa:
     item-source: MoreMaterials\KFood_Core\luffa_seed
-    block-source: MoreMaterials\KFood_Core\luffa1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\luffa:
             amount: 1        
@@ -246,16 +358,24 @@ luffa:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\luffa2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\luffa1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\luffa2
+            growth-required: 180                        
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\luffa3
-            growth-required: 75                        
-            growth-chance: 20
+            growth-required: 240                        
+            growth-chance: 3
 olive:
     item-source: MoreMaterials\KFood_Core\olive_seed
-    block-source: MoreMaterials\KFood_Core\olive1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\olive:
             amount: 1        
@@ -263,16 +383,24 @@ olive:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\olive2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\olive1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\olive2
+            growth-required: 180                        
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\olive3
-            growth-required: 75                        
-            growth-chance: 20
+            growth-required: 240                      
+            growth-chance: 3
 onion:
     item-source: MoreMaterials\KFood_Core\onion_seed
-    block-source: MoreMaterials\KFood_Core\onion1 
+    block-source: MoreMaterials\KFood_Core\plantedseed 
     drops: 
         MoreMaterials\KFood_Core\onion:
             amount: 1        
@@ -280,16 +408,24 @@ onion:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\onion2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\onion1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\onion2
+            growth-required: 180                    
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\onion3
-            growth-required: 75                    
-            growth-chance: 20
+            growth-required: 240
+            growth-chance: 3
 radish:
     item-source: MoreMaterials\KFood_Core\radish_seed
-    block-source: MoreMaterials\KFood_Core\radish1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\radish:
             amount: 1        
@@ -297,16 +433,24 @@ radish:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\radish2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\radish1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\radish2
+            growth-required: 180                        
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\radish3
-            growth-required: 75                        
-            growth-chance: 20
+            growth-required: 240                        
+            growth-chance: 3
 soybean:
     item-source: MoreMaterials\KFood_Core\soybean_seed
-    block-source: MoreMaterials\KFood_Core\soybean1 
+    block-source: MoreMaterials\KFood_Core\plantedseed 
     drops: 
         MoreMaterials\KFood_Core\soybean:
             amount: 1        
@@ -314,16 +458,24 @@ soybean:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\soybean2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\soybean1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\soybean2
+            growth-required: 180       
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\soybean3
-            growth-required: 75       
-            growth-chance: 20
+            growth-required: 240       
+            growth-chance: 3
 sweetpepper:
     item-source: MoreMaterials\KFood_Core\sweetpepper_seed
-    block-source: MoreMaterials\KFood_Core\sweetpepper1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\sweetpepper:
             amount: 1        
@@ -331,16 +483,24 @@ sweetpepper:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\sweetpepper2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\sweetpepper1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\sweetpepper2
+            growth-required: 180                      
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\sweetpepper3
-            growth-required: 75                      
-            growth-chance: 20
+            growth-required: 240                      
+            growth-chance: 3
 sweetpotato:
     item-source: MoreMaterials\KFood_Core\sweetpotato_seed
-    block-source: MoreMaterials\KFood_Core\sweetpotato1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\sweetpotato:
             amount: 1        
@@ -348,16 +508,24 @@ sweetpotato:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\sweetpotato2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\sweetpotato1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\sweetpotato2
+            growth-required: 180                  
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\sweetpotato3
-            growth-required: 75                  
-            growth-chance: 20
+            growth-required: 240                  
+            growth-chance: 3
 tomato:
     item-source: MoreMaterials\KFood_Core\tomato_seed
-    block-source: MoreMaterials\KFood_Core\tomato1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\tomato:
             amount: 1        
@@ -365,16 +533,24 @@ tomato:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\tomato2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\tomato1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\tomato2
+            growth-required: 180                     
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\tomato3
-            growth-required: 75                     
-            growth-chance: 20
+            growth-required: 240                     
+            growth-chance: 3
 turnip:
     item-source: MoreMaterials\KFood_Core\turnip_seed
-    block-source: MoreMaterials\KFood_Core\turnip1 
+    block-source: MoreMaterials\KFood_Core\plantedseed
     drops: 
         MoreMaterials\KFood_Core\turnip:
             amount: 1        
@@ -382,10 +558,18 @@ turnip:
             amount: 2    
     stages:
         1:
-            source: MoreMaterials\KFood_Core\turnip2
-            growth-required: 35
-            growth-chance: 20
+            source: MoreMaterials\KFood_Core\plantedseed
+            growth-required: 60
+            growth-chance: 3
         2:
+            source: MoreMaterials\KFood_Core\turnip1
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\turnip2
+            growth-required: 180                        
+            growth-chance: 3
+        4:
             source: MoreMaterials\KFood_Core\turnip3
-            growth-required: 75                        
-            growth-chance: 20
+            growth-required: 240                        
+            growth-chance: 3

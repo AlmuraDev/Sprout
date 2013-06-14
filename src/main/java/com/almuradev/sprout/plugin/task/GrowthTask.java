@@ -116,9 +116,7 @@ public class GrowthTask implements Runnable {
 				}
 				if (!sprout.isFullyGrown()) {
 					final Stage current = sprout.getCurrentStage();
-					if (current == null) {
-						// TODO: Throw Error.
-					} else {
+					if (current != null) {
 						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) { 
 							final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
 							final Material material = Material.getMaterial(current.getName());
