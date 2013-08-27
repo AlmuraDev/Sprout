@@ -36,7 +36,11 @@ public interface Sprout {
 
 	public String getPlacementSource();
 
+	public int getDamage();
+
 	public Fertilizer getFertilizerSource();
+
+	public Light getLight();
 
 	public Stage getStage(int level);
 
@@ -45,8 +49,6 @@ public interface Sprout {
 	public Stage getCurrentStage();
 
 	public boolean isFullyGrown();
-
-	public Light getLight();
 
 	public Map<Integer, Stage> getStages();
 

@@ -22,5 +22,7 @@ package com.almuradev.sprout.api.mech;
 public interface VariableHolder {
 	public boolean allowFertilization();
 
+	public boolean damagePlayer();
+
 	public boolean dropItemSourceOnGrassBreak();
 }

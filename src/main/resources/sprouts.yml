@@ -29,6 +29,10 @@ bellpepper:
             source: MoreMaterials\KFood_Core\bellpepper3
             growth-required: 240
             growth-chance: 3
+    variables:
+        allow-fertilization: true;
+        damage-player: false
+        drop-item-source-on-grass-break: true
 bambooshoot:
     item-source: MoreMaterials\KFood_Core\bambooshoot_seed
     block-source: MoreMaterials\KFood_Core\plantedseed

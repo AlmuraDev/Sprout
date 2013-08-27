@@ -131,6 +131,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			if (Material.getMaterial(initialPlacementSource.toUpperCase()) == null && MaterialData.getCustomItem(initialPlacementSource) == null) {
 				plugin.getLogger().warning("The placement source [" + initialPlacementSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 			}
+			//DAMAGE
+			final int damage = nameSection.getInt("damage", 0);
 			//LIGHT
 			final int minLightLevel = nameSection.getInt("min-light-level", 0);
 			final int maxLightLevel = nameSection.getInt("max-light-level", 15);
@@ -167,6 +169,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
 					plugin.getLogger().warning("The stage [" + index + "] source [" + stageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 				}
+				//LIGHT
 				final int minStageLightLevel = indexSection.getInt("min-light-level", minLightLevel);
 				final int maxStageLightLevel = indexSection.getInt("max-light-level", maxLightLevel);
 				//FERTILIZER
@@ -175,21 +178,24 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				if (!fertilizerSource.equals("bonemeal") && Material.getMaterial(fertilizerStageSource.toUpperCase()) == null && MaterialData.getCustomItem(fertilizerStageSource) == null) {
 					plugin.getLogger().warning("The stage fertilizer [" + index + "] source [" + fertilizerStageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
 				}
-				final int fertilizerStageAmount = indexSection.getInt("fertilizer-amount", 1);
+				final int fertilizerStageAmount = indexSection.getInt("fertilizer-amount", fertilizerAmount);
 				//GROWTH
 				final int growthTicks = indexSection.getInt("growth-required", 350);
 				final int growthChance = indexSection.getInt("growth-chance", 10);
-				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount), new SproutLight(minStageLightLevel, maxStageLightLevel)));
+				//DAMAGE
+				final int stageDamage = indexSection.getInt("damage", damage);
+				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount), new SproutLight(minStageLightLevel, maxStageLightLevel), stageDamage));
 			}
 			//VARIABLES
 			final ConfigurationSection variablesSection = nameSection.getConfigurationSection("variables");
 			final SimpleSprout created;
 			if (variablesSection != null) {
 				final boolean allowFertilization = variablesSection.getBoolean("allow-fertilization", true);
+				final boolean damagePlayer = variablesSection.getBoolean("damage-player", false);
 				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, new SproutVariableHolder(allowFertilization, dropItemSourceOnGrassBreak));
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak));
 			} else {
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops);
 			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);

@@ -28,6 +28,7 @@ import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
+import com.almuradev.sprout.plugin.task.LocatableSprout;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 import com.rits.cloning.Cloner;
@@ -38,6 +39,7 @@ import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -54,6 +56,7 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -157,6 +160,7 @@ public class SproutListener implements Listener {
 		// Prevent trampling from other Entities
 		final Material mat = event.getBlock().getType();
 		final Entity entity = event.getEntity();
+		//TODO: Placement source is generic, not limited to soil or soulsand
 		if (entity instanceof LivingEntity && (mat == Material.SOIL || mat == Material.SOUL_SAND)) {
 			event.setCancelled(true);
 		}
@@ -282,7 +286,7 @@ public class SproutListener implements Listener {
 						}
 						if (((SimpleSprout) dispersed).isOnLastStage()) {
 							((SimpleSprout) dispersed).setFullyGrown(true);
-							((SaveThread) ThreadRegistry.get(interacter.getWorld().getName())).QUEUE.offer(new GrowthTask.SproutInfo(interacted.getX(), interacted.getY(), interacted.getZ(), (SimpleSprout) dispersed));
+							((SaveThread) ThreadRegistry.get(interacter.getWorld().getName())).QUEUE.offer(new LocatableSprout(interacted.getX(), interacted.getY(), interacted.getZ(), (SimpleSprout) dispersed));
 						}
 					}
 					decrementInventory(interacter, interacter.getItemInHand());
@@ -339,6 +343,26 @@ public class SproutListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onWorldSave(WorldSaveEvent event) {
 		GrowthTask.unschedule(event.getWorld());
+	}
+
+	@EventHandler(priority = EventPriority.LOW)
+	public void onPlayerMove(PlayerMoveEvent event) {
+		//No Entity move :/
+		final Player player = event.getPlayer();
+		final Location location = player.getLocation();
+		final Sprout sprout = plugin.getWorldRegistry().get(player.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+		if (sprout == null) {
+			return;
+		}
+		if (sprout.getVariables().damagePlayer()) {
+			int damage;
+			if (sprout.getCurrentStage() == null) {
+				damage = sprout.getDamage();
+			} else {
+				damage = sprout.getCurrentStage().getDamage();
+			}
+			player.damage(damage);
+		}
 	}
 
 	private void disperseDrops(final Sprout sprout, final Block block) {

@@ -23,20 +23,27 @@ import com.almuradev.sprout.api.mech.VariableHolder;
 
 public class SproutVariableHolder implements VariableHolder {
 	private final boolean allowFertilization;
+	private final boolean damagePlayer;
 	private final boolean dropItemSourceOnGrassBreak;
 
 	public SproutVariableHolder() {
-		this(true, true);
+		this(true, false, true);
 	}
 
-	public SproutVariableHolder(final boolean allowsFertilization, final boolean dropItemSourceOnGrassBreak) {
+	public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak) {
 		this.allowFertilization = allowsFertilization;
+		this.damagePlayer = damagePlayer;
 		this.dropItemSourceOnGrassBreak = dropItemSourceOnGrassBreak;
 	}
 
 	@Override
 	public boolean allowFertilization() {
 		return allowFertilization;
+	}
+
+	@Override
+	public boolean damagePlayer() {
+		return damagePlayer;
 	}
 
 	@Override
@@ -51,11 +58,11 @@ public class SproutVariableHolder implements VariableHolder {
 		}
 
 		final SproutVariableHolder other = (SproutVariableHolder) obj;
-		return other.allowFertilization == allowFertilization && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak;
+		return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak;
 	}
 
 	@Override
 	public String toString() {
-		return "Variables{allowsFertilization= " + allowFertilization + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + "}";
+		return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + "}";
 	}
 }

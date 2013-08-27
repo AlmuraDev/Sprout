@@ -43,6 +43,7 @@ public class SimpleSprout implements Sprout {
 	private final String placementSource;
 	private final Fertilizer fertilizerSource;
 	private final Light light;
+	private final int damage;
 	private int age = 0;
 	private final VariableHolder variable;
 	//Fertilization
@@ -50,11 +51,11 @@ public class SimpleSprout implements Sprout {
 	//Optimizations
 	private boolean fullyGrown;
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		this(name, blockSource, itemSource, placementSource, fertilizerSource, light, stages, drops, new SproutVariableHolder());
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops) {
+		this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, new SproutVariableHolder());
 	}
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, VariableHolder variable) {
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, VariableHolder variable) {
 		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
@@ -63,6 +64,7 @@ public class SimpleSprout implements Sprout {
 		this.blockSource = blockSource;
 		this.itemSource = itemSource;
 		this.placementSource = placementSource;
+		this.damage = damage;
 		this.fertilizerSource = fertilizerSource;
 		this.light = light;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
@@ -85,6 +87,11 @@ public class SimpleSprout implements Sprout {
 	@Override
 	public String getPlacementSource() {
 		return placementSource;
+	}
+
+	@Override
+	public int getDamage() {
+		return damage;
 	}
 
 	@Override

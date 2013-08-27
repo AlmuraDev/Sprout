@@ -29,18 +29,25 @@ public class SimpleStage implements Stage {
 	private final int growthChance;
 	private final Fertilizer fertilizer;
 	private final Light light;
+	private final int damage;
 
-	public SimpleStage(final String name, final int growthRequired, final int growthChance, final Fertilizer fertilizer, final Light light) {
+	public SimpleStage(final String name, final int growthRequired, final int growthChance, final Fertilizer fertilizer, final Light light, int damage) {
 		this.name = name;
 		this.growthRequired = growthRequired;
 		this.growthChance = growthChance;
 		this.fertilizer = fertilizer;
 		this.light = light;
+		this.damage = damage;
 	}
 
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public int getDamage() {
+		return damage;
 	}
 
 	@Override
@@ -75,6 +82,6 @@ public class SimpleStage implements Stage {
 
 	@Override
 	public String toString() {
-		return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light;
+		return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", damage= " + damage + "}";
 	}
 }
