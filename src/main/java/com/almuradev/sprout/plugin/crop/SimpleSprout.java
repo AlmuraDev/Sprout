@@ -44,6 +44,8 @@ public class SimpleSprout implements Sprout {
 	private final Fertilizer fertilizerSource;
 	private final Light light;
 	private final int damage;
+	private final Collection<Drop> bonus;
+	private final int bonusChance;
 	private int age = 0;
 	private final VariableHolder variable;
 	//Fertilization
@@ -51,11 +53,11 @@ public class SimpleSprout implements Sprout {
 	//Optimizations
 	private boolean fullyGrown;
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, new SproutVariableHolder());
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus) {
+		this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, new SproutVariableHolder());
 	}
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, VariableHolder variable) {
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, VariableHolder variable) {
 		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
@@ -69,6 +71,8 @@ public class SimpleSprout implements Sprout {
 		this.light = light;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
+		this.bonusChance = bonusChance;
+		this.bonus = bonus == null ? Collections.<Drop>emptyList() : drops;
 		this.variable = variable;
 		this.fertilizerUsed = new LinkedHashMap<>();
 		fullyGrown = false;
@@ -170,6 +174,16 @@ public class SimpleSprout implements Sprout {
 	}
 
 	@Override
+	public int getBonusChance() {
+		return bonusChance;
+	}
+
+	@Override
+	public Collection<Drop> getBonus() {
+		return bonus;
+	}
+
+	@Override
 	public int getAge() {
 		return age;
 	}
@@ -191,7 +205,7 @@ public class SimpleSprout implements Sprout {
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops + "}, bonusChance= " + bonusChance + "bonusDrops= {" + bonus + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
 	}
 
 	public void setFullyGrown(boolean fullyGrown) {

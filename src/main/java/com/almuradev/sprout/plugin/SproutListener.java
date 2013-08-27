@@ -108,7 +108,14 @@ public class SproutListener implements Listener {
 			block.setType(Material.AIR);
 			((SpoutBlock) block).setCustomBlock(null);
 			plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
-			disperseDrops(event.getPlayer(), sprout, block);
+
+			//Lets roll a dice for a bonus!
+			if (!sprout.getBonus().isEmpty() && RANDOM.nextInt(sprout.getBonusChance() - 1 + 1) + 1 == sprout.getBonusChance()) {
+				event.getPlayer().sendMessage("[Sprout] You get a bonus drop!");
+				disperseDrops(event.getPlayer(), sprout, block, true);
+			} else {
+				disperseDrops(event.getPlayer(), sprout, block, false);
+			}
 		}
 	}
 
@@ -134,7 +141,7 @@ public class SproutListener implements Listener {
 
 			to.setType(Material.AIR);
 			((SpoutBlock) to).setCustomBlock(null);
-			disperseDrops(sprout, to);
+			disperseDrops(sprout, to, false);
 		}
 	}
 
@@ -152,7 +159,7 @@ public class SproutListener implements Listener {
 		event.setCancelled(true);
 		physics.setType(Material.AIR);
 		((SpoutBlock) physics).setCustomBlock(null);
-		disperseDrops(sprout, physics);
+		disperseDrops(sprout, physics, false);
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -365,11 +372,11 @@ public class SproutListener implements Listener {
 		}
 	}
 
-	private void disperseDrops(final Sprout sprout, final Block block) {
-		disperseDrops(null, sprout, block);
+	private void disperseDrops(final Sprout sprout, final Block block, final boolean bonus) {
+		disperseDrops(null, sprout, block, bonus);
 	}
 
-	private void disperseDrops(final Player cause, final Sprout sprout, final Block block) {
+	private void disperseDrops(final Player cause, final Sprout sprout, final Block block, final boolean bonus) {
 		if (cause != null && cause.getGameMode() == GameMode.CREATIVE) {
 			return;
 		}
@@ -389,6 +396,23 @@ public class SproutListener implements Listener {
 			} else {
 				final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
 				block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
+			}
+		}
+		if (bonus) {
+			final Collection<Drop> bonusDrops = sprout.getBonus();
+			for (Drop drop : bonusDrops) {
+				final org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(drop.getName());
+				if (customMaterial == null) {
+					final Material material = Material.getMaterial(drop.getName().toUpperCase());
+					if (material == null) {
+						continue;
+					}
+					final ItemStack stack = new ItemStack(material, drop.getAmount());
+					block.getWorld().dropItemNaturally(block.getLocation(), stack);
+				} else {
+					final SpoutItemStack spoutStack = new SpoutItemStack(customMaterial, drop.getAmount());
+					block.getWorld().dropItemNaturally(block.getLocation(), spoutStack);
+				}
 			}
 		}
 	}

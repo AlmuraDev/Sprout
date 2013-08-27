@@ -143,6 +143,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				plugin.getLogger().warning("The fertilizer source [" + fertilizerSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
 			}
 			final int fertilizerAmount = nameSection.getInt("fertilizer-amount", 1);
+			final int bonusChance = nameSection.getInt("bonus-chance", 1);
 			//DROPS
 			final ConfigurationSection dropsSection = nameSection.getConfigurationSection("drops");
 			final List<Drop> drops = new LinkedList<>();
@@ -150,6 +151,18 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final String dropSource = replacePeriodWithBackslash(rawDropSource);
 				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
 					plugin.getLogger().warning("The drop source [" + dropSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+				}
+				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
+				final int amount = dropSection.getInt("amount", 0);
+				drops.add(new SproutDrop(dropSource, amount));
+			}
+			//BONUS DROPS
+			final ConfigurationSection bonusDropsSection = dropsSection.getConfigurationSection("bonus");
+			final List<Drop> bonusDrops = new LinkedList<>();
+			for (String rawDropSource : bonusDropsSection.getKeys(false)) {
+				final String dropSource = replacePeriodWithBackslash(rawDropSource);
+				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
+					plugin.getLogger().warning("The bonus drop source [" + dropSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
 				}
 				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
 				final int amount = dropSection.getInt("amount", 0);
@@ -193,9 +206,9 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final boolean allowFertilization = variablesSection.getBoolean("allow-fertilization", true);
 				final boolean damagePlayer = variablesSection.getBoolean("damage-player", false);
 				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak));
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak));
 			} else {
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops);
 			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);

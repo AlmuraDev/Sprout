@@ -54,6 +54,10 @@ public interface Sprout {
 
 	public Collection<Drop> getDrops();
 
+	public int getBonusChance();
+
+	public Collection<Drop> getBonus();
+
 	public int getAge();
 
 	public VariableHolder getVariables();

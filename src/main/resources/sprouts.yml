@@ -2,13 +2,18 @@ bellpepper:
     item-source: MoreMaterials\KFood_Core\bellpepper_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
-    min-light-level: 0
-    max-light-level: 15
+    min-light-level: 4
+    max-light-level: 7
+    bonus-chance: 50
     drops: 
         MoreMaterials\KFood_Core\bellpepper:
             amount: 1        
         MoreMaterials\KFood_Core\bellpepper_seed:
-            amount: 2    
+            amount: 2
+        bonus:
+            MoreMaterials\KFood_Core\bellpepper_seed:
+                amount: 2
+
     stages:
         1:
             source: MoreMaterials\KFood_Core\plantedseed
