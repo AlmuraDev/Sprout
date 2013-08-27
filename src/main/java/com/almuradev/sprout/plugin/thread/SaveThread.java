@@ -23,15 +23,15 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
-import com.almuradev.sprout.plugin.task.GrowthTask;
+import com.almuradev.sprout.plugin.task.LocatableSprout;
 
 public class SaveThread extends Thread {
-	public final LinkedBlockingDeque<GrowthTask.SproutInfo> QUEUE = new LinkedBlockingDeque();
+	public final LinkedBlockingDeque<LocatableSprout> QUEUE = new LinkedBlockingDeque();
 	final SproutPlugin plugin;
 	final String world;
 
 	public SaveThread(final SproutPlugin plugin, final String world) {
-		super ("Save Thread - " + world);
+		super("Save Thread - " + world);
 		setDaemon(true);
 		this.plugin = plugin;
 		this.world = world;
@@ -41,7 +41,7 @@ public class SaveThread extends Thread {
 	public void run() {
 		while (!this.isInterrupted()) {
 			try {
-				final GrowthTask.SproutInfo sprout = QUEUE.take();
+				final LocatableSprout sprout = QUEUE.take();
 				if (sprout != null) {
 					((SimpleSQLStorage) plugin.getStorage()).add(world, sprout.getLocation(), sprout.getSprout());
 				}

@@ -19,7 +19,6 @@
  */
 package com.almuradev.sprout.plugin;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.almuradev.sprout.api.io.SQLMode;
@@ -32,10 +31,11 @@ import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 
+import org.mcstats.MetricsLite;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.MetricsLite;
 
 public class SproutPlugin extends JavaPlugin {
 	private final FlatFileStorage flatFileStorage;
@@ -43,7 +43,6 @@ public class SproutPlugin extends JavaPlugin {
 	private final SimpleSproutRegistry sproutRegistry;
 	private final SimpleSQLStorage sqlStorage;
 	private final SimpleWorldRegistry worldRegistry;
-    private File customConfigFile = null;
 
 	public SproutPlugin() {
 		configuration = new SproutConfiguration(this);
@@ -62,7 +61,6 @@ public class SproutPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		configuration.onEnable();
-		saveDefaultSproutConfig();
 		final SQLMode mode = configuration.getMode();
 		if (mode == null) {
 			getLogger().severe("SQL mode within config.yml is not a valid SQL mode (h2, sqlite, mysql). Disabling...");
@@ -85,7 +83,7 @@ public class SproutPlugin extends JavaPlugin {
 		try {
 			MetricsLite metrics = new MetricsLite(this);
 			metrics.start();
-		} catch (IOException e) {
+		} catch (IOException ignore) {
 		}
 	}
 
@@ -104,13 +102,4 @@ public class SproutPlugin extends JavaPlugin {
 	public WorldRegistry getWorldRegistry() {
 		return worldRegistry;
 	}
-	
-    public void saveDefaultSproutConfig() {
-        if (customConfigFile == null) {
-            customConfigFile = new File(getDataFolder(), "sprouts.yml");
-        }
-        if (!customConfigFile.exists()) {            
-             this.saveResource("sprouts.yml", false);             
-         }
-    }   
 }

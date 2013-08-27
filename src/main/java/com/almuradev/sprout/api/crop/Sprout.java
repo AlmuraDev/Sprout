@@ -24,6 +24,7 @@ import java.util.Map;
 
 import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
+import com.almuradev.sprout.api.mech.Light;
 import com.almuradev.sprout.api.mech.VariableHolder;
 
 public interface Sprout {
@@ -44,6 +45,8 @@ public interface Sprout {
 	public Stage getCurrentStage();
 
 	public boolean isFullyGrown();
+
+	public Light getLight();
 
 	public Map<Integer, Stage> getStages();
 

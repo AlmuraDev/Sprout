@@ -26,6 +26,7 @@ import java.util.Random;
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.io.WorldRegistry;
+import com.almuradev.sprout.api.mech.Light;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 import com.almuradev.sprout.plugin.SproutPlugin;
@@ -117,7 +118,7 @@ public class GrowthTask implements Runnable {
 				if (!sprout.isFullyGrown()) {
 					final Stage current = sprout.getCurrentStage();
 					if (current != null) {
-						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) { 
+						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
 							final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
 							final Material material = Material.getMaterial(current.getName());
 
@@ -129,6 +130,11 @@ public class GrowthTask implements Runnable {
 
 							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
 							if (block.getChunk().isLoaded()) {
+								final Light light = current.getLight();
+								// (A <= B <= C) inclusive
+								if (!(light.getMinimumBlockLight() <= block.getLightFromBlocks() && block.getLightFromBlocks() <= light.getMaximumBlockLight())) {
+									return true;
+								}
 								if (customBlock != null) {
 									if (((SpoutBlock) block).getCustomBlock() != customBlock) {
 										((SpoutBlock) block).setCustomBlock(customBlock);
@@ -139,7 +145,7 @@ public class GrowthTask implements Runnable {
 								}
 								if (sprout.isOnLastStage()) {
 									sprout.setFullyGrown(true);
-									((SaveThread) ThreadRegistry.get(world)).QUEUE.offer(new SproutInfo(l, sprout));
+									((SaveThread) ThreadRegistry.get(world)).QUEUE.offer(new LocatableSprout(l, sprout));
 								} else {
 									sprout.grow((int) delta);
 								}
@@ -150,27 +156,5 @@ public class GrowthTask implements Runnable {
 				return true;
 			}
 		});
-	}
-
-	public static class SproutInfo {
-		private final long location;
-		private final Sprout sprout;
-
-		public SproutInfo(final long location, final SimpleSprout sprout) {
-			this.location = location;
-			this.sprout = sprout;
-		}
-
-		public SproutInfo(final int x, final int y, final int z, final SimpleSprout sprout) {
-			this(Int21TripleHashed.key(x, y, z), sprout);
-		}
-
-		public long getLocation() {
-			return location;
-		}
-
-		public Sprout getSprout() {
-			return sprout;
-		}
 	}
 }

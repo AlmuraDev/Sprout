@@ -21,7 +21,6 @@ package com.almuradev.sprout.plugin;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import com.almuradev.sprout.api.io.SQLMode;
@@ -42,11 +41,12 @@ public class SproutConfiguration {
 		if (!new File(plugin.getDataFolder(), "config.yml").exists()) {
 			plugin.saveDefaultConfig();
 		}
+		if (!new File(plugin.getDataFolder(), "sprouts.yml").exists()) {
+			plugin.saveResource("sprouts.yml", true);
+		}
 		config = plugin.getConfig();
 		//Parse in worlds
-		final Iterator<String> worldIterator = config.getKeys(false).iterator();
-		while (worldIterator.hasNext()) {
-			final String world = worldIterator.next();
+		for (String world : config.getKeys(false)) {
 			final ConfigurationSection worldSection = config.getConfigurationSection(world);
 			growthIntervals.put(world, worldSection.getLong("growth-interval", 350));
 		}

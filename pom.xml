@@ -5,7 +5,7 @@
 	<!-- Project information -->
 	<groupId>com.almuradev</groupId>
 	<artifactId>sprout</artifactId>
-	<version>1.3</version>
+	<version>1.3.1-SNAPSHOT</version>
 	<name>Sprout</name>
 	<url>http://www.almuradev.com</url>
 	<description>The premiere Spoutcraft farming emulation system.</description>

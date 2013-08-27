@@ -30,10 +30,9 @@ import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
+import com.almuradev.sprout.api.mech.Light;
 import com.almuradev.sprout.api.mech.VariableHolder;
 import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
-
-import org.bukkit.Bukkit;
 
 public class SimpleSprout implements Sprout {
 	private final String name;
@@ -43,6 +42,7 @@ public class SimpleSprout implements Sprout {
 	private final String itemSource;
 	private final String placementSource;
 	private final Fertilizer fertilizerSource;
+	private final Light light;
 	private int age = 0;
 	private final VariableHolder variable;
 	//Fertilization
@@ -50,11 +50,11 @@ public class SimpleSprout implements Sprout {
 	//Optimizations
 	private boolean fullyGrown;
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Map<Integer, Stage> stages, Collection<Drop> drops) {
-		this(name, blockSource, itemSource, placementSource, fertilizerSource, stages, drops, new SproutVariableHolder());
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops) {
+		this(name, blockSource, itemSource, placementSource, fertilizerSource, light, stages, drops, new SproutVariableHolder());
 	}
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Map<Integer, Stage> stages, Collection<Drop> drops, VariableHolder variable) {
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, VariableHolder variable) {
 		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
@@ -64,6 +64,7 @@ public class SimpleSprout implements Sprout {
 		this.itemSource = itemSource;
 		this.placementSource = placementSource;
 		this.fertilizerSource = fertilizerSource;
+		this.light = light;
 		this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
 		this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
 		this.variable = variable;
@@ -121,30 +122,34 @@ public class SimpleSprout implements Sprout {
 		if (age >= last.getGrowthRequired()) {
 			return last;
 		}
-		
+
 		Stage middle = null;
-		
+
 		//Stage 0-n (some middle stage)
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-				
-			if (age >= entry.getValue().getGrowthRequired()) {		
+
+			if (age >= entry.getValue().getGrowthRequired()) {
 				continue;
 			}
-		
-			if (entry.getKey()>=2) {
-				middle = getPreviousStage(entry.getKey());  
+
+			if (entry.getKey() >= 2) {
+				middle = getPreviousStage(entry.getKey());
 			} else {
 				middle = entry.getValue();
 			}
 			break;
-			
-		}	
+		}
 		return middle;
 	}
 
 	@Override
 	public boolean isFullyGrown() {
 		return fullyGrown;
+	}
+
+	@Override
+	public Light getLight() {
+		return light;
 	}
 
 	@Override
@@ -179,7 +184,7 @@ public class SimpleSprout implements Sprout {
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops.toString() + "}, stages= {" + stages.toString() + "}, " + variable.toString() + ", fullyGrown= " + fullyGrown + "}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
 	}
 
 	public void setFullyGrown(boolean fullyGrown) {
@@ -195,14 +200,17 @@ public class SimpleSprout implements Sprout {
 		Integer id = null;
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
 			if (entry.getValue().equals(current)) {
-				id = entry.getKey().intValue();
+				id = entry.getKey();
 				break;
 			}
 		}
 
+		if (id == null) {
+			return null;
+		}
 		//Find the next id
 		for (Map.Entry<Integer, Stage> entry : stages.entrySet()) {
-			if (entry.getKey().intValue() == (id + 1)) {
+			if (entry.getKey() == (id + 1)) {
 				return entry.getValue();
 			}
 		}
@@ -216,10 +224,10 @@ public class SimpleSprout implements Sprout {
 	}
 
 	public Stage getPreviousStage(int current) {
-		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());		
-		return entryList.get(current-2).getValue();
+		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+		return entryList.get(current - 2).getValue();
 	}
-	
+
 	public Stage getLastStage() {
 		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
 		return entryList.get(entryList.size() - 1).getValue();

@@ -20,6 +20,7 @@
 package com.almuradev.sprout.api.crop;
 
 import com.almuradev.sprout.api.mech.Fertilizer;
+import com.almuradev.sprout.api.mech.Light;
 
 public interface Stage {
 	public String getName();
@@ -29,4 +30,6 @@ public interface Stage {
 	public int getGrowthChance();
 
 	public Fertilizer getFertilizer();
+
+	public Light getLight();
 }

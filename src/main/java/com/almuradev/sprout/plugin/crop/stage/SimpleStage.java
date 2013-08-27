@@ -21,18 +21,21 @@ package com.almuradev.sprout.plugin.crop.stage;
 
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Fertilizer;
+import com.almuradev.sprout.api.mech.Light;
 
 public class SimpleStage implements Stage {
 	private final String name;
 	private final int growthRequired;
 	private final int growthChance;
 	private final Fertilizer fertilizer;
+	private final Light light;
 
-	public SimpleStage(final String name, final int growthRequired, final int growthChance, final Fertilizer fertilizer) {
+	public SimpleStage(final String name, final int growthRequired, final int growthChance, final Fertilizer fertilizer, final Light light) {
 		this.name = name;
 		this.growthRequired = growthRequired;
 		this.growthChance = growthChance;
 		this.fertilizer = fertilizer;
+		this.light = light;
 	}
 
 	@Override
@@ -56,17 +59,22 @@ public class SimpleStage implements Stage {
 	}
 
 	@Override
+	public Light getLight() {
+		return light;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof SimpleStage)) {
 			return false;
 		}
 
 		final SimpleStage other = (SimpleStage) obj;
-		return other.getName().equals(name) && other.getGrowthRequired() == growthRequired && other.getGrowthChance() == growthChance && other.getFertilizer().equals(fertilizer);
+		return other.getName().equals(name);
 	}
 
 	@Override
 	public String toString() {
-		return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= {" + fertilizer.toString() + "}}";
+		return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light;
 	}
 }
