@@ -356,7 +356,7 @@ public class SproutListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		//No Entity move :/
 		final Player player = event.getPlayer();
-		final Location location = player.getLocation();
+		final Location location = player.getLocation().subtract(0, 1, 0);
 		final Sprout sprout = plugin.getWorldRegistry().get(player.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
 		if (sprout == null) {
 			return;
