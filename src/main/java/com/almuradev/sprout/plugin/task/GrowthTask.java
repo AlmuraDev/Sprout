@@ -131,10 +131,16 @@ public class GrowthTask implements Runnable {
 							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
 							if (block.getChunk().isLoaded()) {
 								final Light light = current.getLight();
-								// (A <= B <= C) inclusive
-								if (!(light.getMinimumBlockLight() <= block.getLightFromBlocks() && block.getLightFromBlocks() <= light.getMaximumBlockLight())) {
+								// (A <= B <= C) block inclusive
+								if (!sprout.getVariables().ignoreBlockLight() && !(light.getMinimumBlockLight() <= block.getLightFromBlocks() && block.getLightFromBlocks() <= light.getMaximumBlockLight())) {
 									return true;
 								}
+
+								// (A <= B <= C) sky inclusive
+								if (!sprout.getVariables().ignoreSkyLight() && !(light.getMinimumSkyLight() <= block.getLightFromSky() && block.getLightFromSky() <= light.getMaximumSkyLight())) {
+									return true;
+								}
+
 								if (customBlock != null) {
 									if (((SpoutBlock) block).getCustomBlock() != customBlock) {
 										((SpoutBlock) block).setCustomBlock(customBlock);

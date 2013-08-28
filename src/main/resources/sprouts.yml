@@ -3,8 +3,10 @@ bellpepper:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-light-level: 7
-    max-light-level: 15
+    min-block-light-level: 7
+    max-block-light-level: 15
+    min-sky-light-level: 7
+    max-sky-light-level: 15
     bonus-chance: 50
     drops: 
         MoreMaterials\KFood_Core\bellpepper:
@@ -19,8 +21,10 @@ bellpepper:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-light-level: 7
-            max-light-level: 15
+            min-block-light-level: 7
+            max-block-light-level: 15
+            min-sky-light-level: 7
+            max-sky-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
@@ -51,6 +55,8 @@ bellpepper:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
+        ignore-block-light: true
+        ignore-sky-light: false
 bambooshoot:
     item-source: MoreMaterials\KFood_Core\bambooshoot_seed
     block-source: MoreMaterials\KFood_Core\plantedseed

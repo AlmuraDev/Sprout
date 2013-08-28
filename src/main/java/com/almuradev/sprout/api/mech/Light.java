@@ -22,5 +22,9 @@ package com.almuradev.sprout.api.mech;
 public interface Light {
 	public int getMinimumBlockLight();
 
+	public int getMinimumSkyLight();
+
 	public int getMaximumBlockLight();
+
+	public int getMaximumSkyLight();
 }

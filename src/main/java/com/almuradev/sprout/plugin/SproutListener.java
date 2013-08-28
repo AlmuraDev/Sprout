@@ -39,7 +39,6 @@ import me.zford.jobs.bukkit.actions.BlockActionInfo;
 import me.zford.jobs.config.ConfigManager;
 import me.zford.jobs.container.ActionType;
 import me.zford.jobs.container.JobsPlayer;
-
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
@@ -92,7 +91,7 @@ public class SproutListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
-		final Block block = event.getBlock();		
+		final Block block = event.getBlock();
 		//Handle random seed drops. To preserve a possible LongGrass base block, make sure it isn't a custom block
 		//TODO Configurable.
 		if (event.getBlock().getType() == Material.LONG_GRASS && !(((SpoutBlock) block).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10 - 1) + 1 == 7) { //10% chance for a drop.
@@ -111,16 +110,18 @@ public class SproutListener implements Listener {
 				return;
 			}
 			event.setCancelled(true);
-			
+
 			//Handle Jobs Integration Calls
 			if (SproutConfiguration.jobsEnabled && sprout.isFullyGrown()) {
-				me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());           
+				me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
 
-				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative())
+				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative()) {
 					return;
+				}
 
-				if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld()))
+				if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
 					return;
+				}
 
 				// restricted area multiplier
 				double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
@@ -363,13 +364,15 @@ public class SproutListener implements Listener {
 					}
 					//Handle Jobs Integration Calls
 					if (SproutConfiguration.jobsEnabled) {
-						me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());           
+						me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
 
-						if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative())
+						if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative()) {
 							return;
+						}
 
-						if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld()))
+						if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
 							return;
+						}
 
 						// restricted area multiplier
 						double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
@@ -377,7 +380,6 @@ public class SproutListener implements Listener {
 						Jobs.action(jPlayer, new BlockActionInfo(where, ActionType.PLACE), multiplier);
 						System.out.println("Block Place: " + where.getType().toString());
 					}
-					
 				}
 		}
 	}

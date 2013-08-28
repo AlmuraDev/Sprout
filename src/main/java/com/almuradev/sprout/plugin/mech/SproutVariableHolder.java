@@ -25,15 +25,19 @@ public class SproutVariableHolder implements VariableHolder {
 	private final boolean allowFertilization;
 	private final boolean damagePlayer;
 	private final boolean dropItemSourceOnGrassBreak;
+	private final boolean ignoreBlockLight;
+	private final boolean ignoreSkyLight;
 
 	public SproutVariableHolder() {
-		this(true, false, true);
+		this(true, false, true, false, false);
 	}
 
-	public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak) {
+	public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak, final boolean ignoreBlockLight, final boolean ignoreSkyLight) {
 		this.allowFertilization = allowsFertilization;
 		this.damagePlayer = damagePlayer;
 		this.dropItemSourceOnGrassBreak = dropItemSourceOnGrassBreak;
+		this.ignoreBlockLight = ignoreBlockLight;
+		this.ignoreSkyLight = ignoreSkyLight;
 	}
 
 	@Override
@@ -52,17 +56,27 @@ public class SproutVariableHolder implements VariableHolder {
 	}
 
 	@Override
+	public boolean ignoreBlockLight() {
+		return ignoreBlockLight;
+	}
+
+	@Override
+	public boolean ignoreSkyLight() {
+		return ignoreSkyLight;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof SproutVariableHolder)) {
 			return false;
 		}
 
 		final SproutVariableHolder other = (SproutVariableHolder) obj;
-		return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak;
+		return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak && other.ignoreBlockLight == ignoreBlockLight && other.ignoreSkyLight == ignoreSkyLight;
 	}
 
 	@Override
 	public String toString() {
-		return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + "}";
+		return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + ", ignoreBlockLight= " + ignoreBlockLight + ", ignoreSkyLight= " + ignoreSkyLight + "}";
 	}
 }
