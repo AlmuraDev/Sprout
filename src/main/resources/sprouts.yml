@@ -31,24 +31,30 @@ bellpepper:
             source: MoreMaterials\KFood_Core\bellpepper1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-light-level: 7
-            max-light-level: 15
+            min-block-light-level: 7
+            max-block-light-level: 15
+            min-sky-light-level: 7
+            max-sky-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\bellpepper2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-light-level: 7
-            max-light-level: 15
+            min-block-light-level: 7
+            max-block-light-level: 15
+            min-sky-light-level: 7
+            max-sky-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\bellpepper3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-light-level: 7
-            max-light-level: 15
+            min-block-light-level: 7
+            max-block-light-level: 15
+            min-sky-light-level: 7
+            max-sky-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
