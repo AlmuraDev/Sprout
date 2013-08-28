@@ -378,7 +378,6 @@ public class SproutListener implements Listener {
 						double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
 						JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
 						Jobs.action(jPlayer, new BlockActionInfo(where, ActionType.PLACE), multiplier);
-						plugin.getLogger().info("Block Place: " + where.getType().toString());
 					}
 				}
 		}
