@@ -25,3 +25,5 @@ sql:
     port: 25566
     username: minecraft
     password: minecraft
+jobs:
+    enabled: true

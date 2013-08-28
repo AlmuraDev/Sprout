@@ -33,6 +33,13 @@ import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 import com.rits.cloning.Cloner;
 
+import me.zford.jobs.Jobs;
+import me.zford.jobs.bukkit.BukkitUtil;
+import me.zford.jobs.bukkit.actions.BlockActionInfo;
+import me.zford.jobs.config.ConfigManager;
+import me.zford.jobs.container.ActionType;
+import me.zford.jobs.container.JobsPlayer;
+
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
@@ -85,7 +92,7 @@ public class SproutListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
-		final Block block = event.getBlock();
+		final Block block = event.getBlock();		
 		//Handle random seed drops. To preserve a possible LongGrass base block, make sure it isn't a custom block
 		//TODO Configurable.
 		if (event.getBlock().getType() == Material.LONG_GRASS && !(((SpoutBlock) block).getBlockType() instanceof CustomBlock) && RANDOM.nextInt(10 - 1) + 1 == 7) { //10% chance for a drop.
@@ -104,12 +111,28 @@ public class SproutListener implements Listener {
 				return;
 			}
 			event.setCancelled(true);
+			
+			//Handle Jobs Integration Calls
+			if (SproutConfiguration.jobsEnabled && sprout.isFullyGrown()) {
+				me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());           
 
+				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative())
+					return;
+
+				if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld()))
+					return;
+
+				// restricted area multiplier
+				double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
+				JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
+				Jobs.action(jPlayer, new BlockActionInfo(block, ActionType.BREAK), multiplier);
+			}
+			// Clear current location
 			block.setType(Material.AIR);
 			((SpoutBlock) block).setCustomBlock(null);
 			plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
-			//Lets roll a dice for a bonus!
+			//Lets roll a dice for a bonus!			
 			if (!sprout.getBonus().isEmpty() && RANDOM.nextInt(sprout.getBonusChance() - 1 + 1) + 1 == sprout.getBonusChance()) {
 				event.getPlayer().sendMessage("[Sprout] You get a bonus drop!");
 				disperseDrops(event.getPlayer(), sprout, block, true);
@@ -338,6 +361,23 @@ public class SproutListener implements Listener {
 						interacter.playSound(interacter.getLocation(), Sound.DIG_GRASS, 1.0F, 0.7936508F);
 						decrementInventory(interacter, held);
 					}
+					//Handle Jobs Integration Calls
+					if (SproutConfiguration.jobsEnabled) {
+						me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());           
+
+						if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative())
+							return;
+
+						if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld()))
+							return;
+
+						// restricted area multiplier
+						double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
+						JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
+						Jobs.action(jPlayer, new BlockActionInfo(where, ActionType.PLACE), multiplier);
+						System.out.println("Block Place: " + where.getType().toString());
+					}
+					
 				}
 		}
 	}

@@ -159,14 +159,16 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			//BONUS DROPS
 			final ConfigurationSection bonusDropsSection = dropsSection.getConfigurationSection("bonus");
 			final List<Drop> bonusDrops = new LinkedList<>();
-			for (String rawDropSource : bonusDropsSection.getKeys(false)) {
-				final String dropSource = replacePeriodWithBackslash(rawDropSource);
-				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
-					plugin.getLogger().warning("The bonus drop source [" + dropSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+				if (bonusDropsSection != null) {
+				for (String rawDropSource : bonusDropsSection.getKeys(false)) {
+					final String dropSource = replacePeriodWithBackslash(rawDropSource);
+					if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
+						plugin.getLogger().warning("The bonus drop source [" + dropSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+					}
+					final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
+					final int amount = dropSection.getInt("amount", 0);
+					drops.add(new SproutDrop(dropSource, amount));
 				}
-				final ConfigurationSection dropSection = dropsSection.getConfigurationSection(rawDropSource);
-				final int amount = dropSection.getInt("amount", 0);
-				drops.add(new SproutDrop(dropSource, amount));
 			}
 			//STAGES
 			final ConfigurationSection stagesSection = nameSection.getConfigurationSection("stages");
