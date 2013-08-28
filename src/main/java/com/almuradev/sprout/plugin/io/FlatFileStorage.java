@@ -189,8 +189,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				//LIGHT
 				final int minStageBlockLightLevel = indexSection.getInt("min-block-light-level", minBlockLightLevel);
 				final int maxStageBlockLightLevel = indexSection.getInt("max-block-light-level", maxBlockLightLevel);
-				final int minStageSkyLightLevel = nameSection.getInt("min-sky-light-level", minSkyLightLevel);
-				final int maxStageSkyLightLevel = nameSection.getInt("max-sky-light-level", maxSkyLightLevel);
+				final int minStageSkyLightLevel = indexSection.getInt("min-sky-light-level", minSkyLightLevel);
+				final int maxStageSkyLightLevel = indexSection.getInt("max-sky-light-level", maxSkyLightLevel);
 				//FERTILIZER
 				final String fertilizerRawStageSource = indexSection.getString("fertilizer-source", fertilizerRawSource);
 				final String fertilizerStageSource = replacePeriodWithBackslash(fertilizerRawStageSource);
