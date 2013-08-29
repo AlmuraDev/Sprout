@@ -151,6 +151,9 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			final List<Drop> drops = new LinkedList<>();
 			for (String rawDropSource : dropsSection.getKeys(false)) {
 				final String dropSource = replacePeriodWithBackslash(rawDropSource);
+				if (dropSource.equals("bonus")) {
+					continue;
+				}
 				if (Material.getMaterial(dropSource) == null && MaterialData.getCustomItem(dropSource) == null) {
 					plugin.getLogger().warning("The drop source [" + dropSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
 				}
