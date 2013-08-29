@@ -44,6 +44,7 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -113,20 +114,15 @@ public class SproutListener implements Listener {
 
 			//Handle Jobs Integration Calls
 			if (SproutConfiguration.jobsEnabled && sprout.isFullyGrown()) {
-				me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
-
-				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative()) {
-					return;
+				me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());				
+				if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+					if (Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
+						// restricted area multiplier
+						double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
+						JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
+						Jobs.action(jPlayer, new BlockActionInfo(block, ActionType.BREAK), multiplier);
+					}
 				}
-
-				if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
-					return;
-				}
-
-				// restricted area multiplier
-				double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
-				JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
-				Jobs.action(jPlayer, new BlockActionInfo(block, ActionType.BREAK), multiplier);
 			}
 			// Clear current location
 			block.setType(Material.AIR);
@@ -134,11 +130,13 @@ public class SproutListener implements Listener {
 			plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
 			//Lets roll a dice for a bonus!			
-			if (!sprout.getBonus().isEmpty() && RANDOM.nextInt(sprout.getBonusChance() - 1 + 1) + 1 == sprout.getBonusChance()) {
-				event.getPlayer().sendMessage("[Sprout] You get a bonus drop!");
-				disperseDrops(event.getPlayer(), sprout, block, true);
-			} else {
-				disperseDrops(event.getPlayer(), sprout, block, false);
+			if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+				if (!sprout.getBonus().isEmpty() && RANDOM.nextInt(sprout.getBonusChance() - 1 + 1) + 1 == sprout.getBonusChance()) {
+					event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " You get a bonus drop!");
+					disperseDrops(event.getPlayer(), sprout, block, true);
+				} else {
+					disperseDrops(event.getPlayer(), sprout, block, false);
+				}
 			}
 		}
 	}
@@ -201,185 +199,180 @@ public class SproutListener implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		// Prevent trampling
 		switch (event.getAction()) {
-			case PHYSICAL:
-				final Block top = event.getClickedBlock().getRelative((BlockFace.UP));
-				if (plugin.getWorldRegistry().contains(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
-					event.setCancelled(true);
-					break;
+		case PHYSICAL:
+			final Block top = event.getClickedBlock().getRelative((BlockFace.UP));
+			if (plugin.getWorldRegistry().contains(top.getWorld().getName(), top.getX(), top.getY(), top.getZ())) {
+				event.setCancelled(true);
+				break;
+			}
+		case RIGHT_CLICK_BLOCK:
+			// Exit this method if player clicking on chest, door, button, etc.
+			switch (event.getClickedBlock().getType()) {
+			case CHEST:
+			case WOOD_BUTTON:
+			case STONE_BUTTON:
+			case WOOD_DOOR:
+			case IRON_DOOR:
+			case IRON_DOOR_BLOCK:
+			case FENCE_GATE:
+			case BREWING_STAND:
+			case FURNACE:
+			case BURNING_FURNACE:
+				return;
+			}
+			final Player interacter = event.getPlayer();
+			final ItemStack held = event.getItem();
+			if (held == null) {
+				return;
+			}
+			final Block interacted = event.getClickedBlock();
+			final SpoutItemStack stack = new SpoutItemStack(held);
+			final String name;
+
+			//Grab the material's name
+			if (stack.isCustomItem()) {
+				name = stack.getMaterial().getNotchianName();
+			} else {
+				name = held.getType().name();
+			}
+
+			//Fertilizer logic
+			final Sprout dispersed = plugin.getWorldRegistry().get(interacted.getWorld().getName(), interacted.getX(), interacted.getY(), interacted.getZ());
+			if (dispersed != null && !((SimpleSprout) dispersed).isOnLastStage() && dispersed.getVariables().allowFertilization()) {
+				final Stage current = dispersed.getCurrentStage();
+				final Fertilizer fertilizer;
+				if (current == null) {
+					fertilizer = dispersed.getFertilizerSource();
+				} else {
+					fertilizer = current.getFertilizer();
 				}
-			case RIGHT_CLICK_BLOCK:
-				// Exit this method if player clicking on chest, door, button, etc.
-				switch (event.getClickedBlock().getType()) {
-					case CHEST:
-					case WOOD_BUTTON:
-					case STONE_BUTTON:
-					case WOOD_DOOR:
-					case IRON_DOOR:
-					case IRON_DOOR_BLOCK:
-					case FENCE_GATE:
-					case BREWING_STAND:
-					case FURNACE:
-					case BURNING_FURNACE:
-						return;
+
+				boolean toContinue = false;
+
+				//Bonemeal
+				if ((fertilizer.getName().equals("bonemeal") && name.equals("INK_SACK"))) {
+					toContinue = true;
+					//Custom Block
+				} else if (fertilizer.getName().endsWith(name)) {
+					toContinue = true;
+					//Material
+				} else if (fertilizer.getName().equals(name.toLowerCase())) {
+					toContinue = true;
 				}
-				final Player interacter = event.getPlayer();
-				final ItemStack held = event.getItem();
-				if (held == null) {
+				if (!toContinue) {
 					return;
 				}
-				final Block interacted = event.getClickedBlock();
-				final SpoutItemStack stack = new SpoutItemStack(held);
-				final String name;
+				event.setCancelled(true);
 
-				//Grab the material's name
-				if (stack.isCustomItem()) {
-					name = stack.getMaterial().getNotchianName();
-				} else {
-					name = held.getType().name();
-				}
+				Stage stage;
+				org.getspout.spoutapi.material.Material customMaterial;
+				Material material;
 
-				//Fertilizer logic
-				final Sprout dispersed = plugin.getWorldRegistry().get(interacted.getWorld().getName(), interacted.getX(), interacted.getY(), interacted.getZ());
-				if (dispersed != null && !((SimpleSprout) dispersed).isOnLastStage() && dispersed.getVariables().allowFertilization()) {
-					final Stage current = dispersed.getCurrentStage();
-					final Fertilizer fertilizer;
-					if (current == null) {
-						fertilizer = dispersed.getFertilizerSource();
+				//Stage 0
+				if (current == null) {
+					stage = dispersed.getStage(1);
+					customMaterial = MaterialData.getCustomBlock(stage.getName());
+					material = Material.getMaterial(stage.getName().toUpperCase());
+
+					if (customMaterial == null) {
+						if (material == null) {
+							return;
+						}
+					}
+
+					//Grow to stage 1
+					((SimpleSprout) dispersed).grow(stage);
+
+					if (customMaterial != null) {
+						((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
 					} else {
-						fertilizer = current.getFertilizer();
+						((SpoutBlock) interacted).setCustomBlock(null);
+						interacted.setType(material);
 					}
-
-					boolean toContinue = false;
-
-					//Bonemeal
-					if ((fertilizer.getName().equals("bonemeal") && name.equals("INK_SACK"))) {
-						toContinue = true;
-						//Custom Block
-					} else if (fertilizer.getName().endsWith(name)) {
-						toContinue = true;
-						//Material
-					} else if (fertilizer.getName().equals(name.toLowerCase())) {
-						toContinue = true;
-					}
-					if (!toContinue) {
+				} else {
+					stage = ((SimpleSprout) dispersed).getNextStage();
+					if (stage == null) {
 						return;
 					}
-					event.setCancelled(true);
+					customMaterial = MaterialData.getCustomBlock(stage.getName());
+					material = Material.getMaterial(stage.getName().toUpperCase());
 
-					Stage stage;
-					org.getspout.spoutapi.material.Material customMaterial;
-					Material material;
-
-					//Stage 0
-					if (current == null) {
-						stage = dispersed.getStage(1);
-						customMaterial = MaterialData.getCustomBlock(stage.getName());
-						material = Material.getMaterial(stage.getName().toUpperCase());
-
-						if (customMaterial == null) {
-							if (material == null) {
-								return;
-							}
+					if (customMaterial == null) {
+						if (material == null) {
+							return;
 						}
+					}
 
-						//Grow to stage 1
-						((SimpleSprout) dispersed).grow(stage);
-
+					((SimpleSprout) dispersed).incrementFertilizerCount(stage);
+					if (((SimpleSprout) dispersed).getFertilizerCount(stage) >= fertilizer.getAmount()) {
 						if (customMaterial != null) {
 							((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
 						} else {
 							((SpoutBlock) interacted).setCustomBlock(null);
 							interacted.setType(material);
 						}
-					} else {
-						stage = ((SimpleSprout) dispersed).getNextStage();
-						if (stage == null) {
-							return;
-						}
-						customMaterial = MaterialData.getCustomBlock(stage.getName());
-						material = Material.getMaterial(stage.getName().toUpperCase());
-
-						if (customMaterial == null) {
-							if (material == null) {
-								return;
-							}
-						}
-
-						((SimpleSprout) dispersed).incrementFertilizerCount(stage);
-						if (((SimpleSprout) dispersed).getFertilizerCount(stage) >= fertilizer.getAmount()) {
-							if (customMaterial != null) {
-								((SpoutBlock) interacted).setCustomBlock((CustomBlock) customMaterial);
-							} else {
-								((SpoutBlock) interacted).setCustomBlock(null);
-								interacted.setType(material);
-							}
-							((SimpleSprout) dispersed).grow(stage);
-						}
-						if (((SimpleSprout) dispersed).isOnLastStage()) {
-							((SimpleSprout) dispersed).setFullyGrown(true);
-							((SaveThread) ThreadRegistry.get(interacter.getWorld().getName())).QUEUE.offer(new LocatableSprout(interacted.getX(), interacted.getY(), interacted.getZ(), (SimpleSprout) dispersed));
-						}
+						((SimpleSprout) dispersed).grow(stage);
 					}
-					decrementInventory(interacter, interacter.getItemInHand());
-				} else {
-					//Non-fertilizer logic
-					final Sprout sprout = plugin.getSproutRegistry().find(name);
-					if (sprout == null) {
-						return;
-					}
-
-					event.setCancelled(true);
-
-					//Block face logic. TODO Customizable?
-					if (event.getBlockFace() != BlockFace.UP) {
-						return;
-					}
-
-					//Soil logic
-					org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
-					Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
-					if (customMaterial == null || !(((SpoutBlock) interacted).getBlockType() instanceof CustomBlock) || !((CustomBlock) ((SpoutBlock) interacted).getBlockType()).getFullName().equalsIgnoreCase(customMaterial.getName())) {
-						if (material == null || !interacted.getType().equals(material)) {
-							return;
-						}
-					}
-
-					final Block where = interacted.getRelative(BlockFace.UP);
-
-					//Make sure where we are setting the block won't be already obstructed.
-					if (where.getType() != Material.AIR) {
-						return;
-					}
-
-					final Sprout toInject = cloner.deepClone(sprout);
-					plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-					plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-
-					//Set material
-					if (stack.isCustomItem()) {
-						final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
-						((SpoutBlock) where).setCustomBlock(block);
-						interacter.playSound(interacter.getLocation(), Sound.DIG_GRASS, 1.0F, 0.7936508F);
-						decrementInventory(interacter, held);
-					}
-					//Handle Jobs Integration Calls
-					if (SproutConfiguration.jobsEnabled) {
-						me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
-
-						if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ConfigManager.getJobsConfiguration().payInCreative()) {
-							return;
-						}
-
-						if (!Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
-							return;
-						}
-
-						// restricted area multiplier
-						double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
-						JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
-						Jobs.action(jPlayer, new BlockActionInfo(where, ActionType.PLACE), multiplier);
+					if (((SimpleSprout) dispersed).isOnLastStage()) {
+						((SimpleSprout) dispersed).setFullyGrown(true);
+						((SaveThread) ThreadRegistry.get(interacter.getWorld().getName())).QUEUE.offer(new LocatableSprout(interacted.getX(), interacted.getY(), interacted.getZ(), (SimpleSprout) dispersed));
 					}
 				}
+				decrementInventory(interacter, interacter.getItemInHand());
+			} else {
+				//Non-fertilizer logic
+				final Sprout sprout = plugin.getSproutRegistry().find(name);
+				if (sprout == null) {
+					return;
+				}
+
+				event.setCancelled(true);
+
+				//Block face logic. TODO Customizable?
+				if (event.getBlockFace() != BlockFace.UP) {
+					return;
+				}
+
+				//Soil logic
+				org.getspout.spoutapi.material.Material customMaterial = MaterialData.getCustomItem(sprout.getPlacementSource());
+				Material material = Material.getMaterial(sprout.getPlacementSource().toUpperCase());
+				if (customMaterial == null || !(((SpoutBlock) interacted).getBlockType() instanceof CustomBlock) || !((CustomBlock) ((SpoutBlock) interacted).getBlockType()).getFullName().equalsIgnoreCase(customMaterial.getName())) {
+					if (material == null || !interacted.getType().equals(material)) {
+						return;
+					}
+				}
+
+				final Block where = interacted.getRelative(BlockFace.UP);
+
+				//Make sure where we are setting the block won't be already obstructed.
+				if (where.getType() != Material.AIR) {
+					return;
+				}
+
+				final Sprout toInject = cloner.deepClone(sprout);
+				plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+				plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+
+				//Set material
+				if (stack.isCustomItem()) {
+					final CustomBlock block = MaterialData.getCustomBlock(sprout.getBlockSource());
+					((SpoutBlock) where).setCustomBlock(block);
+					interacter.playSound(interacter.getLocation(), Sound.DIG_GRASS, 1.0F, 0.7936508F);
+					decrementInventory(interacter, held);
+				}
+				//Handle Jobs Integration Calls
+				if (SproutConfiguration.jobsEnabled) {
+					me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
+					if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+						if (Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
+							// restricted area multiplier
+							double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
+							JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
+							Jobs.action(jPlayer, new BlockActionInfo(where, ActionType.PLACE), multiplier);
+						}
+					}
+				}
+			}
 		}
 	}
 
