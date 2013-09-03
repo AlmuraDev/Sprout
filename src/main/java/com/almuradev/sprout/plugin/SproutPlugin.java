@@ -25,6 +25,7 @@ import com.almuradev.sprout.api.io.SQLMode;
 import com.almuradev.sprout.api.io.SQLStorage;
 import com.almuradev.sprout.api.io.SproutRegistry;
 import com.almuradev.sprout.api.io.WorldRegistry;
+import com.almuradev.sprout.plugin.command.SproutExecutor;
 import com.almuradev.sprout.plugin.io.FlatFileStorage;
 import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
 import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
@@ -85,6 +86,7 @@ public class SproutPlugin extends JavaPlugin {
 			metrics.start();
 		} catch (IOException ignore) {
 		}
+		getCommand("sprout").setExecutor(new SproutExecutor(this));
 	}
 
 	public SproutConfiguration getConfiguration() {

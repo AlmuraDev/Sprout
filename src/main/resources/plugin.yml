@@ -8,3 +8,21 @@ main: ${mainClass}
 depend: [Spout]
 softdepend: [MoreMaterials]
 load: POSTWORLD
+
+commands:
+   sprout:
+      description: Access all sprout commands.
+      usage: /sprout <command> [additional arguments]
+
+permissions:
+    sprout.*:
+        description: Gives access to all sprout commands
+        children:
+            sprout.clear: true
+            sprout.info: true
+    sprout.clear:
+        description: Gives access to the clear command which clears sprouts from world(s).
+        default: op
+    sprout.info:
+        description: Gives access to the info command which lists the amount of sprouts per world(s).
+        default: op

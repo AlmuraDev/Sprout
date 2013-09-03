@@ -52,6 +52,12 @@ public class ThreadRegistry {
 		}
 	}
 
+	public static void stop() {
+		for (final Thread thread : THREADS) {
+			thread.interrupt();
+		}
+	}
+
 	public static void start(final String world) {
 		final Thread thread = get(world);
 		if (thread == null) {

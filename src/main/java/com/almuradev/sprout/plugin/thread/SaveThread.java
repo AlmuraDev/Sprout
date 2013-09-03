@@ -21,7 +21,6 @@ package com.almuradev.sprout.plugin.thread;
 
 import java.util.concurrent.LinkedBlockingDeque;
 
-import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
@@ -31,8 +30,8 @@ import com.almuradev.sprout.plugin.task.LocatableSprout;
 import org.bukkit.Location;
 
 public class SaveThread extends Thread {
-	public final LinkedBlockingDeque<LocatableSprout> ADD = new LinkedBlockingDeque();
-	public final LinkedBlockingDeque<LocatableSprout> REMOVE = new LinkedBlockingDeque();
+	public final LinkedBlockingDeque<LocatableSprout> ADD = new LinkedBlockingDeque<>();
+	public final LinkedBlockingDeque<LocatableSprout> REMOVE = new LinkedBlockingDeque<>();
 	final SproutPlugin plugin;
 	final String world;
 
@@ -80,10 +79,21 @@ public class SaveThread extends Thread {
 		ADD.offer(new LocatableSprout(x, y, z, sprout));
 	}
 
-	public void remove (final Location location, final SimpleSprout sprout) {
+	public void remove(final Location location, final SimpleSprout sprout) {
 		if (location == null || sprout == null) {
 			return;
 		}
 		REMOVE.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
+	}
+
+	public void remove(long location, final SimpleSprout sprout) {
+		if (sprout == null) {
+			return;
+		}
+		REMOVE.offer(new LocatableSprout(location, sprout));
+	}
+
+	public void clear() {
+		ADD.clear();
 	}
 }
