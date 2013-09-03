@@ -67,14 +67,23 @@ public class SaveThread extends Thread {
 	}
 
 	public void add(final Location location, final SimpleSprout sprout) {
+		if (location == null || sprout == null) {
+			return;
+		}
 		ADD.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
 	}
 
 	public void add(final int x, final int y, final int z, final SimpleSprout sprout) {
+		if (sprout == null) {
+			return;
+		}
 		ADD.offer(new LocatableSprout(x, y, z, sprout));
 	}
 
 	public void remove (final Location location, final SimpleSprout sprout) {
+		if (location == null || sprout == null) {
+			return;
+		}
 		REMOVE.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
 	}
 }
