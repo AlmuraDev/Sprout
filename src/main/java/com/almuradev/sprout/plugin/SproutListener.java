@@ -28,7 +28,6 @@ import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
-import com.almuradev.sprout.plugin.task.LocatableSprout;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 import com.rits.cloning.Cloner;
@@ -69,7 +68,7 @@ import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class SproutListener implements Listener {
-	private static final Random RANDOM = new Random();
+	private final Random RANDOM = new Random();
 	private final SproutPlugin plugin;
 	private final Cloner cloner = new Cloner();
 
@@ -107,6 +106,7 @@ public class SproutListener implements Listener {
 		} else {
 			//Handle breaking of Sprouts
 			final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+			((SaveThread) ThreadRegistry.get(block.getWorld().getName())).remove(block.getLocation(), (SimpleSprout) sprout);
 			if (sprout == null) {
 				return;
 			}
@@ -127,7 +127,6 @@ public class SproutListener implements Listener {
 			// Clear current location
 			block.setType(Material.AIR);
 			((SpoutBlock) block).setCustomBlock(null);
-			plugin.getStorage().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
 			//Lets roll a dice for a bonus!			
 			if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
@@ -155,10 +154,10 @@ public class SproutListener implements Listener {
 			disperseSeeds(sprout, to);
 		} else {
 			final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
+			((SaveThread) ThreadRegistry.get(to.getWorld().getName())).remove(to.getLocation(), (SimpleSprout) sprout);
 			if (sprout == null) {
 				return;
 			}
-			plugin.getStorage().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
 			event.setCancelled(true);
 
 			to.setType(Material.AIR);
@@ -174,10 +173,10 @@ public class SproutListener implements Listener {
 			return;
 		}
 		final Sprout sprout = plugin.getWorldRegistry().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
+		((SaveThread) ThreadRegistry.get(physics.getWorld().getName())).remove(physics.getLocation(), (SimpleSprout) sprout);
 		if (sprout == null) {
 			return;
 		}
-		plugin.getStorage().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
 		event.setCancelled(true);
 		physics.setType(Material.AIR);
 		((SpoutBlock) physics).setCustomBlock(null);
@@ -315,7 +314,7 @@ public class SproutListener implements Listener {
 						}
 						if (((SimpleSprout) dispersed).isOnLastStage()) {
 							((SimpleSprout) dispersed).setFullyGrown(true);
-							((SaveThread) ThreadRegistry.get(interacter.getWorld().getName())).QUEUE.offer(new LocatableSprout(interacted.getX(), interacted.getY(), interacted.getZ(), (SimpleSprout) dispersed));
+							((SaveThread) ThreadRegistry.get(interacted.getWorld().getName())).add(interacted.getLocation(), (SimpleSprout) dispersed);
 						}
 					}
 					decrementInventory(interacter, interacter.getItemInHand());
@@ -351,7 +350,7 @@ public class SproutListener implements Listener {
 
 					final Sprout toInject = cloner.deepClone(sprout);
 					plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-					plugin.getStorage().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
+					((SaveThread) ThreadRegistry.get(interacted.getWorld().getName())).add(interacted.getLocation(), (SimpleSprout) toInject);
 
 					//Set material
 					if (stack.isCustomItem()) {

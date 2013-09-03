@@ -21,12 +21,18 @@ package com.almuradev.sprout.plugin.thread;
 
 import java.util.concurrent.LinkedBlockingDeque;
 
+import com.almuradev.sprout.api.crop.Sprout;
+import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.plugin.SproutPlugin;
+import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
 import com.almuradev.sprout.plugin.task.LocatableSprout;
 
+import org.bukkit.Location;
+
 public class SaveThread extends Thread {
-	public final LinkedBlockingDeque<LocatableSprout> QUEUE = new LinkedBlockingDeque();
+	public final LinkedBlockingDeque<LocatableSprout> ADD = new LinkedBlockingDeque();
+	public final LinkedBlockingDeque<LocatableSprout> REMOVE = new LinkedBlockingDeque();
 	final SproutPlugin plugin;
 	final String world;
 
@@ -41,13 +47,34 @@ public class SaveThread extends Thread {
 	public void run() {
 		while (!this.isInterrupted()) {
 			try {
-				final LocatableSprout sprout = QUEUE.take();
-				if (sprout != null) {
-					((SimpleSQLStorage) plugin.getStorage()).add(world, sprout.getLocation(), sprout.getSprout());
+				final LocatableSprout toAdd = ADD.take();
+				//Handle additions
+				if (toAdd != null) {
+					//Only add what isn't being removed
+					if (!REMOVE.contains(toAdd)) {
+						((SimpleSQLStorage) plugin.getStorage()).add(world, toAdd.getLocation(), toAdd.getSprout());
+					}
+				}
+				//Handle removals
+				final LocatableSprout toRemove = REMOVE.take();
+				if (toRemove != null) {
+					((SimpleSQLStorage) plugin.getStorage()).remove(world, toRemove.getLocation());
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void add(final Location location, final SimpleSprout sprout) {
+		ADD.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
+	}
+
+	public void add(final int x, final int y, final int z, final SimpleSprout sprout) {
+		ADD.offer(new LocatableSprout(x, y, z, sprout));
+	}
+
+	public void remove (final Location location, final SimpleSprout sprout) {
+		REMOVE.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
 	}
 }

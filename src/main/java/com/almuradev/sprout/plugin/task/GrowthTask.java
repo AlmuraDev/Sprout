@@ -111,7 +111,10 @@ public class GrowthTask implements Runnable {
 			@Override
 			public boolean execute(long l, Object o) {
 				final SimpleSprout sprout = (SimpleSprout) o;
-				final Sprout live = plugin.getWorldRegistry().get(world, Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
+				final int x = Int21TripleHashed.key1(l);
+				final int y = Int21TripleHashed.key2(l);
+				final int z = Int21TripleHashed.key3(l);
+				final Sprout live = plugin.getWorldRegistry().get(world, x, y, z);
 				if (!sprout.equals(live)) {
 					return true;
 				}
@@ -128,7 +131,7 @@ public class GrowthTask implements Runnable {
 								}
 							}
 
-							final Block block = Bukkit.getWorld(world).getBlockAt(Int21TripleHashed.key1(l), Int21TripleHashed.key2(l), Int21TripleHashed.key3(l));
+							final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 							if (block.getChunk().isLoaded()) {
 								final Light light = current.getLight();
 								// (A <= B <= C) block inclusive
@@ -151,7 +154,7 @@ public class GrowthTask implements Runnable {
 								}
 								if (sprout.isOnLastStage()) {
 									sprout.setFullyGrown(true);
-									((SaveThread) ThreadRegistry.get(world)).QUEUE.offer(new LocatableSprout(l, sprout));
+									((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
 								} else {
 									sprout.grow((int) delta);
 								}
