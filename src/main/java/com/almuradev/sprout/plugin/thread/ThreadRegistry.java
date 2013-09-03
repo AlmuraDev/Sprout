@@ -55,6 +55,9 @@ public class ThreadRegistry {
 	public static void stop() {
 		for (final Thread thread : THREADS) {
 			thread.interrupt();
+			if (thread instanceof SaveThread) {
+				((SaveThread) thread).flush();
+			}
 		}
 	}
 

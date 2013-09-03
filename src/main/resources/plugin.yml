@@ -12,7 +12,7 @@ load: POSTWORLD
 commands:
    sprout:
       description: Access all sprout commands.
-      usage: /sprout <command> [additional arguments]
+      usage: /sprout <clear, info> [world]
 
 permissions:
     sprout.*:

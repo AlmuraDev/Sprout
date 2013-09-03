@@ -31,6 +31,7 @@ import com.almuradev.sprout.plugin.io.SimpleSQLStorage;
 import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
+import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 
 import org.mcstats.MetricsLite;
 
@@ -56,7 +57,7 @@ public class SproutPlugin extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		GrowthTask.stop(this);
-		sqlStorage.dropAll();
+		ThreadRegistry.stop();
 	}
 
 	@Override

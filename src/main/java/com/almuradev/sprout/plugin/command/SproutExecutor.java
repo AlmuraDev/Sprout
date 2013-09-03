@@ -50,49 +50,51 @@ public class SproutExecutor implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-		switch (command.getName().toLowerCase()) {
-			case "clear":
-				if (!checkPermission(sender, "sprout.clear")) {
-					sender.sendMessage("[Sprout] You do not have permission!");
-					return true;
-				}
-				switch (args.length) {
-					case 0:
-						plugin.getServer().getScheduler().cancelTasks(plugin);
-						for (World world : Bukkit.getWorlds()) {
+		if (args.length > 0) {
+			switch (args[0].toLowerCase()) {
+				case "clear":
+					if (!checkPermission(sender, "sprout.clear")) {
+						sender.sendMessage("[Sprout] You do not have permission!");
+						return true;
+					}
+					switch (args.length) {
+						case 1:
+							plugin.getServer().getScheduler().cancelTasks(plugin);
+							for (World world : Bukkit.getWorlds()) {
+								clear(sender, world);
+							}
+							return true;
+						case 2:
+							final World world = Bukkit.getWorld(args[1]);
+							if (world == null) {
+								sender.sendMessage("[Sprout] World [" + args[1] + "] is not a valid world.");
+								return true;
+							}
+							plugin.getServer().getScheduler().cancelTasks(plugin);
 							clear(sender, world);
-						}
-						return true;
-					case 1:
-						final World world = Bukkit.getWorld(args[0]);
-						if (world == null) {
-							sender.sendMessage("[Sprout] World [" + args[0] + "] is not a valid world.");
 							return true;
-						}
-						plugin.getServer().getScheduler().cancelTasks(plugin);
-						clear(sender, world);
+					}
+				case "info":
+					if (!checkPermission(sender, "sprout.info")) {
+						sender.sendMessage("[Sprout] You do not have permission!");
 						return true;
-				}
-			case "info":
-				if (!checkPermission(sender, "sprout.info")) {
-					sender.sendMessage("[Sprout] You do not have permission!");
-					return true;
-				}
-				switch (args.length) {
-					case 0:
-						for (World world : Bukkit.getWorlds()) {
+					}
+					switch (args.length) {
+						case 1:
+							for (World world : Bukkit.getWorlds()) {
+								info(sender, world);
+							}
+							return true;
+						case 2:
+							final World world = Bukkit.getWorld(args[1]);
+							if (world == null) {
+								sender.sendMessage("[Sprout] World [" + args[1] + "] is not a valid world.");
+								return true;
+							}
 							info(sender, world);
-						}
-						return true;
-					case 1:
-						final World world = Bukkit.getWorld(args[0]);
-						if (world == null) {
-							sender.sendMessage("[Sprout] World [" + args[0] + "] is not a valid world.");
 							return true;
-						}
-						info(sender, world);
-						return true;
-				}
+					}
+			}
 		}
 		return false;
 	}
@@ -104,6 +106,7 @@ public class SproutExecutor implements CommandExecutor {
 	private void clear(final CommandSender sender, final World world) {
 		final TInt21TripleObjectHashMap registry = plugin.getWorldRegistry().get(world.getName());
 		if (registry == null) {
+			sender.sendMessage("[Sprout] World [" + world.getName() + "] has no registry of sprouts.");
 			return;
 		}
 		sender.sendMessage("[Sprout] Clearing all sprouts for world [" + world.getName() + "]. WARNING: THIS MAY TAKE SOME TIME...");
@@ -126,7 +129,7 @@ public class SproutExecutor implements CommandExecutor {
 			}
 		});
 		registry.clear();
-		GrowthTask.schedule(plugin, world);
+		GrowthTask.schedule(plugin, false, world);
 	}
 
 	private void info(final CommandSender sender, final World world) {

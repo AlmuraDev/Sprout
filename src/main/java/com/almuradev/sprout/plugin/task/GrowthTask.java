@@ -60,7 +60,7 @@ public class GrowthTask implements Runnable {
 		worldRegistry = plugin.getWorldRegistry();
 	}
 
-	public static void schedule(Plugin plugin, World... worlds) {
+	public static void schedule(Plugin plugin, boolean log, World... worlds) {
 		final SproutPlugin sproutPlugin = (SproutPlugin) plugin;
 		for (World world : worlds) {
 			if (world == null) {
@@ -70,12 +70,18 @@ public class GrowthTask implements Runnable {
 			if (l == null) {
 				continue;
 			}
-			plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
+			if (log) {
+				plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
+			}
 			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
 
 			//Async saving
 			ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName())).start();
 		}
+	}
+
+	public static void schedule(Plugin plugin, World... worlds) {
+		schedule(plugin, true, worlds);
 	}
 
 	public static void unschedule(World... worlds) {
@@ -154,10 +160,10 @@ public class GrowthTask implements Runnable {
 								}
 								if (sprout.isOnLastStage()) {
 									sprout.setFullyGrown(true);
-									((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
 								} else {
 									sprout.grow((int) delta);
 								}
+								((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
 							}
 						}
 					}

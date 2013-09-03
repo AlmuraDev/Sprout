@@ -106,7 +106,10 @@ public class SproutListener implements Listener {
 		} else {
 			//Handle breaking of Sprouts
 			final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
-			((SaveThread) ThreadRegistry.get(block.getWorld().getName())).remove(block.getLocation(), (SimpleSprout) sprout);
+			final SaveThread thread = ((SaveThread) ThreadRegistry.get(block.getWorld().getName()));
+			if (thread != null) {
+				thread.remove(block.getLocation(), (SimpleSprout) sprout);
+			}
 			if (sprout == null) {
 				return;
 			}
@@ -154,7 +157,10 @@ public class SproutListener implements Listener {
 			disperseSeeds(sprout, to);
 		} else {
 			final Sprout sprout = plugin.getWorldRegistry().remove(to.getWorld().getName(), to.getX(), to.getY(), to.getZ());
-			((SaveThread) ThreadRegistry.get(to.getWorld().getName())).remove(to.getLocation(), (SimpleSprout) sprout);
+			final SaveThread thread = ((SaveThread) ThreadRegistry.get(to.getWorld().getName()));
+			if (thread != null) {
+				thread.remove(to.getLocation(), (SimpleSprout) sprout);
+			}
 			if (sprout == null) {
 				return;
 			}
@@ -173,7 +179,10 @@ public class SproutListener implements Listener {
 			return;
 		}
 		final Sprout sprout = plugin.getWorldRegistry().remove(physics.getWorld().getName(), physics.getX(), physics.getY(), physics.getZ());
-		((SaveThread) ThreadRegistry.get(physics.getWorld().getName())).remove(physics.getLocation(), (SimpleSprout) sprout);
+		final SaveThread thread = ((SaveThread) ThreadRegistry.get(physics.getWorld().getName()));
+		if (thread != null) {
+			thread.remove(physics.getLocation(), (SimpleSprout) sprout);
+		}
 		if (sprout == null) {
 			return;
 		}
@@ -314,7 +323,10 @@ public class SproutListener implements Listener {
 						}
 						if (((SimpleSprout) dispersed).isOnLastStage()) {
 							((SimpleSprout) dispersed).setFullyGrown(true);
-							((SaveThread) ThreadRegistry.get(interacted.getWorld().getName())).add(interacted.getLocation(), (SimpleSprout) dispersed);
+							final SaveThread thread = ((SaveThread) ThreadRegistry.get(interacted.getWorld().getName()));
+							if (thread != null) {
+								thread.add(interacted.getLocation(), (SimpleSprout) dispersed);
+							}
 						}
 					}
 					decrementInventory(interacter, interacter.getItemInHand());
@@ -350,7 +362,10 @@ public class SproutListener implements Listener {
 
 					final Sprout toInject = cloner.deepClone(sprout);
 					plugin.getWorldRegistry().add(where.getWorld().getName(), where.getX(), where.getY(), where.getZ(), toInject);
-					((SaveThread) ThreadRegistry.get(interacted.getWorld().getName())).add(interacted.getLocation(), (SimpleSprout) toInject);
+					final SaveThread thread = ((SaveThread) ThreadRegistry.get(where.getWorld().getName()));
+					if (thread != null) {
+						thread.add(where.getLocation(), (SimpleSprout) toInject);
+					}
 
 					//Set material
 					if (stack.isCustomItem()) {

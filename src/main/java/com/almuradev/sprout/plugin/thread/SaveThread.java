@@ -19,6 +19,7 @@
  */
 package com.almuradev.sprout.plugin.thread;
 
+import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import com.almuradev.sprout.api.util.Int21TripleHashed;
@@ -37,31 +38,14 @@ public class SaveThread extends Thread {
 
 	public SaveThread(final SproutPlugin plugin, final String world) {
 		super("Save Thread - " + world);
-		setDaemon(true);
 		this.plugin = plugin;
 		this.world = world;
 	}
 
 	@Override
 	public void run() {
-		while (!this.isInterrupted()) {
-			try {
-				final LocatableSprout toAdd = ADD.take();
-				//Handle additions
-				if (toAdd != null) {
-					//Only add what isn't being removed
-					if (!REMOVE.contains(toAdd)) {
-						((SimpleSQLStorage) plugin.getStorage()).add(world, toAdd.getLocation(), toAdd.getSprout());
-					}
-				}
-				//Handle removals
-				final LocatableSprout toRemove = REMOVE.take();
-				if (toRemove != null) {
-					((SimpleSQLStorage) plugin.getStorage()).remove(world, toRemove.getLocation());
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		while(!this.isInterrupted()) {
+			flush();
 		}
 	}
 
@@ -77,6 +61,19 @@ public class SaveThread extends Thread {
 			return;
 		}
 		ADD.offer(new LocatableSprout(x, y, z, sprout));
+	}
+
+	public void flush() {
+		ADD.removeAll(Arrays.asList(REMOVE.toArray()));
+		LocatableSprout flush;
+
+		while ((flush = ADD.poll()) != null) {
+			((SimpleSQLStorage) plugin.getStorage()).add(world, flush.getLocation(), flush.getSprout());
+		}
+
+		while ((flush = REMOVE.poll()) != null) {
+			((SimpleSQLStorage) plugin.getStorage()).remove(world, flush.getLocation());
+		}
 	}
 
 	public void remove(final Location location, final SimpleSprout sprout) {

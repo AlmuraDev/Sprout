@@ -49,7 +49,6 @@ import gnu.trove.procedure.TLongObjectProcedure;
 public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
 	private final Cloner cloner = new Cloner();
-	private Configuration configuration;
 	private Database db;
 
 	public SimpleSQLStorage(SproutPlugin plugin) {
@@ -65,6 +64,7 @@ public class SimpleSQLStorage implements SQLStorage {
 	}
 
 	public void onEnable(SQLMode mode, File loc, String host, String database, int port, String username, String password) {
+		Configuration configuration;
 		try {
 			configuration = mode.getAssociation().newInstance();
 		} catch (Exception ignore) {
@@ -108,8 +108,19 @@ public class SimpleSQLStorage implements SQLStorage {
 		if (world == null || world.isEmpty() || sprout == null) {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
-
-		db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
+		final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
+		if (row == null) {
+			db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
+		} else {
+			//Check to see if we need to do a save
+			if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge())) {
+				return this;
+			}
+			row.setSprout(sprout.getName());
+			row.setAge(sprout.getAge());
+			row.setStillGrowing(!sprout.isFullyGrown());
+			db.save(row);
+		}
 		return this;
 	}
 
@@ -149,36 +160,6 @@ public class SimpleSQLStorage implements SQLStorage {
 			worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
 		}
 		return registry;
-	}
-
-	public void dropAll() {
-		for (Map.Entry<String, TInt21TripleObjectHashMap> entry : plugin.getWorldRegistry().getAll().entrySet()) {
-			final String world = entry.getKey();
-			plugin.getLogger().info("Saving [" + entry.getValue().size() + "] sprout(s) for [" + world + "]. Please wait as this may take some time...");
-			entry.getValue().getInternalMap().forEachEntry(new TLongObjectProcedure() {
-				@Override
-				public boolean execute(long l, Object o) {
-					final Sprout sprout = (Sprout) o;
-					if (sprout.isFullyGrown()) {
-						return true;
-					}
-					final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", l).execute().findOne();
-					if (row == null) {
-						add(world, l, sprout);
-					} else {
-						//Check to see if we need to do a save
-						if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge())) {
-							return true;
-						}
-						row.setSprout(sprout.getName());
-						row.setAge(sprout.getAge());
-						row.setStillGrowing(!sprout.isFullyGrown());
-						db.save(row);
-					}
-					return true;
-				}
-			});
-		}
 	}
 
 	private void createFile(final File dir) {
