@@ -19,7 +19,6 @@
  */
 package com.almuradev.sprout.plugin.thread;
 
-import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import com.almuradev.sprout.api.util.Int21TripleHashed;
@@ -46,7 +45,11 @@ public class SaveThread extends Thread {
 	@Override
 	public void run() {
 		while (!this.isInterrupted()) {
-			flush();
+			try {
+				flush();
+			} catch (InterruptedException ignore) {
+				return;
+			}
 		}
 	}
 
@@ -72,16 +75,16 @@ public class SaveThread extends Thread {
 		ADD.offer(dispersed);
 	}
 
-	public void flush() {
+	public void flush() throws InterruptedException {
 		LocatableSprout flush;
 		if (!ADD.isEmpty()) {
-			flush = ADD.poll();
+			flush = ADD.take();
 			if (flush != null && !REMOVE.contains(flush)) {
 				((SimpleSQLStorage) plugin.getStorage()).add(world, flush.getLocation(), flush.getSprout());
 			}
 		}
 		if (!REMOVE.isEmpty()) {
-			flush = REMOVE.poll();
+			flush = REMOVE.take();
 			if (flush != null) {
 				((SimpleSQLStorage) plugin.getStorage()).remove(world, flush.getLocation());
 			}
