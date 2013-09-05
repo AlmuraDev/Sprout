@@ -26,7 +26,6 @@ public class ThreadRegistry {
 	private static final List<Thread> THREADS = new LinkedList<>();
 
 	public ThreadRegistry() {
-
 	}
 
 	public static Thread add(Thread thread) {
@@ -55,9 +54,6 @@ public class ThreadRegistry {
 	public static void stop() {
 		for (final Thread thread : THREADS) {
 			thread.interrupt();
-			if (thread instanceof SaveThread) {
-				((SaveThread) thread).flush();
-			}
 		}
 	}
 

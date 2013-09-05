@@ -45,7 +45,6 @@ import com.almuradev.sprout.plugin.mech.SproutDrop;
 import com.almuradev.sprout.plugin.mech.SproutFertilizer;
 import com.almuradev.sprout.plugin.mech.SproutLight;
 import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
-
 import org.getspout.spoutapi.material.MaterialData;
 
 import org.bukkit.Material;

@@ -27,10 +27,7 @@ import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
-
 import gnu.trove.procedure.TLongObjectProcedure;
-
-import me.zford.jobs.Player;
 import org.getspout.spoutapi.block.SpoutBlock;
 
 import org.bukkit.Bukkit;
@@ -40,6 +37,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SproutExecutor implements CommandExecutor {
 	private final SproutPlugin plugin;

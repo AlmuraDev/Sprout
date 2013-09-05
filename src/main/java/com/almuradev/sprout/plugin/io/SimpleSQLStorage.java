@@ -43,8 +43,10 @@ import com.alta189.simplesave.h2.H2Configuration;
 import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
 import com.rits.cloning.Cloner;
-
 import gnu.trove.procedure.TLongObjectProcedure;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
@@ -160,6 +162,29 @@ public class SimpleSQLStorage implements SQLStorage {
 			worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
 		}
 		return registry;
+	}
+
+	public void dropAll() {
+		for (final World world : Bukkit.getWorlds()) {
+			final TInt21TripleObjectHashMap registry = plugin.getWorldRegistry().get(world.getName());
+			if (registry == null) {
+				continue;
+			}
+			registry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
+				@Override
+				public boolean execute(long l, Object o) {
+					final SimpleSprout sprout = (SimpleSprout) o;
+					if (sprout.isFullyGrown()) {
+						return true;
+					}
+					final int x = Int21TripleHashed.key1(l);
+					final int y = Int21TripleHashed.key2(l);
+					final int z = Int21TripleHashed.key3(l);
+					add(world.getName(), x, y, z, sprout);
+					return true;
+				}
+			});
+		}
 	}
 
 	private void createFile(final File dir) {

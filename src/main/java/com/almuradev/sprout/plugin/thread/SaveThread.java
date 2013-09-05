@@ -44,7 +44,7 @@ public class SaveThread extends Thread {
 
 	@Override
 	public void run() {
-		while(!this.isInterrupted()) {
+		while (!this.isInterrupted()) {
 			flush();
 		}
 	}
@@ -53,14 +53,22 @@ public class SaveThread extends Thread {
 		if (location == null || sprout == null) {
 			return;
 		}
-		ADD.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
+		final LocatableSprout dispersed = new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout);
+		if (ADD.contains(dispersed)) {
+			ADD.remove(dispersed);
+		}
+		ADD.offer(dispersed);
 	}
 
 	public void add(final int x, final int y, final int z, final SimpleSprout sprout) {
 		if (sprout == null) {
 			return;
 		}
-		ADD.offer(new LocatableSprout(x, y, z, sprout));
+		final LocatableSprout dispersed = new LocatableSprout(x, y, z, sprout);
+		if (ADD.contains(dispersed)) {
+			ADD.remove(dispersed);
+		}
+		ADD.offer(dispersed);
 	}
 
 	public void flush() {
@@ -80,14 +88,22 @@ public class SaveThread extends Thread {
 		if (location == null || sprout == null) {
 			return;
 		}
-		REMOVE.offer(new LocatableSprout(Int21TripleHashed.key(location.getBlockX(), location.getBlockY(), location.getBlockZ()), sprout));
+		final LocatableSprout dispersed = new LocatableSprout(location.getBlockX(), location.getBlockY(), location.getBlockZ(), sprout);
+		if (REMOVE.contains(dispersed)) {
+			return;
+		}
+		REMOVE.offer(dispersed);
 	}
 
 	public void remove(long location, final SimpleSprout sprout) {
 		if (sprout == null) {
 			return;
 		}
-		REMOVE.offer(new LocatableSprout(location, sprout));
+		final LocatableSprout dispersed = new LocatableSprout(location, sprout);
+		if (REMOVE.contains(dispersed)) {
+			return;
+		}
+		REMOVE.offer(dispersed);
 	}
 
 	public void clear() {

@@ -32,7 +32,6 @@ import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
-
 import org.mcstats.MetricsLite;
 
 import org.bukkit.Bukkit;
@@ -58,6 +57,7 @@ public class SproutPlugin extends JavaPlugin {
 	public void onDisable() {
 		GrowthTask.stop(this);
 		ThreadRegistry.stop();
+		sqlStorage.dropAll();
 	}
 
 	@Override

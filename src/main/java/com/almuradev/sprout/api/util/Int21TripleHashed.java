@@ -22,6 +22,7 @@ package com.almuradev.sprout.api.util;
 public class Int21TripleHashed {
 	/**
 	 * Packs the most significant and the twenty least significant of each int into a <code>long</code>
+	 *
 	 * @param x an <code>int</code> value
 	 * @param y an <code>int</code> value
 	 * @param z an <code>int</code> value
@@ -33,6 +34,7 @@ public class Int21TripleHashed {
 
 	/**
 	 * Gets the first 21-bit integer value from a long key
+	 *
 	 * @param key to get from
 	 * @return the first 21-bit integer value in the key
 	 */
@@ -42,6 +44,7 @@ public class Int21TripleHashed {
 
 	/**
 	 * Gets the second 21-bit integer value from a long key
+	 *
 	 * @param key to get from
 	 * @return the second 21-bit integer value in the key
 	 */
@@ -51,6 +54,7 @@ public class Int21TripleHashed {
 
 	/**
 	 * Gets the third 21-bit integer value from a long key
+	 *
 	 * @param key to get from
 	 * @return the third 21-bit integer value in the key
 	 */

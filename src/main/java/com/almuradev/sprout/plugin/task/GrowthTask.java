@@ -33,9 +33,7 @@ import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
-
 import gnu.trove.procedure.TLongObjectProcedure;
-
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
@@ -98,7 +96,7 @@ public class GrowthTask implements Runnable {
 		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	@Override
 	public void run() {
 		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.get(world);
@@ -128,17 +126,16 @@ public class GrowthTask implements Runnable {
 					final Stage current = sprout.getCurrentStage();
 					if (current != null) {
 						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
-							final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
-							final Material material = Material.getMaterial(current.getName());
-
-							if (customBlock == null) {
-								if (material == null) {
-									return true;
-								}
-							}
-
 							final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 							if (block.getChunk().isLoaded()) {
+								final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
+								final Material material = Material.getMaterial(current.getName());
+
+								if (customBlock == null) {
+									if (material == null) {
+										return true;
+									}
+								}
 								final Light light = current.getLight();
 								// (A <= B <= C) block inclusive
 								if (!sprout.getVariables().ignoreBlockLight() && !(light.getMinimumBlockLight() <= block.getLightFromBlocks() && block.getLightFromBlocks() <= light.getMaximumBlockLight())) {
@@ -159,17 +156,18 @@ public class GrowthTask implements Runnable {
 									block.setType(material);
 								}
 								if (sprout.isOnLastStage()) {
+									((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
 									sprout.setFullyGrown(true);
 								} else {
 									sprout.grow((int) delta);
 								}
-								((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
 							}
 						}
 					}
 				}
 				return true;
 			}
-		});
+		}
+		);
 	}
 }
