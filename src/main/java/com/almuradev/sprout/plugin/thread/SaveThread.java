@@ -72,14 +72,12 @@ public class SaveThread extends Thread {
 	}
 
 	public void flush() {
-		ADD.removeAll(Arrays.asList(REMOVE.toArray()));
-		LocatableSprout flush;
-
-		while ((flush = ADD.poll()) != null) {
+		LocatableSprout flush = ADD.poll();
+		if (flush != null && !REMOVE.contains(flush)) {
 			((SimpleSQLStorage) plugin.getStorage()).add(world, flush.getLocation(), flush.getSprout());
 		}
-
-		while ((flush = REMOVE.poll()) != null) {
+		flush = REMOVE.poll();
+		if (flush != null) {
 			((SimpleSQLStorage) plugin.getStorage()).remove(world, flush.getLocation());
 		}
 	}
