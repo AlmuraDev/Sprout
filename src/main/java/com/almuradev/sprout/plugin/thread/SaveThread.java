@@ -40,6 +40,7 @@ public class SaveThread extends Thread {
 		super("Save Thread - " + world);
 		this.plugin = plugin;
 		this.world = world;
+		setDaemon(true);
 	}
 
 	@Override
@@ -72,13 +73,18 @@ public class SaveThread extends Thread {
 	}
 
 	public void flush() {
-		LocatableSprout flush = ADD.poll();
-		if (flush != null && !REMOVE.contains(flush)) {
-			((SimpleSQLStorage) plugin.getStorage()).add(world, flush.getLocation(), flush.getSprout());
+		LocatableSprout flush;
+		if (!ADD.isEmpty()) {
+			flush = ADD.poll();
+			if (flush != null && !REMOVE.contains(flush)) {
+				((SimpleSQLStorage) plugin.getStorage()).add(world, flush.getLocation(), flush.getSprout());
+			}
 		}
-		flush = REMOVE.poll();
-		if (flush != null) {
-			((SimpleSQLStorage) plugin.getStorage()).remove(world, flush.getLocation());
+		if (!REMOVE.isEmpty()) {
+			flush = REMOVE.poll();
+			if (flush != null) {
+				((SimpleSQLStorage) plugin.getStorage()).remove(world, flush.getLocation());
+			}
 		}
 	}
 
