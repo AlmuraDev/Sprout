@@ -89,6 +89,10 @@ public class SaveThread extends Thread {
 				((SimpleSQLStorage) plugin.getStorage()).remove(world, flush.getLocation());
 			}
 		}
+		
+		if (ADD.isEmpty() && REMOVE.isEmpty()) {			
+			SaveThread.sleep(10000);
+		}
 	}
 
 	public void remove(final Location location, final SimpleSprout sprout) {

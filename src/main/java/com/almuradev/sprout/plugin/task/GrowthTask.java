@@ -96,10 +96,9 @@ public class GrowthTask implements Runnable {
 		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 
-	@SuppressWarnings ("unchecked")
 	@Override
 	public void run() {
-		final TInt21TripleObjectHashMap worldRegistry = this.worldRegistry.get(world);
+		final TInt21TripleObjectHashMap<?> worldRegistry = this.worldRegistry.get(world);
 		if (worldRegistry == null) {
 			return;
 		}
@@ -111,7 +110,7 @@ public class GrowthTask implements Runnable {
 		final long delta = localTime - pastTime;
 		pastTime = localTime;
 
-		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
+		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
 			@Override
 			public boolean execute(long l, Object o) {
 				final SimpleSprout sprout = (SimpleSprout) o;
@@ -136,14 +135,23 @@ public class GrowthTask implements Runnable {
 										return true;
 									}
 								}
+								
+								boolean blockLightPassed = true;
+								boolean skyLightPassed = true;								
 								final Light light = current.getLight();
+								
 								// (A <= B <= C) block inclusive
 								if (!sprout.getVariables().ignoreBlockLight() && !(light.getMinimumBlockLight() <= block.getLightFromBlocks() && block.getLightFromBlocks() <= light.getMaximumBlockLight())) {
-									return true;
+									blockLightPassed = false;
 								}
 
 								// (A <= B <= C) sky inclusive
 								if (!sprout.getVariables().ignoreSkyLight() && !(light.getMinimumSkyLight() <= block.getLightFromSky() && block.getLightFromSky() <= light.getMaximumSkyLight())) {
+									skyLightPassed = false;
+								}
+								
+								if (!blockLightPassed && !skyLightPassed) {
+									// not enough light to continue growth task
 									return true;
 								}
 
