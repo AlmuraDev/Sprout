@@ -1402,10 +1402,8 @@ rice:
     block-source: MoreMaterials\KFood_Core\flatseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\rice:
@@ -1422,40 +1420,32 @@ rice:
             source: MoreMaterials\KFood_Core\flatseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\rice1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\rice2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\rice3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
@@ -1469,10 +1459,8 @@ strawberry:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\strawberry:
@@ -1489,40 +1477,32 @@ strawberry:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\strawberry1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\strawberry2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\strawberry3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
@@ -1536,10 +1516,8 @@ soybean:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\soybean:
@@ -1556,40 +1534,32 @@ soybean:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\soybean1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\soybean2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180       
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\soybean3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240       
             growth-chance: 3
     variables:
@@ -1603,10 +1573,8 @@ spinach:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\spinach:
@@ -1623,40 +1591,32 @@ spinach:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\spinach1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\spinach2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180       
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\spinach3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240       
             growth-chance: 3
     variables:
@@ -1670,10 +1630,8 @@ sweetpepper:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\sweetpepper:
@@ -1690,40 +1648,32 @@ sweetpepper:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\sweetpepper1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\sweetpepper2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                      
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\sweetpepper3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                      
             growth-chance: 3
     variables:
@@ -1737,10 +1687,8 @@ sweetpotato:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\sweetpotato:
@@ -1757,40 +1705,32 @@ sweetpotato:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\sweetpotato1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\sweetpotato2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                  
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\sweetpotato3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                  
             growth-chance: 3
     variables:
@@ -1804,10 +1744,8 @@ tobacco:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\tobacco:
@@ -1824,40 +1762,32 @@ tobacco:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\tobacco1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\tobacco2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                     
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\tobacco3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                     
             growth-chance: 3
     variables:
@@ -1871,10 +1801,8 @@ tomato:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\tomato:
@@ -1891,40 +1819,32 @@ tomato:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\tomato1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\tomato2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                     
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\tomato3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                     
             growth-chance: 3
     variables:
@@ -1938,10 +1858,8 @@ turnip:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\turnip:
@@ -1958,40 +1876,32 @@ turnip:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\turnip1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\turnip2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\turnip3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
