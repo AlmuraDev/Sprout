@@ -22,33 +22,21 @@ package com.almuradev.sprout.plugin.mech;
 import com.almuradev.sprout.api.mech.Light;
 
 public class SproutLight implements Light {
-	private final int minimumBlockLight, maximumBlockLight, minimumSkyLight, maximumSkyLight;
+	private final int minimumLight, maximumLight;
 
-	public SproutLight(int minimumBlockLight, int maximumBlockLight, int minimumSkyLight, int maximumSkyLight) {
-		this.minimumBlockLight = minimumBlockLight;
-		this.maximumBlockLight = maximumBlockLight;
-		this.minimumSkyLight = minimumSkyLight;
-		this.maximumSkyLight = maximumSkyLight;
+	public SproutLight(int minimumLight, int maximumLight) {
+		this.minimumLight = minimumLight;
+		this.maximumLight = maximumLight;
 	}
 
 	@Override
-	public int getMinimumBlockLight() {
-		return minimumBlockLight;
+	public int getMinimumLight() {
+		return minimumLight;
 	}
 
 	@Override
-	public int getMinimumSkyLight() {
-		return minimumSkyLight;
-	}
-
-	@Override
-	public int getMaximumBlockLight() {
-		return maximumBlockLight;
-	}
-
-	@Override
-	public int getMaximumSkyLight() {
-		return maximumSkyLight;
+	public int getMaximumLight() {
+		return maximumLight;
 	}
 
 	@Override
@@ -58,11 +46,11 @@ public class SproutLight implements Light {
 		}
 
 		final SproutLight other = (SproutLight) obj;
-		return minimumBlockLight == other.minimumBlockLight && maximumBlockLight == other.maximumBlockLight && minimumSkyLight == other.minimumSkyLight && maximumSkyLight == other.maximumSkyLight;
+		return minimumLight == other.minimumLight && maximumLight == other.maximumLight;
 	}
 
 	@Override
 	public String toString() {
-		return "Light{minimumBlockLight= " + minimumBlockLight + ", maximumBlockLight= " + maximumBlockLight + ", ,minimumSkyLight= " + minimumSkyLight + ", maximumSkyLight= " + maximumSkyLight + "}";
+		return "Light{minimumLight= " + minimumLight + ", maximumLight= " + maximumLight + "}";
 	}
 }

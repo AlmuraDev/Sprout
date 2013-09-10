@@ -33,7 +33,9 @@ import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
+
 import gnu.trove.procedure.TLongObjectProcedure;
+
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
@@ -135,22 +137,16 @@ public class GrowthTask implements Runnable {
 										return true;
 									}
 								}
-								
-								boolean blockLightPassed = true;
-								boolean skyLightPassed = true;								
+
+								boolean lightPassed = true;
 								final Light light = current.getLight();
-								
+
 								// (A <= B <= C) block inclusive
-								if (!sprout.getVariables().ignoreBlockLight() && !(light.getMinimumBlockLight() <= block.getLightFromBlocks() && block.getLightFromBlocks() <= light.getMaximumBlockLight())) {
-									blockLightPassed = false;
+								if (!sprout.getVariables().ignoreLight() && !(light.getMinimumLight() <= block.getLightLevel() && block.getLightLevel() <= light.getMaximumLight())) {
+									lightPassed = false;
 								}
 
-								// (A <= B <= C) sky inclusive
-								if (!sprout.getVariables().ignoreSkyLight() && !(light.getMinimumSkyLight() <= block.getLightFromSky() && block.getLightFromSky() <= light.getMaximumSkyLight())) {
-									skyLightPassed = false;
-								}
-								
-								if (!blockLightPassed && !skyLightPassed) {
+								if (!lightPassed) {
 									// not enough light to continue growth task
 									return true;
 								}

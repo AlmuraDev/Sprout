@@ -26,7 +26,5 @@ public interface VariableHolder {
 
 	public boolean dropItemSourceOnGrassBreak();
 
-	public boolean ignoreBlockLight();
-
-	public boolean ignoreSkyLight();
+	public boolean ignoreLight();
 }

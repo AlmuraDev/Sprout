@@ -45,6 +45,7 @@ import com.almuradev.sprout.plugin.mech.SproutDrop;
 import com.almuradev.sprout.plugin.mech.SproutFertilizer;
 import com.almuradev.sprout.plugin.mech.SproutLight;
 import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
+
 import org.getspout.spoutapi.material.MaterialData;
 
 import org.bukkit.Material;
@@ -133,10 +134,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			//DAMAGE
 			final int damage = nameSection.getInt("damage", 0);
 			//LIGHT
-			final int minBlockLightLevel = nameSection.getInt("min-block-light-level", 0);
-			final int maxBlockLightLevel = nameSection.getInt("max-block-light-level", 15);
-			final int minSkyLightLevel = nameSection.getInt("min-sky-light-level", 0);
-			final int maxSkyLightLevel = nameSection.getInt("max-sky-light-level", 15);
+			final int minLightLevel = nameSection.getInt("min-light-level", 0);
+			final int maxLightLevel = nameSection.getInt("max-light-level", 15);
 			//FERTILIZER
 			final String fertilizerRawSource = nameSection.getString("fertilizer-source", "bonemeal");
 			final String fertilizerSource = replacePeriodWithBackslash(fertilizerRawSource);
@@ -189,10 +188,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 					plugin.getLogger().warning("The stage [" + index + "] source [" + stageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 				}
 				//LIGHT
-				final int minStageBlockLightLevel = indexSection.getInt("min-block-light-level", minBlockLightLevel);
-				final int maxStageBlockLightLevel = indexSection.getInt("max-block-light-level", maxBlockLightLevel);
-				final int minStageSkyLightLevel = indexSection.getInt("min-sky-light-level", minSkyLightLevel);
-				final int maxStageSkyLightLevel = indexSection.getInt("max-sky-light-level", maxSkyLightLevel);
+				final int minStageLightLevel = indexSection.getInt("min-light-level", minLightLevel);
+				final int maxStageLightLevel = indexSection.getInt("max-light-level", maxLightLevel);
 				//FERTILIZER
 				final String fertilizerRawStageSource = indexSection.getString("fertilizer-source", fertilizerRawSource);
 				final String fertilizerStageSource = replacePeriodWithBackslash(fertilizerRawStageSource);
@@ -205,7 +202,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final int growthChance = indexSection.getInt("growth-chance", 10);
 				//DAMAGE
 				final int stageDamage = indexSection.getInt("damage", damage);
-				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount), new SproutLight(minStageBlockLightLevel, maxStageBlockLightLevel, minStageSkyLightLevel, maxStageSkyLightLevel), stageDamage));
+				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount), new SproutLight(minStageLightLevel, maxStageLightLevel), stageDamage));
 			}
 			//VARIABLES
 			final ConfigurationSection variablesSection = nameSection.getConfigurationSection("variables");
@@ -214,11 +211,10 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final boolean allowFertilization = variablesSection.getBoolean("allow-fertilization", true);
 				final boolean damagePlayer = variablesSection.getBoolean("damage-player", false);
 				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
-				final boolean ignoreBlockLight = variablesSection.getBoolean("ignore-block-light", false);
-				final boolean ignoreSkyLight = variablesSection.getBoolean("ignore-sky-light", false);
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minBlockLightLevel, maxBlockLightLevel, minSkyLightLevel, maxSkyLightLevel), stages, drops, bonusChance, bonusDrops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak, ignoreBlockLight, ignoreSkyLight));
+				final boolean ignoreLight = variablesSection.getBoolean("ignore-light", false);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak, ignoreLight));
 			} else {
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minBlockLightLevel, maxBlockLightLevel, minSkyLightLevel, maxSkyLightLevel), stages, drops, bonusChance, bonusDrops);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops);
 			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);

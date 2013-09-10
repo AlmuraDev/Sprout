@@ -42,7 +42,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	/**
 	 * Creates a new <code>TInt21TripleObjectHashMap</code> instance backend by a {@see TLongObjectHashMap} instance with a prime capacity equal to or greater than <code>capacity</code> and with the
 	 * default load factor.
-	 *
 	 * @param capacity an <code>int</code> value
 	 */
 	public TInt21TripleObjectHashMap(int capacity) {
@@ -63,7 +62,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	/**
 	 * Associates the specified value with the specified key in this map (optional operation). If the map previously contained a mapping for the key, the old value is replaced by the specified value. (A
 	 * map m is said to contain a mapping for a key k if and only if {@see #containsKey(int, int, int) m.containsKey(k)} would return <code>true</code>.)
-	 *
 	 * @param x an <code>int</code> value
 	 * @param y an <code>int</code> value
 	 * @param z an <code>int</code> value
@@ -81,7 +79,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	 * <code>k</code> to a value <code>v</code> such that <code>(key==null ? k==null : key.equals(k))</code>, then this method returns <code>v</code>; otherwise it returns <code>null</code>. (There can
 	 * be at most one such mapping.) <p/> If this map permits <code>null</code> values, then a return value of <code>null</code> does not <i>necessarily</i> indicate that the map contains no mapping for
 	 * the key; it's also possible that the map explicitly maps the key to <code>null</code>. The {@see #containsKey(int, int, int) containsKey} operation may be used to distinguish these two cases.
-	 *
 	 * @param x an <code>int</code> value
 	 * @param y an <code>int</code> value
 	 * @param z an <code>int</code> value
@@ -96,7 +93,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	/**
 	 * Returns true if this map contains a mapping for the specified key. More formally, returns <code>true</code> if and only if this map contains a mapping for a key <code>k</code> such that
 	 * <code>key.equals(k)</code>. (There can be at most one such mapping.)
-	 *
 	 * @param x an <code>int</code> value
 	 * @param y an <code>int</code> value
 	 * @param z an <code>int</code> value
@@ -118,7 +114,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	/**
 	 * Returns <code>true</code> if this map contains a mapping for the specified key. More formally, returns <code>true</code> if and only if this map contains a mapping for a key <code>k</code> such
 	 * that <code>key.equals(k)</code>. (There can be at most one such mapping.)
-	 *
 	 * @param val value whose presence in this map is to be tested
 	 * @return <code>true</code> if this map maps one or more keys to the specified value
 	 */
@@ -128,7 +123,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 
 	/**
 	 * Returns <code>true</code> if this map contains no key-value mappings.
-	 *
 	 * @return <code>true</code> if this map contains no key-value mappings.
 	 */
 	public boolean isEmpty() {
@@ -137,7 +131,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 
 	/**
 	 * Returns a {@see TLongObjectIterator} with access to this map's keys and values.
-	 *
 	 * @return a {@see TLongObjectIterator} with access to this map's keys and values.
 	 */
 	public TLongObjectIterator<K> iterator() {
@@ -149,7 +142,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	 * iteration over the set is in progress (except through the iterator's own remove operation), the results of the iteration are undefined. The set supports element removal, which removes the
 	 * corresponding mapping from the map, via the <code>Iterator.remove</code>, <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations. It does not
 	 * support the add or addAll operations.
-	 *
 	 * @return a set view of the keys contained in this map.
 	 */
 	public TLongSet keySet() {
@@ -158,7 +150,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 
 	/**
 	 * Returns a copy of the keys of the map as an array. Changes to the array of keys will not be reflected in the map nor vice-versa.
-	 *
 	 * @return a copy of the keys of the map as an array.
 	 */
 	public long[] keys() {
@@ -170,7 +161,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 	 * <code>key.equals(k)</code>, that mapping is removed. (The map can contain at most one such mapping.) <p/> Returns the value to which this map previously associated the key, or <code>null</code> if
 	 * the map contained no mapping for the key. </p> If this map permits null values, then a return value of <code>null</code> does not <i>necessarily</i> indicate that the map contained no mapping for
 	 * the key; it's also possible that the map explicitly mapped the key to <code>null</code>. <p/> The map will not contain a mapping for the specified key once the call returns.
-	 *
 	 * @param x an <code>int</code> value
 	 * @param y an <code>int</code> value
 	 * @param z an <code>int</code> value
@@ -184,7 +174,6 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 
 	/**
 	 * Returns the number of key-value mappings in this map. If the map contains more than <code>Integer.MAX_VALUE</code> elements, returns <code>Integer.MAX_VALUE</code>.
-	 *
 	 * @return the number of key-value mappings in this map
 	 */
 	public int size() {
@@ -203,17 +192,15 @@ public class TInt21TripleObjectHashMap<K> extends Int21TripleHashed {
 
 	/**
 	 * Returns the values of the map as an array of <code>long</code> values. Changes to the array of values will not be reflected in the map nor vice-versa.
-	 *
 	 * @return the values of the map as an array of <code>long</code> values.
 	 */
-	@SuppressWarnings ("unchecked")
+	@SuppressWarnings("unchecked")
 	public K[] values() {
 		return (K[]) map.values();
 	}
 
 	/**
 	 * Returns the internal {@see TLongObjectMap}<code>&lt;K&gt;</code> instance.
-	 *
 	 * @return the internal {@see TLongObjectMap}<code>&lt;K&gt;</code> instance.
 	 */
 	public TLongObjectMap<K> getInternalMap() {

@@ -23,7 +23,7 @@ import com.alta189.simplesave.Field;
 import com.alta189.simplesave.Id;
 import com.alta189.simplesave.Table;
 
-@Table ("sprouts")
+@Table("sprouts")
 public class Sprouts {
 	@Id
 	private int id;

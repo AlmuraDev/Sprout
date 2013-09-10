@@ -25,19 +25,17 @@ public class SproutVariableHolder implements VariableHolder {
 	private final boolean allowFertilization;
 	private final boolean damagePlayer;
 	private final boolean dropItemSourceOnGrassBreak;
-	private final boolean ignoreBlockLight;
-	private final boolean ignoreSkyLight;
+	private final boolean ignoreLight;
 
 	public SproutVariableHolder() {
-		this(true, false, true, false, false);
+		this(true, false, true, false);
 	}
 
-	public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak, final boolean ignoreBlockLight, final boolean ignoreSkyLight) {
+	public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak, final boolean ignoreLight) {
 		this.allowFertilization = allowsFertilization;
 		this.damagePlayer = damagePlayer;
 		this.dropItemSourceOnGrassBreak = dropItemSourceOnGrassBreak;
-		this.ignoreBlockLight = ignoreBlockLight;
-		this.ignoreSkyLight = ignoreSkyLight;
+		this.ignoreLight = ignoreLight;
 	}
 
 	@Override
@@ -56,13 +54,8 @@ public class SproutVariableHolder implements VariableHolder {
 	}
 
 	@Override
-	public boolean ignoreBlockLight() {
-		return ignoreBlockLight;
-	}
-
-	@Override
-	public boolean ignoreSkyLight() {
-		return ignoreSkyLight;
+	public boolean ignoreLight() {
+		return ignoreLight;
 	}
 
 	@Override
@@ -72,11 +65,11 @@ public class SproutVariableHolder implements VariableHolder {
 		}
 
 		final SproutVariableHolder other = (SproutVariableHolder) obj;
-		return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak && other.ignoreBlockLight == ignoreBlockLight && other.ignoreSkyLight == ignoreSkyLight;
+		return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak && other.ignoreLight == ignoreLight;
 	}
 
 	@Override
 	public String toString() {
-		return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + ", ignoreBlockLight= " + ignoreBlockLight + ", ignoreSkyLight= " + ignoreSkyLight + "}";
+		return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + ", ignoreLight= " + ignoreLight + "}";
 	}
 }

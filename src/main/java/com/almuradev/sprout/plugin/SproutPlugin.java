@@ -32,6 +32,7 @@ import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
+
 import org.mcstats.MetricsLite;
 
 import org.bukkit.Bukkit;

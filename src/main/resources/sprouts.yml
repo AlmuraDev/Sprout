@@ -3,10 +3,8 @@ barley:
     block-source: MoreMaterials\KFood_Core\flatseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\barley:
@@ -23,57 +21,46 @@ barley:
             source: MoreMaterials\KFood_Core\flatseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\barley1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\barley2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\barley3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 bellpepper:
     item-source: MoreMaterials\KFood_Core\bellpepper_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\bellpepper:
@@ -90,57 +77,46 @@ bellpepper:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\bellpepper1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\bellpepper2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\bellpepper3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 blackberry:
     item-source: MoreMaterials\KFood_Core\blackberry_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\blackberry:
@@ -157,57 +133,46 @@ blackberry:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\blackberry1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\blackberry2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\blackberry3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 bambooshoot:
     item-source: MoreMaterials\KFood_Core\bambooshoot_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\bambooshoot:
@@ -224,40 +189,32 @@ bambooshoot:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\bambooshoot1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\bambooshoot2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180            
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\bambooshoot3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240            
             growth-chance: 3
     variables:
@@ -271,10 +228,8 @@ broccoli:
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\broccoli:
@@ -291,57 +246,46 @@ broccoli:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\broccoli1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\broccoli2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\broccoli3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 cabbage:
     item-source: MoreMaterials\KFood_Core\cabbage_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\cabbage:
@@ -358,57 +302,46 @@ cabbage:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3       
         2:
             source: MoreMaterials\KFood_Core\cabbage1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\cabbage2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180            
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\cabbage3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 celery:
     item-source: MoreMaterials\KFood_Core\celery_seed
     block-source: MoreMaterials\KFood_Core\plantedseed 
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\celery:
@@ -425,57 +358,46 @@ celery:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\celery1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\celery2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180            
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\celery3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 chilipepper:
     item-source: MoreMaterials\KFood_Core\chilipepper_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\chilipepper:
@@ -492,57 +414,46 @@ chilipepper:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\chilipepper1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\chilipepper2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180          
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\chilipepper3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240          
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 corn:
     item-source: MoreMaterials\KFood_Core\corn_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\corn:
@@ -559,57 +470,46 @@ corn:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\corn1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\corn2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180          
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\corn3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240           
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 cotton:
     item-source: MoreMaterials\KFood_Core\cotton_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\cotton:
@@ -626,57 +526,46 @@ cotton:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3       
         2:
             source: MoreMaterials\KFood_Core\cotton1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\cotton2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180            
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\cotton3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 cucumber:
     item-source: MoreMaterials\KFood_Core\cucumber_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\cucumber:
@@ -693,57 +582,46 @@ cucumber:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\cucumber1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\cucumber2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180    
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\cucumber3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 daikon:
     item-source: MoreMaterials\KFood_Core\daikon_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\daikon:
@@ -760,57 +638,46 @@ daikon:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\daikon1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\daikon2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\daikon3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 eggplant:
     item-source: MoreMaterials\KFood_Core\eggplant_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\eggplant:
@@ -827,57 +694,44 @@ eggplant:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\eggplant1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\eggplant2
-            fertilizer-source: bonemeal
-            fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                       
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\eggplant3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                       
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 fargreens:
     item-source: MoreMaterials\KFood_Core\fargreens_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\fargreens:
@@ -894,57 +748,46 @@ fargreens:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\fargreens1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\fargreens2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\fargreens3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+             min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 garlic:
     item-source: MoreMaterials\KFood_Core\garlic_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\garlic:
@@ -961,57 +804,45 @@ garlic:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\garlic1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\garlic2
             fertilizer-source: bonemeal
-            fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                    
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\garlic3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                    
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 grape:
     item-source: MoreMaterials\KFood_Core\grape_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\grape:
@@ -1028,57 +859,46 @@ grape:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\grape1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\grape2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                    
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\grape3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                    
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 leek:
     item-source: MoreMaterials\KFood_Core\leek_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\leek:
@@ -1095,57 +915,46 @@ leek:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\leek1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\leek2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\leek3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                 
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 lettuce:
     item-source: MoreMaterials\KFood_Core\lettuce_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\lettuce:
@@ -1162,57 +971,46 @@ lettuce:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\lettuce1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\lettuce2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\lettuce3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 luffa:
     item-source: MoreMaterials\KFood_Core\luffa_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\luffa:
@@ -1229,57 +1027,46 @@ luffa:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\luffa1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\luffa2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\luffa3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 olive:
     item-source: MoreMaterials\KFood_Core\olive_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\olive:
@@ -1296,57 +1083,46 @@ olive:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\olive1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\olive2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\olive3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                      
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 oat:
     item-source: MoreMaterials\KFood_Core\oat_seed
     block-source: MoreMaterials\KFood_Core\flatseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\oat:
@@ -1363,57 +1139,46 @@ oat:
             source: MoreMaterials\KFood_Core\flatseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\oat1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\oat2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                    
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\oat3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 onion:
     item-source: MoreMaterials\KFood_Core\onion_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20    
     drops: 
         MoreMaterials\KFood_Core\onion:
@@ -1430,57 +1195,46 @@ onion:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\onion1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\onion2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                    
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\onion3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 peanut:
     item-source: MoreMaterials\KFood_Core\peanut_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\peanut:
@@ -1497,57 +1251,47 @@ peanut:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\peanut1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\peanut2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\peanut3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
+        ignore-light: true
 radish:
     item-source: MoreMaterials\KFood_Core\radish_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\radish:
@@ -1564,57 +1308,46 @@ radish:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\radish1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\radish2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\radish3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 raspberry:
     item-source: MoreMaterials\KFood_Core\raspberry_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
     fertilizer-source: bonemeal
     fertilizer-amount: 1
-    min-block-light-level: 7
-    max-block-light-level: 15
-    min-sky-light-level: 7
-    max-sky-light-level: 15
+    min-light-level: 7
+    max-light-level: 15
     bonus-chance: 20
     drops: 
         MoreMaterials\KFood_Core\raspberry:
@@ -1631,48 +1364,39 @@ raspberry:
             source: MoreMaterials\KFood_Core\plantedseed
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 60
             growth-chance: 3
         2:
             source: MoreMaterials\KFood_Core\raspberry1
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 120
             growth-chance: 3
         3:
             source: MoreMaterials\KFood_Core\raspberry2
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 180                        
             growth-chance: 3
         4:
             source: MoreMaterials\KFood_Core\raspberry3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-            min-block-light-level: 7
-            max-block-light-level: 15
-            min-sky-light-level: 7
-            max-sky-light-level: 15
+            min-light-level: 7
+            max-light-level: 15
             growth-required: 240                        
             growth-chance: 3
     variables:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-block-light: true
-        ignore-sky-light: true
+        ignore-light: true
 rice:
     item-source: MoreMaterials\KFood_Core\rice_seed
     block-source: MoreMaterials\KFood_Core\flatseed
