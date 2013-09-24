@@ -772,7 +772,7 @@ fargreens:
             source: MoreMaterials\KFood_Core\fargreens3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-             min-light-level: 7
+            min-light-level: 7
             max-light-level: 15
             growth-required: 240
             growth-chance: 3
