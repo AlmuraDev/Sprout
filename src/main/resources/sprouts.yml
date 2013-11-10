@@ -1,3 +1,59 @@
+alfalfa:
+    item-source: MoreMaterials\KFood_Core\alfalfa_seed
+    block-source: MoreMaterials\KFood_Core\flatseed
+    fertilizer-source: bonemeal
+    fertilizer-amount: 1
+    min-light-level: 7
+    max-light-level: 15
+    bonus-chance: 20
+    drops: 
+        MoreMaterials\KFood_Core\alfalfa:
+            amount: 1        
+        MoreMaterials\KFood_Core\alfalfa_seed:
+            amount: 2
+        bonus:
+            MoreMaterials\KFood_Core\alfalfa_seed:
+                amount: 1
+            MoreMaterials\KFood_Core\alfalfa:
+                amount: 1
+    stages:
+        1:
+            source: MoreMaterials\KFood_Core\flatseed
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 60
+            growth-chance: 3
+        2:
+            source: MoreMaterials\KFood_Core\alfalfa1
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 120
+            growth-chance: 3
+        3:
+            source: MoreMaterials\KFood_Core\alfalfa2
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 180
+            growth-chance: 3
+        4:
+            source: MoreMaterials\KFood_Core\alfalfa3
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 240
+            growth-chance: 3
+    variables:
+        allow-fertilization: true;
+        damage-player: false
+        drop-item-source-on-grass-break: true
+        ignore-light: false
 barley:
     item-source: MoreMaterials\KFood_Core\barley_seed
     block-source: MoreMaterials\KFood_Core\flatseed
@@ -53,7 +109,7 @@ barley:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 bellpepper:
     item-source: MoreMaterials\KFood_Core\bellpepper_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -109,7 +165,7 @@ bellpepper:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 blackberry:
     item-source: MoreMaterials\KFood_Core\blackberry_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -165,7 +221,7 @@ blackberry:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 bambooshoot:
     item-source: MoreMaterials\KFood_Core\bambooshoot_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -278,7 +334,7 @@ broccoli:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 cabbage:
     item-source: MoreMaterials\KFood_Core\cabbage_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -334,7 +390,7 @@ cabbage:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 celery:
     item-source: MoreMaterials\KFood_Core\celery_seed
     block-source: MoreMaterials\KFood_Core\plantedseed 
@@ -390,7 +446,7 @@ celery:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 chilipepper:
     item-source: MoreMaterials\KFood_Core\chilipepper_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -446,7 +502,7 @@ chilipepper:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 corn:
     item-source: MoreMaterials\KFood_Core\corn_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -502,7 +558,7 @@ corn:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 cotton:
     item-source: MoreMaterials\KFood_Core\cotton_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -558,7 +614,7 @@ cotton:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 cucumber:
     item-source: MoreMaterials\KFood_Core\cucumber_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -614,7 +670,7 @@ cucumber:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 daikon:
     item-source: MoreMaterials\KFood_Core\daikon_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -670,7 +726,7 @@ daikon:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 eggplant:
     item-source: MoreMaterials\KFood_Core\eggplant_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -724,7 +780,7 @@ eggplant:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 fargreens:
     item-source: MoreMaterials\KFood_Core\fargreens_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -772,7 +828,7 @@ fargreens:
             source: MoreMaterials\KFood_Core\fargreens3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
-             min-light-level: 7
+            min-light-level: 7
             max-light-level: 15
             growth-required: 240
             growth-chance: 3
@@ -780,7 +836,7 @@ fargreens:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 garlic:
     item-source: MoreMaterials\KFood_Core\garlic_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -835,7 +891,7 @@ garlic:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 grape:
     item-source: MoreMaterials\KFood_Core\grape_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -891,7 +947,7 @@ grape:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 leek:
     item-source: MoreMaterials\KFood_Core\leek_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -947,7 +1003,7 @@ leek:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 lettuce:
     item-source: MoreMaterials\KFood_Core\lettuce_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1003,7 +1059,7 @@ lettuce:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 luffa:
     item-source: MoreMaterials\KFood_Core\luffa_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1059,7 +1115,7 @@ luffa:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 olive:
     item-source: MoreMaterials\KFood_Core\olive_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1115,7 +1171,7 @@ olive:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 oat:
     item-source: MoreMaterials\KFood_Core\oat_seed
     block-source: MoreMaterials\KFood_Core\flatseed
@@ -1171,7 +1227,7 @@ oat:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 onion:
     item-source: MoreMaterials\KFood_Core\onion_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1227,7 +1283,7 @@ onion:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 peanut:
     item-source: MoreMaterials\KFood_Core\peanut_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1283,8 +1339,8 @@ peanut:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
-        ignore-light: true
+        ignore-light: false
+        ignore-light: false
 radish:
     item-source: MoreMaterials\KFood_Core\radish_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1340,7 +1396,7 @@ radish:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 raspberry:
     item-source: MoreMaterials\KFood_Core\raspberry_seed
     block-source: MoreMaterials\KFood_Core\plantedseed
@@ -1396,7 +1452,7 @@ raspberry:
         allow-fertilization: true;
         damage-player: false
         drop-item-source-on-grass-break: true
-        ignore-light: true
+        ignore-light: false
 rice:
     item-source: MoreMaterials\KFood_Core\rice_seed
     block-source: MoreMaterials\KFood_Core\flatseed

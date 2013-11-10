@@ -30,6 +30,7 @@ import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
+import com.almuradev.sprout.plugin.util.Util;
 import com.rits.cloning.Cloner;
 
 import me.zford.jobs.Jobs;
@@ -38,11 +39,11 @@ import me.zford.jobs.bukkit.actions.BlockActionInfo;
 import me.zford.jobs.config.ConfigManager;
 import me.zford.jobs.container.ActionType;
 import me.zford.jobs.container.JobsPlayer;
+
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
-
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -493,7 +494,7 @@ public class SproutListener implements Listener {
 		if (source.getGameMode() != GameMode.CREATIVE) {
 			held.setAmount(held.getAmount() - 1);
 			if (held.getAmount() == 0) {
-				source.setItemInHand(new ItemStack(Material.AIR));
+				Util.ReloadItemBar(source, new SpoutItemStack(source.getItemInHand()));				
 			}
 		}
 	}

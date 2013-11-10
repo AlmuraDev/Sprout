@@ -5,15 +5,22 @@
 	<!-- Project information -->
 	<groupId>com.almuradev</groupId>
 	<artifactId>sprout</artifactId>
-	<version>1.4</version>
+	<version>1.5</version>
 	<name>Sprout</name>
 	<url>http://www.almuradev.com</url>
 	<description>The premiere Spoutcraft farming emulation system.</description>
-
+	
+	<!-- Parent information -->
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bukkitVersion>1.5.1-R0.3-SNAPSHOT</bukkitVersion>
-		<spoutVersion>1.5.1-R0.3-SNAPSHOT</spoutVersion>
+		<bukkitVersion>1.6.2-R1.0</bukkitVersion>
+		<spoutcraftpluginVersion>1.6.2-R1.1-SNAPSHOT</spoutcraftpluginVersion>
 		<mainClass>com.almuradev.sprout.plugin.SproutPlugin</mainClass>
 	</properties>
 
@@ -42,8 +49,28 @@
 	<!-- Repository locations -->
 	<repositories>
 		<repository>
-			<id>spout-repo</id>
-			<url>http://repo.spout.org</url>
+			<id>bukkit-releases</id>
+			<url>http://repo.bukkit.org/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<id>bukkit-snapshots</id>
+			<url>http://repo.bukkit.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>sonatype-nexus-releases</id>
+			<url>https://oss.sonatype.org/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 		<repository>
 			<id>Plugin Metrics</id>
@@ -60,11 +87,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.getspout</groupId>
-			<artifactId>spoutplugin</artifactId>
-			<version>${spoutVersion}</version>
-			<scope>provided</scope>
-		</dependency>
+            <groupId>org.spoutcraft</groupId>
+            <artifactId>spoutcraftplugin</artifactId>
+            <version>${spoutcraftpluginVersion}</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>uk.com.robust-it</groupId>
 			<artifactId>cloning</artifactId>
@@ -100,9 +127,23 @@
 			<artifactId>h2</artifactId>
 			<version>1.3.168</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency>		
 	</dependencies>
-
+	<!-- Build plugin repositories -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-nexus-releases</id>
+			<url>https://oss.sonatype.org/content/repositories/releases</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	<!-- Build configuration -->
 	<build>
 		<defaultGoal>clean install</defaultGoal>
