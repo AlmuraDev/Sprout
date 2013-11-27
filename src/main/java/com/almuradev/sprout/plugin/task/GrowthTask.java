@@ -126,7 +126,7 @@ public class GrowthTask implements Runnable {
 				if (!sprout.isFullyGrown()) {
 					final Stage current = sprout.getCurrentStage();
 					if (current != null) {
-						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
+						if (RANDOM.nextInt((current.getGrowthChance() - 0) + 1) + 0 == current.getGrowthChance()) {
 							final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 							if (block.getChunk().isLoaded()) {
 								final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
