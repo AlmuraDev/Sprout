@@ -26,4 +26,4 @@ sql:
     username: minecraft
     password: minecraft
 jobs:
-    enabled: true
+    enabled: false
