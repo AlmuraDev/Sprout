@@ -119,6 +119,8 @@ public class GrowthTask implements Runnable {
 				final int x = Int21TripleHashed.key1(l);
 				final int y = Int21TripleHashed.key2(l);
 				final int z = Int21TripleHashed.key3(l);
+				final int chunkX = x >> 4;
+				final int chunkZ = z >> 4;
 				final Sprout live = plugin.getWorldRegistry().get(world, x, y, z);
 				if (!sprout.equals(live)) {
 					return true;
@@ -126,9 +128,9 @@ public class GrowthTask implements Runnable {
 				if (!sprout.isFullyGrown()) {
 					final Stage current = sprout.getCurrentStage();
 					if (current != null) {
-						if (RANDOM.nextInt(current.getGrowthChance() - 1 + 1) + 1 == current.getGrowthChance()) {
-							final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
-							if (block.getChunk().isLoaded()) {
+						if (RANDOM.nextInt((current.getGrowthChance() - 0) + 1) + 0 == current.getGrowthChance()) {
+							if (Bukkit.getWorld(world).isChunkLoaded(chunkX, chunkZ)) {	
+								final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 								final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
 								final Material material = Material.getMaterial(current.getName());
 
