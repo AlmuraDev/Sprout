@@ -4,6 +4,7 @@
 
 # Binary files that should not be modified
 *.dat binary
+*.jar binary
 *.jpg binary
 *.png binary
 *.ttf binary
