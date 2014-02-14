@@ -135,7 +135,9 @@ public class SproutListener implements Listener {
 			//Lets roll a dice for a bonus!			
 			if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {
 				if (!sprout.getBonus().isEmpty() && RANDOM.nextInt(sprout.getBonusChance() - 1 + 1) + 1 == sprout.getBonusChance()) {
-					event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " You get a bonus drop!");
+					if (SproutConfiguration.bonusMessage) {
+						event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " You get a bonus drop!");
+					}
 					disperseDrops(event.getPlayer(), sprout, block, true);
 				} else {
 					disperseDrops(event.getPlayer(), sprout, block, false);

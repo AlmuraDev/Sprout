@@ -16,6 +16,15 @@
 # WARNING: We have only tested h2 thoroughly for performance impact and therefore only
 #          recommend that mode. We make no promises that sqlite or mysql will have the same
 #          level of performance.
+#
+# Feedback:  
+#    bonus-message: true/false = displays a message in the users chat when they receive a bonus drop.
+#
+# Jobs:
+#    enabled: true/false = Enabled the Jobs Plugin Hooks for the Farming Job.
+#
+#
+# Updated: 2/13/2014 - Version 1.5.1
 world:
     growth-interval: 200
 sql:
@@ -25,5 +34,7 @@ sql:
     port: 25566
     username: minecraft
     password: minecraft
+feedback:
+    bonus-message: true
 jobs:
     enabled: false

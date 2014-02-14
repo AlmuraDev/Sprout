@@ -5,12 +5,12 @@ alfalfa:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\alfalfa:
             amount: 1        
         MoreMaterials\KFood_Core\alfalfa_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\alfalfa_seed:
                 amount: 1
@@ -24,7 +24,7 @@ alfalfa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\alfalfa1
             fertilizer-source: bonemeal
@@ -32,7 +32,7 @@ alfalfa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\alfalfa2
             fertilizer-source: bonemeal
@@ -40,7 +40,7 @@ alfalfa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\alfalfa3
             fertilizer-source: bonemeal
@@ -48,7 +48,7 @@ alfalfa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -61,12 +61,12 @@ barley:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\barley:
             amount: 1        
         MoreMaterials\KFood_Core\barley_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\barley_seed:
                 amount: 1
@@ -80,7 +80,7 @@ barley:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\barley1
             fertilizer-source: bonemeal
@@ -88,7 +88,7 @@ barley:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\barley2
             fertilizer-source: bonemeal
@@ -96,7 +96,7 @@ barley:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\barley3
             fertilizer-source: bonemeal
@@ -104,7 +104,7 @@ barley:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -117,12 +117,12 @@ bellpepper:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\bellpepper:
             amount: 1        
         MoreMaterials\KFood_Core\bellpepper_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\bellpepper_seed:
                 amount: 1
@@ -136,7 +136,7 @@ bellpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\bellpepper1
             fertilizer-source: bonemeal
@@ -144,7 +144,7 @@ bellpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\bellpepper2
             fertilizer-source: bonemeal
@@ -152,7 +152,7 @@ bellpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\bellpepper3
             fertilizer-source: bonemeal
@@ -160,7 +160,7 @@ bellpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -173,12 +173,12 @@ blackberry:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\blackberry:
             amount: 1        
         MoreMaterials\KFood_Core\blackberry_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\blackberry_seed:
                 amount: 1
@@ -192,7 +192,7 @@ blackberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\blackberry1
             fertilizer-source: bonemeal
@@ -200,7 +200,7 @@ blackberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\blackberry2
             fertilizer-source: bonemeal
@@ -208,7 +208,7 @@ blackberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\blackberry3
             fertilizer-source: bonemeal
@@ -216,7 +216,7 @@ blackberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -229,12 +229,12 @@ bambooshoot:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\bambooshoot:
             amount: 1        
         MoreMaterials\KFood_Core\bambooshoot_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\bambooshoot_seed:
                 amount: 1
@@ -248,7 +248,7 @@ bambooshoot:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\bambooshoot1
             fertilizer-source: bonemeal
@@ -256,7 +256,7 @@ bambooshoot:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\bambooshoot2
             fertilizer-source: bonemeal
@@ -264,7 +264,7 @@ bambooshoot:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180            
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\bambooshoot3
             fertilizer-source: bonemeal
@@ -272,7 +272,7 @@ bambooshoot:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240            
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -286,12 +286,12 @@ broccoli:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\broccoli:
             amount: 1        
         MoreMaterials\KFood_Core\broccoli_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\broccoli_seed:
                 amount: 1
@@ -305,7 +305,7 @@ broccoli:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\broccoli1
             fertilizer-source: bonemeal
@@ -313,7 +313,7 @@ broccoli:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\broccoli2
             fertilizer-source: bonemeal
@@ -321,7 +321,7 @@ broccoli:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\broccoli3
             fertilizer-source: bonemeal
@@ -329,7 +329,7 @@ broccoli:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -342,12 +342,12 @@ cabbage:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\cabbage:
             amount: 1        
         MoreMaterials\KFood_Core\cabbage_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\cabbage_seed:
                 amount: 1
@@ -361,7 +361,7 @@ cabbage:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3       
+            growth-chance: 5       
         2:
             source: MoreMaterials\KFood_Core\cabbage1
             fertilizer-source: bonemeal
@@ -369,7 +369,7 @@ cabbage:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\cabbage2
             fertilizer-source: bonemeal
@@ -377,7 +377,7 @@ cabbage:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180            
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\cabbage3
             fertilizer-source: bonemeal
@@ -385,7 +385,7 @@ cabbage:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -398,12 +398,12 @@ celery:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\celery:
             amount: 1        
         MoreMaterials\KFood_Core\celery_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\celery_seed:
                 amount: 1
@@ -417,7 +417,7 @@ celery:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\celery1
             fertilizer-source: bonemeal
@@ -425,7 +425,7 @@ celery:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\celery2
             fertilizer-source: bonemeal
@@ -433,7 +433,7 @@ celery:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180            
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\celery3
             fertilizer-source: bonemeal
@@ -441,7 +441,7 @@ celery:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -454,12 +454,12 @@ chilipepper:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\chilipepper:
             amount: 1        
         MoreMaterials\KFood_Core\chilipepper_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\chilipepper_seed:
                 amount: 1
@@ -473,7 +473,7 @@ chilipepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\chilipepper1
             fertilizer-source: bonemeal
@@ -481,7 +481,7 @@ chilipepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\chilipepper2
             fertilizer-source: bonemeal
@@ -489,7 +489,7 @@ chilipepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180          
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\chilipepper3
             fertilizer-source: bonemeal
@@ -497,7 +497,7 @@ chilipepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240          
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -510,12 +510,12 @@ corn:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\corn:
             amount: 1        
         MoreMaterials\KFood_Core\corn_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\corn_seed:
                 amount: 1
@@ -529,7 +529,7 @@ corn:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\corn1
             fertilizer-source: bonemeal
@@ -537,7 +537,7 @@ corn:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\corn2
             fertilizer-source: bonemeal
@@ -545,7 +545,7 @@ corn:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180          
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\corn3
             fertilizer-source: bonemeal
@@ -553,7 +553,7 @@ corn:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240           
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -566,12 +566,12 @@ cotton:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\cotton:
             amount: 1        
         MoreMaterials\KFood_Core\cotton_seed:
-            amount: 2
+            amount: 1
         bonus:
             MoreMaterials\KFood_Core\cotton_seed:
                 amount: 1
@@ -585,7 +585,7 @@ cotton:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3       
+            growth-chance: 5       
         2:
             source: MoreMaterials\KFood_Core\cotton1
             fertilizer-source: bonemeal
@@ -593,7 +593,7 @@ cotton:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\cotton2
             fertilizer-source: bonemeal
@@ -601,7 +601,7 @@ cotton:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180            
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\cotton3
             fertilizer-source: bonemeal
@@ -609,7 +609,7 @@ cotton:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -622,12 +622,12 @@ cucumber:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\cucumber:
             amount: 1        
         MoreMaterials\KFood_Core\cucumber_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\cucumber_seed:
                 amount: 1
@@ -641,7 +641,7 @@ cucumber:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\cucumber1
             fertilizer-source: bonemeal
@@ -649,7 +649,7 @@ cucumber:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\cucumber2
             fertilizer-source: bonemeal
@@ -657,7 +657,7 @@ cucumber:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180    
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\cucumber3
             fertilizer-source: bonemeal
@@ -665,7 +665,7 @@ cucumber:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -678,12 +678,12 @@ daikon:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\daikon:
             amount: 1        
         MoreMaterials\KFood_Core\daikon_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\daikon_seed:
                 amount: 1
@@ -697,7 +697,7 @@ daikon:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\daikon1
             fertilizer-source: bonemeal
@@ -705,7 +705,7 @@ daikon:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\daikon2
             fertilizer-source: bonemeal
@@ -713,7 +713,7 @@ daikon:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\daikon3
             fertilizer-source: bonemeal
@@ -721,7 +721,7 @@ daikon:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -734,12 +734,12 @@ eggplant:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\eggplant:
             amount: 1        
         MoreMaterials\KFood_Core\eggplant_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\eggplant_seed:
                 amount: 1
@@ -753,7 +753,7 @@ eggplant:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\eggplant1
             fertilizer-source: bonemeal
@@ -761,13 +761,13 @@ eggplant:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\eggplant2
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                       
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\eggplant3
             fertilizer-source: bonemeal
@@ -775,7 +775,7 @@ eggplant:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                       
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -788,12 +788,12 @@ fargreens:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\fargreens:
             amount: 1        
         MoreMaterials\KFood_Core\fargreens_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\fargreens_seed:
                 amount: 1
@@ -807,7 +807,7 @@ fargreens:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\fargreens1
             fertilizer-source: bonemeal
@@ -815,7 +815,7 @@ fargreens:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\fargreens2
             fertilizer-source: bonemeal
@@ -823,7 +823,7 @@ fargreens:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\fargreens3
             fertilizer-source: bonemeal
@@ -831,7 +831,7 @@ fargreens:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -844,12 +844,12 @@ garlic:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\garlic:
             amount: 1        
         MoreMaterials\KFood_Core\garlic_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\garlic_seed:
                 amount: 1
@@ -863,7 +863,7 @@ garlic:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\garlic1
             fertilizer-source: bonemeal
@@ -871,14 +871,14 @@ garlic:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\garlic2
             fertilizer-source: bonemeal
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                    
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\garlic3
             fertilizer-source: bonemeal
@@ -886,7 +886,7 @@ garlic:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                    
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -899,12 +899,12 @@ grape:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\grape:
             amount: 1        
         MoreMaterials\KFood_Core\grape_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\grape_seed:
                 amount: 1
@@ -918,7 +918,7 @@ grape:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\grape1
             fertilizer-source: bonemeal
@@ -926,7 +926,7 @@ grape:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\grape2
             fertilizer-source: bonemeal
@@ -934,7 +934,7 @@ grape:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                    
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\grape3
             fertilizer-source: bonemeal
@@ -942,7 +942,7 @@ grape:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                    
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -955,12 +955,12 @@ leek:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\leek:
             amount: 1        
         MoreMaterials\KFood_Core\leek_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\leek_seed:
                 amount: 1
@@ -974,7 +974,7 @@ leek:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\leek1
             fertilizer-source: bonemeal
@@ -982,7 +982,7 @@ leek:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\leek2
             fertilizer-source: bonemeal
@@ -990,7 +990,7 @@ leek:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\leek3
             fertilizer-source: bonemeal
@@ -998,7 +998,7 @@ leek:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                 
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1011,12 +1011,12 @@ lettuce:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\lettuce:
             amount: 1        
         MoreMaterials\KFood_Core\lettuce_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\lettuce_seed:
                 amount: 1
@@ -1030,7 +1030,7 @@ lettuce:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\lettuce1
             fertilizer-source: bonemeal
@@ -1038,7 +1038,7 @@ lettuce:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\lettuce2
             fertilizer-source: bonemeal
@@ -1046,7 +1046,7 @@ lettuce:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\lettuce3
             fertilizer-source: bonemeal
@@ -1054,7 +1054,7 @@ lettuce:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1067,12 +1067,12 @@ luffa:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\luffa:
             amount: 1        
         MoreMaterials\KFood_Core\luffa_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\luffa_seed:
                 amount: 1
@@ -1086,7 +1086,7 @@ luffa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\luffa1
             fertilizer-source: bonemeal
@@ -1094,7 +1094,7 @@ luffa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\luffa2
             fertilizer-source: bonemeal
@@ -1102,7 +1102,7 @@ luffa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\luffa3
             fertilizer-source: bonemeal
@@ -1110,7 +1110,7 @@ luffa:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1123,12 +1123,12 @@ olive:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\olive:
             amount: 1        
         MoreMaterials\KFood_Core\olive_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\olive_seed:
                 amount: 1
@@ -1142,7 +1142,7 @@ olive:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\olive1
             fertilizer-source: bonemeal
@@ -1150,7 +1150,7 @@ olive:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\olive2
             fertilizer-source: bonemeal
@@ -1158,7 +1158,7 @@ olive:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\olive3
             fertilizer-source: bonemeal
@@ -1166,7 +1166,7 @@ olive:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                      
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1179,12 +1179,12 @@ oat:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\oat:
             amount: 1        
         MoreMaterials\KFood_Core\oat_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\oat_seed:
                 amount: 1
@@ -1198,7 +1198,7 @@ oat:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\oat1
             fertilizer-source: bonemeal
@@ -1206,7 +1206,7 @@ oat:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\oat2
             fertilizer-source: bonemeal
@@ -1214,7 +1214,7 @@ oat:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                    
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\oat3
             fertilizer-source: bonemeal
@@ -1222,7 +1222,7 @@ oat:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1235,12 +1235,12 @@ onion:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\onion:
             amount: 1        
         MoreMaterials\KFood_Core\onion_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\onion_seed:
                 amount: 1
@@ -1254,7 +1254,7 @@ onion:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\onion1
             fertilizer-source: bonemeal
@@ -1262,7 +1262,7 @@ onion:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\onion2
             fertilizer-source: bonemeal
@@ -1270,7 +1270,7 @@ onion:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                    
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\onion3
             fertilizer-source: bonemeal
@@ -1278,7 +1278,7 @@ onion:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1291,12 +1291,12 @@ peanut:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\peanut:
             amount: 1        
         MoreMaterials\KFood_Core\peanut_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\peanut_seed:
                 amount: 1
@@ -1310,7 +1310,7 @@ peanut:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\peanut1
             fertilizer-source: bonemeal
@@ -1318,7 +1318,7 @@ peanut:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\peanut2
             fertilizer-source: bonemeal
@@ -1326,7 +1326,7 @@ peanut:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\peanut3
             fertilizer-source: bonemeal
@@ -1334,7 +1334,7 @@ peanut:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1348,12 +1348,12 @@ radish:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\radish:
             amount: 1        
         MoreMaterials\KFood_Core\radish_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\radish_seed:
                 amount: 1
@@ -1367,7 +1367,7 @@ radish:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\radish1
             fertilizer-source: bonemeal
@@ -1375,7 +1375,7 @@ radish:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\radish2
             fertilizer-source: bonemeal
@@ -1383,7 +1383,7 @@ radish:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\radish3
             fertilizer-source: bonemeal
@@ -1391,7 +1391,7 @@ radish:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1404,12 +1404,12 @@ raspberry:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\raspberry:
             amount: 1        
         MoreMaterials\KFood_Core\raspberry_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\raspberry_seed:
                 amount: 1
@@ -1423,7 +1423,7 @@ raspberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\raspberry1
             fertilizer-source: bonemeal
@@ -1431,7 +1431,7 @@ raspberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\raspberry2
             fertilizer-source: bonemeal
@@ -1439,7 +1439,7 @@ raspberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\raspberry3
             fertilizer-source: bonemeal
@@ -1447,7 +1447,7 @@ raspberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1460,12 +1460,12 @@ rice:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\rice:
             amount: 1        
         MoreMaterials\KFood_Core\rice_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\rice_seed:
                 amount: 1
@@ -1479,7 +1479,7 @@ rice:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\rice1
             fertilizer-source: bonemeal
@@ -1487,7 +1487,7 @@ rice:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\rice2
             fertilizer-source: bonemeal
@@ -1495,7 +1495,7 @@ rice:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\rice3
             fertilizer-source: bonemeal
@@ -1503,7 +1503,7 @@ rice:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1517,12 +1517,12 @@ strawberry:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\strawberry:
             amount: 1        
         MoreMaterials\KFood_Core\strawberry_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\strawberry_seed:
                 amount: 1
@@ -1536,7 +1536,7 @@ strawberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 6
         2:
             source: MoreMaterials\KFood_Core\strawberry1
             fertilizer-source: bonemeal
@@ -1544,7 +1544,7 @@ strawberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 6
         3:
             source: MoreMaterials\KFood_Core\strawberry2
             fertilizer-source: bonemeal
@@ -1552,7 +1552,7 @@ strawberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 6
         4:
             source: MoreMaterials\KFood_Core\strawberry3
             fertilizer-source: bonemeal
@@ -1560,7 +1560,7 @@ strawberry:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 6
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1574,12 +1574,12 @@ soybean:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\soybean:
             amount: 1        
         MoreMaterials\KFood_Core\soybean_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\soybean_seed:
                 amount: 1
@@ -1593,7 +1593,7 @@ soybean:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\soybean1
             fertilizer-source: bonemeal
@@ -1601,7 +1601,7 @@ soybean:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\soybean2
             fertilizer-source: bonemeal
@@ -1609,7 +1609,7 @@ soybean:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180       
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\soybean3
             fertilizer-source: bonemeal
@@ -1617,7 +1617,7 @@ soybean:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240       
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1631,12 +1631,12 @@ spinach:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20    
+    bonus-chance: 10    
     drops: 
         MoreMaterials\KFood_Core\spinach:
             amount: 1        
         MoreMaterials\KFood_Core\spinach_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\spinach_seed:
                 amount: 1
@@ -1650,7 +1650,7 @@ spinach:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\spinach1
             fertilizer-source: bonemeal
@@ -1658,7 +1658,7 @@ spinach:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\spinach2
             fertilizer-source: bonemeal
@@ -1666,7 +1666,7 @@ spinach:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180       
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\spinach3
             fertilizer-source: bonemeal
@@ -1674,7 +1674,7 @@ spinach:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240       
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1688,12 +1688,12 @@ sweetpepper:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\sweetpepper:
             amount: 1        
         MoreMaterials\KFood_Core\sweetpepper_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\sweetpepper_seed:
                 amount: 1
@@ -1707,7 +1707,7 @@ sweetpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\sweetpepper1
             fertilizer-source: bonemeal
@@ -1715,7 +1715,7 @@ sweetpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\sweetpepper2
             fertilizer-source: bonemeal
@@ -1723,7 +1723,7 @@ sweetpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                      
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\sweetpepper3
             fertilizer-source: bonemeal
@@ -1731,7 +1731,7 @@ sweetpepper:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                      
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1745,12 +1745,12 @@ sweetpotato:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\sweetpotato:
             amount: 1        
         MoreMaterials\KFood_Core\sweetpotato_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\sweetpotato_seed:
                 amount: 1
@@ -1764,7 +1764,7 @@ sweetpotato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\sweetpotato1
             fertilizer-source: bonemeal
@@ -1772,7 +1772,7 @@ sweetpotato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\sweetpotato2
             fertilizer-source: bonemeal
@@ -1780,7 +1780,7 @@ sweetpotato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                  
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\sweetpotato3
             fertilizer-source: bonemeal
@@ -1788,7 +1788,7 @@ sweetpotato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                  
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1802,12 +1802,12 @@ tobacco:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\tobacco:
             amount: 1        
         MoreMaterials\KFood_Core\tobacco_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\tobacco_seed:
                 amount: 1
@@ -1821,7 +1821,7 @@ tobacco:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\tobacco1
             fertilizer-source: bonemeal
@@ -1829,7 +1829,7 @@ tobacco:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\tobacco2
             fertilizer-source: bonemeal
@@ -1837,7 +1837,7 @@ tobacco:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                     
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\tobacco3
             fertilizer-source: bonemeal
@@ -1845,7 +1845,7 @@ tobacco:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                     
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1859,12 +1859,12 @@ tomato:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\tomato:
             amount: 1        
         MoreMaterials\KFood_Core\tomato_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\tomato_seed:
                 amount: 1
@@ -1878,7 +1878,7 @@ tomato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\tomato1
             fertilizer-source: bonemeal
@@ -1886,7 +1886,7 @@ tomato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\tomato2
             fertilizer-source: bonemeal
@@ -1894,7 +1894,7 @@ tomato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                     
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\tomato3
             fertilizer-source: bonemeal
@@ -1902,7 +1902,7 @@ tomato:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                     
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false
@@ -1916,12 +1916,12 @@ turnip:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 20
+    bonus-chance: 10
     drops: 
         MoreMaterials\KFood_Core\turnip:
             amount: 1        
         MoreMaterials\KFood_Core\turnip_seed:
-            amount: 2    
+            amount: 1    
         bonus:
             MoreMaterials\KFood_Core\turnip_seed:
                 amount: 1
@@ -1935,7 +1935,7 @@ turnip:
             min-light-level: 7
             max-light-level: 15
             growth-required: 60
-            growth-chance: 3
+            growth-chance: 5
         2:
             source: MoreMaterials\KFood_Core\turnip1
             fertilizer-source: bonemeal
@@ -1943,7 +1943,7 @@ turnip:
             min-light-level: 7
             max-light-level: 15
             growth-required: 120
-            growth-chance: 3
+            growth-chance: 5
         3:
             source: MoreMaterials\KFood_Core\turnip2
             fertilizer-source: bonemeal
@@ -1951,7 +1951,7 @@ turnip:
             min-light-level: 7
             max-light-level: 15
             growth-required: 180                        
-            growth-chance: 3
+            growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\turnip3
             fertilizer-source: bonemeal
@@ -1959,7 +1959,7 @@ turnip:
             min-light-level: 7
             max-light-level: 15
             growth-required: 240                        
-            growth-chance: 3
+            growth-chance: 5
     variables:
         allow-fertilization: true;
         damage-player: false

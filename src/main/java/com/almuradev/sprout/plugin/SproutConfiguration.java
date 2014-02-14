@@ -32,7 +32,7 @@ public class SproutConfiguration {
 	private final SproutPlugin plugin;
 	private FileConfiguration config;
 	private Map<String, Long> growthIntervals = new HashMap<>();
-	public static boolean jobsEnabled = false;
+	public static boolean jobsEnabled, bonusMessage = false;
 
 	public SproutConfiguration(SproutPlugin plugin) {
 		this.plugin = plugin;
@@ -46,10 +46,15 @@ public class SproutConfiguration {
 			plugin.saveResource("sprouts.yml", true);
 		}
 		config = plugin.getConfig();
-		//Parse in worlds
+				
 		if (config.getBoolean("jobs.enabled") == true) {
 			jobsEnabled = true;
 		}
+		
+		if (config.getBoolean("feedback.bonus-message-enabled") == true) {
+			bonusMessage = true;
+		}
+		
 		for (String world : config.getKeys(false)) {
 			final ConfigurationSection worldSection = config.getConfigurationSection(world);
 			growthIntervals.put(world, worldSection.getLong("growth-interval", 350));
