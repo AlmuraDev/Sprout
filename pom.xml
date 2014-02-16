@@ -105,11 +105,10 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.alta189</groupId>
+			<groupId>org.inspirenxe</groupId>
 			<artifactId>simplesave</artifactId>
 			<version>1.2.0-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/SimpleSave.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.zford</groupId>
