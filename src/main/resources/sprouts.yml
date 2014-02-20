@@ -54,7 +54,7 @@ alfalfa:
         damage-player: false
         drop-item-source-on-grass-break: true
         ignore-light: false
-barley:
+lotusroot:
     item-source: MoreMaterials\KFood_Core\barley_seed
     block-source: MoreMaterials\KFood_Core\flatseed
     fertilizer-source: bonemeal
@@ -324,6 +324,62 @@ broccoli:
             growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\broccoli3
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 240
+            growth-chance: 5
+    variables:
+        allow-fertilization: true;
+        damage-player: false
+        drop-item-source-on-grass-break: true
+        ignore-light: false
+butterbean:
+    item-source: MoreMaterials\KFood_Core\butterbean_seed
+    block-source: MoreMaterials\KFood_Core\flatseed
+    fertilizer-source: bonemeal
+    fertilizer-amount: 1
+    min-light-level: 7
+    max-light-level: 15
+    bonus-chance: 10
+    drops: 
+        MoreMaterials\KFood_Core\butterbean:
+            amount: 1        
+        MoreMaterials\KFood_Core\butterbean_seed:
+            amount: 1
+        bonus:
+            MoreMaterials\KFood_Core\butterbean_seed:
+                amount: 1
+            MoreMaterials\KFood_Core\butterbean:
+                amount: 1
+    stages:
+        1:
+            source: MoreMaterials\KFood_Core\flatseed
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 60
+            growth-chance: 5
+        2:
+            source: MoreMaterials\KFood_Core\butterbean1
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 120
+            growth-chance: 5
+        3:
+            source: MoreMaterials\KFood_Core\butterbean2
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 180
+            growth-chance: 5
+        4:
+            source: MoreMaterials\KFood_Core\butterbean3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
             min-light-level: 7
@@ -1049,6 +1105,62 @@ lettuce:
             growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\lettuce3
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 240                        
+            growth-chance: 5
+    variables:
+        allow-fertilization: true;
+        damage-player: false
+        drop-item-source-on-grass-break: true
+        ignore-light: false
+lotusroot:
+    item-source: MoreMaterials\KFood_Core\lotusroot_seed
+    block-source: MoreMaterials\KFood_Core\plantedseed
+    fertilizer-source: bonemeal
+    fertilizer-amount: 1
+    min-light-level: 7
+    max-light-level: 15
+    bonus-chance: 10
+    drops: 
+        MoreMaterials\KFood_Core\lotusroot:
+            amount: 1        
+        MoreMaterials\KFood_Corlotusrootce_seed:
+            amount: 1    
+        bonus:
+            MoreMaterials\KFood_Core\lotusroot_seed:
+                amount: 1
+            MoreMaterials\KFood_Core\lotusroot:
+                amount: 1
+    stages:
+        1:
+            source: MoreMaterials\KFood_Core\plantedseed
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 60
+            growth-chance: 5
+        2:
+            source: MoreMaterials\KFood_Core\lotusroot1
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 120
+            growth-chance: 5
+        3:
+            source: MoreMaterials\KFood_Core\lotusroot2
+            fertilizer-source: bonemeal
+            fertilizer-amount: 1
+            min-light-level: 7
+            max-light-level: 15
+            growth-required: 180
+            growth-chance: 5
+        4:
+            source: MoreMaterials\KFood_Core\lotusroot3
             fertilizer-source: bonemeal
             fertilizer-amount: 1
             min-light-level: 7
