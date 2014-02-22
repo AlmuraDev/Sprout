@@ -38,3 +38,5 @@ feedback:
     bonus-message: true
 jobs:
     enabled: false
+forceloadchunks:
+    enabled: false

@@ -29,6 +29,7 @@ import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.api.mech.Light;
 import com.almuradev.sprout.api.util.Int21TripleHashed;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
+import com.almuradev.sprout.plugin.SproutConfiguration;
 import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.thread.SaveThread;
@@ -39,7 +40,6 @@ import gnu.trove.procedure.TLongObjectProcedure;
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -129,6 +129,10 @@ public class GrowthTask implements Runnable {
 					final Stage current = sprout.getCurrentStage();
 					if (current != null) {
 						if (RANDOM.nextInt((current.getGrowthChance() - 0) + 1) + 0 == current.getGrowthChance()) {
+							// Force Load the chunk, enables Sprouts to grow when player is away.
+							if (SproutConfiguration.forceLoad) {
+								Bukkit.getWorld(world).loadChunk(chunkX, chunkZ);
+							}
 							if (Bukkit.getWorld(world).isChunkLoaded(chunkX, chunkZ)) {	
 								final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
 								final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());

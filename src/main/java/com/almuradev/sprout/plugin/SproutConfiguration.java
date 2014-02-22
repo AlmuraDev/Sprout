@@ -32,7 +32,7 @@ public class SproutConfiguration {
 	private final SproutPlugin plugin;
 	private FileConfiguration config;
 	private Map<String, Long> growthIntervals = new HashMap<>();
-	public static boolean jobsEnabled, bonusMessage = false;
+	public static boolean jobsEnabled, bonusMessage, forceLoad = false;
 
 	public SproutConfiguration(SproutPlugin plugin) {
 		this.plugin = plugin;
@@ -53,6 +53,10 @@ public class SproutConfiguration {
 		
 		if (config.getBoolean("feedback.bonus-message-enabled") == true) {
 			bonusMessage = true;
+		}
+		
+		if (config.getBoolean("forceloadchunks.enabled") == true) {
+			forceLoad = true;
 		}
 		
 		for (String world : config.getKeys(false)) {
