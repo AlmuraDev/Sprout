@@ -111,6 +111,7 @@ public class SimpleSQLStorage implements SQLStorage {
 		if (world == null || world.isEmpty() || sprout == null) {
 			throw new IllegalArgumentException("World or sprout is null!");
 		}
+
 		final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
 		if (row == null) {
 			db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
@@ -148,9 +149,9 @@ public class SimpleSQLStorage implements SQLStorage {
 	public Map<String, TInt21TripleObjectHashMap> getAll() {
 		final HashMap<String, TInt21TripleObjectHashMap> registry = new HashMap<>();
 		for (Sprouts row : db.select(Sprouts.class).execute().find()) {
-			TInt21TripleObjectHashMap worldRegistry = registry.get(row.getWorld());
+			TInt21TripleObjectHashMap<Sprout> worldRegistry = registry.get(row.getWorld());
 			if (worldRegistry == null) {
-				worldRegistry = new TInt21TripleObjectHashMap();
+				worldRegistry = new TInt21TripleObjectHashMap<Sprout>();
 				registry.put(row.getWorld(), worldRegistry);
 			}
 			final Sprout sprout = plugin.getSproutRegistry().get(row.getSprout());
@@ -166,12 +167,16 @@ public class SimpleSQLStorage implements SQLStorage {
 	}
 
 	public void dropAll() {
+		// Giant hack fix.
+		db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");
+		// End Hack fix.
+		
 		for (final World world : Bukkit.getWorlds()) {
-			final TInt21TripleObjectHashMap registry = plugin.getWorldRegistry().get(world.getName());
+			final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
 			if (registry == null) {
 				continue;
 			}
-			registry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
+			registry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
 				@Override
 				public boolean execute(long l, Object o) {
 					final SimpleSprout sprout = (SimpleSprout) o;
@@ -181,7 +186,7 @@ public class SimpleSQLStorage implements SQLStorage {
 					final int x = Int21TripleHashed.key1(l);
 					final int y = Int21TripleHashed.key2(l);
 					final int z = Int21TripleHashed.key3(l);
-					add(world.getName(), x, y, z, sprout);
+					db.save(new Sprouts(world.getName(),Int21TripleHashed.key(x, y, z), sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
 					return true;
 				}
 			});

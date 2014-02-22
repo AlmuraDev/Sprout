@@ -31,7 +31,6 @@ import com.almuradev.sprout.plugin.thread.ThreadRegistry;
 import gnu.trove.procedure.TLongObjectProcedure;
 
 import org.getspout.spoutapi.block.SpoutBlock;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -104,14 +103,14 @@ public class SproutExecutor implements CommandExecutor {
 	}
 
 	private void clear(final CommandSender sender, final World world) {
-		final TInt21TripleObjectHashMap registry = plugin.getWorldRegistry().get(world.getName());
+		final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
 		if (registry == null) {
 			sender.sendMessage("[Sprout] World [" + world.getName() + "] has no registry of sprouts.");
 			return;
 		}
 		sender.sendMessage("[Sprout] Clearing all sprouts for world [" + world.getName() + "]. WARNING: THIS MAY TAKE SOME TIME...");
 		((SaveThread) ThreadRegistry.get(world.getName())).clear();
-		registry.getInternalMap().forEachEntry(new TLongObjectProcedure() {
+		registry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
 			@Override
 			public boolean execute(long l, Object o) {
 				final Sprout sprout = (Sprout) o;
@@ -133,7 +132,7 @@ public class SproutExecutor implements CommandExecutor {
 	}
 
 	private void info(final CommandSender sender, final World world) {
-		final TInt21TripleObjectHashMap registry = plugin.getWorldRegistry().get(world.getName());
+		final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
 		int count;
 		if (registry == null) {
 			count = 0;

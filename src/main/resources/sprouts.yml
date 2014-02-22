@@ -54,7 +54,7 @@ alfalfa:
         damage-player: false
         drop-item-source-on-grass-break: true
         ignore-light: false
-lotusroot:
+barley:
     item-source: MoreMaterials\KFood_Core\barley_seed
     block-source: MoreMaterials\KFood_Core\flatseed
     fertilizer-source: bonemeal
@@ -1127,7 +1127,7 @@ lotusroot:
     drops: 
         MoreMaterials\KFood_Core\lotusroot:
             amount: 1        
-        MoreMaterials\KFood_Corlotusrootce_seed:
+        MoreMaterials\KFood_Core\lotusroot_seed:
             amount: 1    
         bonus:
             MoreMaterials\KFood_Core\lotusroot_seed:
