@@ -53,6 +53,7 @@ public class SimpleSQLStorage implements SQLStorage {
 	private final SproutPlugin plugin;
 	private final Cloner cloner = new Cloner();
 	private Database db;
+	private int saved = 0;
 
 	public SimpleSQLStorage(SproutPlugin plugin) {
 		this.plugin = plugin;
@@ -166,16 +167,14 @@ public class SimpleSQLStorage implements SQLStorage {
 		return registry;
 	}
 
-	public void dropAll() {
-		// Giant hack fix.
-		db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");
-		// End Hack fix.
-		
+	public void dropAll() {		
+		db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");		
 		for (final World world : Bukkit.getWorlds()) {
 			final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
 			if (registry == null) {
 				continue;
 			}
+			saved = 0;
 			registry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
 				@Override
 				public boolean execute(long l, Object o) {
@@ -187,9 +186,11 @@ public class SimpleSQLStorage implements SQLStorage {
 					final int y = Int21TripleHashed.key2(l);
 					final int z = Int21TripleHashed.key3(l);
 					db.save(new Sprouts(world.getName(),Int21TripleHashed.key(x, y, z), sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
+					saved += 1;
 					return true;
-				}
+				}					
 			});
+			Bukkit.getLogger().info("[Sprout] Saving World: " + world.getName() + " Sprouts: " + saved);
 		}
 	}
 
