@@ -23,8 +23,10 @@
 # Jobs:
 #    enabled: true/false = Enabled the Jobs Plugin Hooks for the Farming Job.
 #
+# ForceLoadChunks:
+#    enabled: true/false = Enables the ability to force load a chunk if a Sprout is due to grow and it isn't already loaded.
 #
-# Updated: 2/13/2014 - Version 1.5.1
+# Updated: 2/22/2014 - Version 1.6
 world:
     growth-interval: 200
 sql:
