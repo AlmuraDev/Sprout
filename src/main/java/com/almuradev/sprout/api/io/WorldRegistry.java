@@ -25,19 +25,19 @@ import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 
 public interface WorldRegistry {
-	public Sprout add(String world, int x, int y, int z, Sprout sprout);
+    public Sprout add(String world, int x, int y, int z, Sprout sprout);
 
-	public boolean contains(String world, int x, int y, int z);
+    public boolean contains(String world, int x, int y, int z);
 
-	public Sprout get(String world, int x, int y, int z);
+    public Sprout get(String world, int x, int y, int z);
 
-	public TInt21TripleObjectHashMap get(String world);
+    public TInt21TripleObjectHashMap get(String world);
 
-	public boolean has(String world, int x, int y, int z);
+    public boolean has(String world, int x, int y, int z);
 
-	public Sprout remove(String world, int x, int y, int z);
+    public Sprout remove(String world, int x, int y, int z);
 
-	public Map<String, TInt21TripleObjectHashMap> getAll();
+    public Map<String, TInt21TripleObjectHashMap> getAll();
 
-	public Integer getSize(String world);
+    public Integer getSize(String world);
 }

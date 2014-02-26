@@ -23,47 +23,47 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ThreadRegistry {
-	private static final List<Thread> THREADS = new LinkedList<>();
+    private static final List<Thread> THREADS = new LinkedList<>();
 
-	public ThreadRegistry() {
-	}
+    public ThreadRegistry() {
+    }
 
-	public static Thread add(Thread thread) {
-		THREADS.add(thread);
-		return thread;
-	}
+    public static Thread add(Thread thread) {
+        THREADS.add(thread);
+        return thread;
+    }
 
-	public static Thread get(final String world) {
-		for (final Thread thread : THREADS) {
-			if (thread.getName().equalsIgnoreCase("Save Thread - " + world)) {
-				return thread;
-			}
-		}
-		return null;
-	}
+    public static Thread get(final String world) {
+        for (final Thread thread : THREADS) {
+            if (thread.getName().equalsIgnoreCase("Save Thread - " + world)) {
+                return thread;
+            }
+        }
+        return null;
+    }
 
-	public static void remove(final String world) {
-		for (final Thread thread : THREADS) {
-			if (thread.getName().equalsIgnoreCase("Save Thread - " + world) && !thread.isInterrupted()) {
-				thread.interrupt();
-				THREADS.remove(thread);
-			}
-		}
-	}
+    public static void remove(final String world) {
+        for (final Thread thread : THREADS) {
+            if (thread.getName().equalsIgnoreCase("Save Thread - " + world) && !thread.isInterrupted()) {
+                thread.interrupt();
+                THREADS.remove(thread);
+            }
+        }
+    }
 
-	public static void stop() {
-		for (final Thread thread : THREADS) {
-			thread.interrupt();
-		}
-	}
+    public static void stop() {
+        for (final Thread thread : THREADS) {
+            thread.interrupt();
+        }
+    }
 
-	public static void start(final String world) {
-		final Thread thread = get(world);
-		if (thread == null) {
-			return;
-		}
-		if (!thread.isAlive()) {
-			thread.start();
-		}
-	}
+    public static void start(final String world) {
+        final Thread thread = get(world);
+        if (thread == null) {
+            return;
+        }
+        if (!thread.isAlive()) {
+            thread.start();
+        }
+    }
 }

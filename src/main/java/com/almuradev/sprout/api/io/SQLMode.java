@@ -25,22 +25,22 @@ import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
 
 public enum SQLMode {
-	H2("h2", H2Configuration.class),
-	SQLITE("sqlite", SQLiteConfiguration.class),
-	MYSQL("mysql", MySQLConfiguration.class);
-	private final String name;
-	private final Class<? extends Configuration> configuration;
+    H2("h2", H2Configuration.class),
+    SQLITE("sqlite", SQLiteConfiguration.class),
+    MYSQL("mysql", MySQLConfiguration.class);
+    private final String name;
+    private final Class<? extends Configuration> configuration;
 
-	private SQLMode(String name, Class<? extends Configuration> configuration) {
-		this.name = name;
-		this.configuration = configuration;
-	}
+    private SQLMode(String name, Class<? extends Configuration> configuration) {
+        this.name = name;
+        this.configuration = configuration;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Class<? extends Configuration> getAssociation() {
-		return configuration;
-	}
+    public Class<? extends Configuration> getAssociation() {
+        return configuration;
+    }
 }

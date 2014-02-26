@@ -22,36 +22,36 @@ package com.almuradev.sprout.plugin.mech;
 import com.almuradev.sprout.api.mech.Drop;
 
 public class SproutDrop implements Drop {
-	private final String name;
-	private final int amount;
+    private final String name;
+    private final int amount;
 
-	public SproutDrop(String name, int amount) {
-		this.name = name;
-		this.amount = amount;
-	}
+    public SproutDrop(String name, int amount) {
+        this.name = name;
+        this.amount = amount;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public int getAmount() {
-		return amount;
-	}
+    @Override
+    public int getAmount() {
+        return amount;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof SproutDrop)) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof SproutDrop)) {
+            return false;
+        }
 
-		final SproutDrop other = (SproutDrop) obj;
-		return other.getName().equals(name);
-	}
+        final SproutDrop other = (SproutDrop) obj;
+        return other.getName().equals(name);
+    }
 
-	@Override
-	public String toString() {
-		return "Drop{name= " + name + ", amount= " + amount + "}";
-	}
+    @Override
+    public String toString() {
+        return "Drop{name= " + name + ", amount= " + amount + "}";
+    }
 }

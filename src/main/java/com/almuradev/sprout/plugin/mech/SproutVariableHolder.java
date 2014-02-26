@@ -22,54 +22,54 @@ package com.almuradev.sprout.plugin.mech;
 import com.almuradev.sprout.api.mech.VariableHolder;
 
 public class SproutVariableHolder implements VariableHolder {
-	private final boolean allowFertilization;
-	private final boolean damagePlayer;
-	private final boolean dropItemSourceOnGrassBreak;
-	private final boolean ignoreLight;
+    private final boolean allowFertilization;
+    private final boolean damagePlayer;
+    private final boolean dropItemSourceOnGrassBreak;
+    private final boolean ignoreLight;
 
-	public SproutVariableHolder() {
-		this(true, false, true, false);
-	}
+    public SproutVariableHolder() {
+        this(true, false, true, false);
+    }
 
-	public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak, final boolean ignoreLight) {
-		this.allowFertilization = allowsFertilization;
-		this.damagePlayer = damagePlayer;
-		this.dropItemSourceOnGrassBreak = dropItemSourceOnGrassBreak;
-		this.ignoreLight = ignoreLight;
-	}
+    public SproutVariableHolder(final boolean allowsFertilization, final boolean damagePlayer, final boolean dropItemSourceOnGrassBreak, final boolean ignoreLight) {
+        this.allowFertilization = allowsFertilization;
+        this.damagePlayer = damagePlayer;
+        this.dropItemSourceOnGrassBreak = dropItemSourceOnGrassBreak;
+        this.ignoreLight = ignoreLight;
+    }
 
-	@Override
-	public boolean allowFertilization() {
-		return allowFertilization;
-	}
+    @Override
+    public boolean allowFertilization() {
+        return allowFertilization;
+    }
 
-	@Override
-	public boolean damagePlayer() {
-		return damagePlayer;
-	}
+    @Override
+    public boolean damagePlayer() {
+        return damagePlayer;
+    }
 
-	@Override
-	public boolean dropItemSourceOnGrassBreak() {
-		return dropItemSourceOnGrassBreak;
-	}
+    @Override
+    public boolean dropItemSourceOnGrassBreak() {
+        return dropItemSourceOnGrassBreak;
+    }
 
-	@Override
-	public boolean ignoreLight() {
-		return ignoreLight;
-	}
+    @Override
+    public boolean ignoreLight() {
+        return ignoreLight;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof SproutVariableHolder)) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof SproutVariableHolder)) {
+            return false;
+        }
 
-		final SproutVariableHolder other = (SproutVariableHolder) obj;
-		return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak && other.ignoreLight == ignoreLight;
-	}
+        final SproutVariableHolder other = (SproutVariableHolder) obj;
+        return other.allowFertilization == allowFertilization && other.damagePlayer == damagePlayer && other.dropItemSourceOnGrassBreak == dropItemSourceOnGrassBreak && other.ignoreLight == ignoreLight;
+    }
 
-	@Override
-	public String toString() {
-		return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + ", ignoreLight= " + ignoreLight + "}";
-	}
+    @Override
+    public String toString() {
+        return "Variables{allowsFertilization= " + allowFertilization + ", damagePlayer= " + damagePlayer + ", dropItemSourceOnGrassBreak= " + dropItemSourceOnGrassBreak + ", ignoreLight= " + ignoreLight + "}";
+    }
 }

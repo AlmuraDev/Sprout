@@ -24,71 +24,71 @@ import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.Light;
 
 public class SimpleStage implements Stage {
-	private final String name;
+    private final String name;
     private final String toolSource;
-	private final int growthRequired;
-	private final int growthChance;
-	private final Fertilizer fertilizer;
-	private final Light light;
-	private final int damage;
+    private final int growthRequired;
+    private final int growthChance;
+    private final Fertilizer fertilizer;
+    private final Light light;
+    private final int damage;
 
-	public SimpleStage(String name, String toolSource, int growthRequired, int growthChance, Fertilizer fertilizer, Light light, int damage) {
-		this.name = name;
+    public SimpleStage(String name, String toolSource, int growthRequired, int growthChance, Fertilizer fertilizer, Light light, int damage) {
+        this.name = name;
         this.toolSource = toolSource;
-		this.growthRequired = growthRequired;
-		this.growthChance = growthChance;
-		this.fertilizer = fertilizer;
-		this.light = light;
-		this.damage = damage;
-	}
+        this.growthRequired = growthRequired;
+        this.growthChance = growthChance;
+        this.fertilizer = fertilizer;
+        this.light = light;
+        this.damage = damage;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String getToolSource() {
         return toolSource;
     }
 
-	@Override
-	public int getDamage() {
-		return damage;
-	}
+    @Override
+    public int getDamage() {
+        return damage;
+    }
 
-	@Override
-	public int getGrowthRequired() {
-		return growthRequired;
-	}
+    @Override
+    public int getGrowthRequired() {
+        return growthRequired;
+    }
 
-	@Override
-	public int getGrowthChance() {
-		return growthChance;
-	}
+    @Override
+    public int getGrowthChance() {
+        return growthChance;
+    }
 
-	@Override
-	public Fertilizer getFertilizer() {
-		return fertilizer;
-	}
+    @Override
+    public Fertilizer getFertilizer() {
+        return fertilizer;
+    }
 
-	@Override
-	public Light getLight() {
-		return light;
-	}
+    @Override
+    public Light getLight() {
+        return light;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof SimpleStage)) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof SimpleStage)) {
+            return false;
+        }
 
-		final SimpleStage other = (SimpleStage) obj;
-		return other.getName().equals(name);
-	}
+        final SimpleStage other = (SimpleStage) obj;
+        return other.getName().equals(name);
+    }
 
-	@Override
-	public String toString() {
-		return "Stage{name= " + name + ", toolSource= " + toolSource + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", damage= " + damage + "}";
-	}
+    @Override
+    public String toString() {
+        return "Stage{name= " + name + ", toolSource= " + toolSource + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", damage= " + damage + "}";
+    }
 }

@@ -28,83 +28,83 @@ import com.almuradev.sprout.api.io.WorldRegistry;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 
 public class SimpleWorldRegistry implements WorldRegistry {
-	private static final HashMap<String, TInt21TripleObjectHashMap> REGISTRIES = new HashMap<>();
+    private static final HashMap<String, TInt21TripleObjectHashMap> REGISTRIES = new HashMap<>();
 
-	@Override
-	public Sprout add(String world, int x, int y, int z, Sprout sprout) {
-		if (world == null || world.isEmpty()) {
-			throw new NullPointerException("Specified world is null!");
-		}
-		TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
-		if (REGISTRY == null) {
-			REGISTRY = new TInt21TripleObjectHashMap();
-			REGISTRIES.put(world, REGISTRY);
-		}
-		return (Sprout) REGISTRY.put(x, y, z, sprout);
-	}
+    @Override
+    public Sprout add(String world, int x, int y, int z, Sprout sprout) {
+        if (world == null || world.isEmpty()) {
+            throw new NullPointerException("Specified world is null!");
+        }
+        TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+        if (REGISTRY == null) {
+            REGISTRY = new TInt21TripleObjectHashMap();
+            REGISTRIES.put(world, REGISTRY);
+        }
+        return (Sprout) REGISTRY.put(x, y, z, sprout);
+    }
 
-	@Override
-	public boolean contains(String world, int x, int y, int z) {
-		if (world == null || world.isEmpty()) {
-			throw new NullPointerException("Specified world is null!");
-		}
-		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
-		if (REGISTRY == null) {
-			return false;
-		}
-		return REGISTRY.containsKey(x, y, z);
-	}
+    @Override
+    public boolean contains(String world, int x, int y, int z) {
+        if (world == null || world.isEmpty()) {
+            throw new NullPointerException("Specified world is null!");
+        }
+        final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+        if (REGISTRY == null) {
+            return false;
+        }
+        return REGISTRY.containsKey(x, y, z);
+    }
 
-	@Override
-	public Sprout get(String world, int x, int y, int z) {
-		if (world == null || world.isEmpty()) {
-			throw new NullPointerException("Specified world is null!");
-		}
-		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
-		if (REGISTRY == null) {
-			return null;
-		}
-		return (Sprout) REGISTRY.get(x, y, z);
-	}
+    @Override
+    public Sprout get(String world, int x, int y, int z) {
+        if (world == null || world.isEmpty()) {
+            throw new NullPointerException("Specified world is null!");
+        }
+        final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+        if (REGISTRY == null) {
+            return null;
+        }
+        return (Sprout) REGISTRY.get(x, y, z);
+    }
 
-	@Override
-	public TInt21TripleObjectHashMap get(String world) {
-		return REGISTRIES.get(world);
-	}
+    @Override
+    public TInt21TripleObjectHashMap get(String world) {
+        return REGISTRIES.get(world);
+    }
 
-	@Override
-	public boolean has(String world, int x, int y, int z) {
-		if (world == null || world.isEmpty()) {
-			throw new NullPointerException("Specified world is null!");
-		}
-		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
-		return REGISTRY != null && REGISTRY.get(x, y, z) != null;
-	}
+    @Override
+    public boolean has(String world, int x, int y, int z) {
+        if (world == null || world.isEmpty()) {
+            throw new NullPointerException("Specified world is null!");
+        }
+        final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+        return REGISTRY != null && REGISTRY.get(x, y, z) != null;
+    }
 
-	@Override
-	public Sprout remove(String world, int x, int y, int z) {
-		if (world == null || world.isEmpty()) {
-			throw new NullPointerException("Specified world is null!");
-		}
-		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
-		if (REGISTRY == null) {
-			return null;
-		}
-		return (Sprout) REGISTRY.remove(x, y, z);
-	}
+    @Override
+    public Sprout remove(String world, int x, int y, int z) {
+        if (world == null || world.isEmpty()) {
+            throw new NullPointerException("Specified world is null!");
+        }
+        final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+        if (REGISTRY == null) {
+            return null;
+        }
+        return (Sprout) REGISTRY.remove(x, y, z);
+    }
 
-	@Override
-	public Map<String, TInt21TripleObjectHashMap> getAll() {
-		return Collections.unmodifiableMap(REGISTRIES);
-	}
+    @Override
+    public Map<String, TInt21TripleObjectHashMap> getAll() {
+        return Collections.unmodifiableMap(REGISTRIES);
+    }
 
-	@Override
-	public Integer getSize(String world) {
-		final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
-		return REGISTRY != null ? REGISTRY.size() : null;
-	}
+    @Override
+    public Integer getSize(String world) {
+        final TInt21TripleObjectHashMap REGISTRY = REGISTRIES.get(world);
+        return REGISTRY != null ? REGISTRY.size() : null;
+    }
 
-	public final void putAll(Map<String, TInt21TripleObjectHashMap> prebuilt) {
-		REGISTRIES.putAll(prebuilt);
-	}
+    public final void putAll(Map<String, TInt21TripleObjectHashMap> prebuilt) {
+        REGISTRIES.putAll(prebuilt);
+    }
 }

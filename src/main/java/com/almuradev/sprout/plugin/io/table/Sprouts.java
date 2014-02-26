@@ -23,65 +23,65 @@ import com.alta189.simplesave.Field;
 import com.alta189.simplesave.Id;
 import com.alta189.simplesave.Table;
 
-@Table("sprouts")
+@Table ("sprouts")
 public class Sprouts {
-	@Id
-	private int id;
-	@Field
-	private String world;
-	@Field
-	private long location;
-	@Field
-	private String sprout;
-	@Field
-	private int age;
-	@Field
-	private boolean stillGrowing;
+    @Id
+    private int id;
+    @Field
+    private String world;
+    @Field
+    private long location;
+    @Field
+    private String sprout;
+    @Field
+    private int age;
+    @Field
+    private boolean stillGrowing;
 
-	public Sprouts() {
-	}
+    public Sprouts() {
+    }
 
-	public Sprouts(String world, long location, String sprout, int age, boolean stillGrowing) {
-		this.world = world;
-		this.location = location;
-		this.sprout = sprout;
-		this.age = age;
-		this.stillGrowing = stillGrowing;
-	}
+    public Sprouts(String world, long location, String sprout, int age, boolean stillGrowing) {
+        this.world = world;
+        this.location = location;
+        this.sprout = sprout;
+        this.age = age;
+        this.stillGrowing = stillGrowing;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getWorld() {
-		return world;
-	}
+    public String getWorld() {
+        return world;
+    }
 
-	public long getLocation() {
-		return location;
-	}
+    public long getLocation() {
+        return location;
+    }
 
-	public String getSprout() {
-		return sprout;
-	}
+    public String getSprout() {
+        return sprout;
+    }
 
-	public void setSprout(String sprout) {
-		this.sprout = sprout;
-	}
+    public void setSprout(String sprout) {
+        this.sprout = sprout;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public boolean isStillGrowing() {
-		return stillGrowing;
-	}
+    public boolean isStillGrowing() {
+        return stillGrowing;
+    }
 
-	public void setStillGrowing(boolean stillGrowing) {
-		this.stillGrowing = stillGrowing;
-	}
+    public void setStillGrowing(boolean stillGrowing) {
+        this.stillGrowing = stillGrowing;
+    }
 }

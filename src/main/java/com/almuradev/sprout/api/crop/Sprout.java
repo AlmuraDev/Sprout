@@ -28,39 +28,39 @@ import com.almuradev.sprout.api.mech.Light;
 import com.almuradev.sprout.api.mech.VariableHolder;
 
 public interface Sprout {
-	public String getName();
+    public String getName();
 
-	public String getItemSource();
+    public String getItemSource();
 
-	public String getBlockSource();
+    public String getBlockSource();
 
-	public String getPlacementSource();
+    public String getPlacementSource();
 
     public String getToolSource();
 
-	public int getDamage();
+    public int getDamage();
 
-	public Fertilizer getFertilizerSource();
+    public Fertilizer getFertilizerSource();
 
-	public Light getLight();
+    public Light getLight();
 
-	public Stage getStage(int level);
+    public Stage getStage(int level);
 
-	public Stage getStage(String name);
+    public Stage getStage(String name);
 
-	public Stage getCurrentStage();
+    public Stage getCurrentStage();
 
-	public boolean isFullyGrown();
+    public boolean isFullyGrown();
 
-	public Map<Integer, Stage> getStages();
+    public Map<Integer, Stage> getStages();
 
-	public Collection<Drop> getDrops();
+    public Collection<Drop> getDrops();
 
-	public int getBonusChance();
+    public int getBonusChance();
 
-	public Collection<Drop> getBonus();
+    public Collection<Drop> getBonus();
 
-	public int getAge();
+    public int getAge();
 
-	public VariableHolder getVariables();
+    public VariableHolder getVariables();
 }

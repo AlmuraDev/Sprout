@@ -22,36 +22,36 @@ package com.almuradev.sprout.plugin.mech;
 import com.almuradev.sprout.api.mech.Fertilizer;
 
 public class SproutFertilizer implements Fertilizer {
-	private final String name;
-	private final int amount;
+    private final String name;
+    private final int amount;
 
-	public SproutFertilizer(final String name, final int amount) {
-		this.name = name;
-		this.amount = amount;
-	}
+    public SproutFertilizer(final String name, final int amount) {
+        this.name = name;
+        this.amount = amount;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public int getAmount() {
-		return amount;
-	}
+    @Override
+    public int getAmount() {
+        return amount;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof SproutFertilizer)) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof SproutFertilizer)) {
+            return false;
+        }
 
-		final SproutFertilizer other = (SproutFertilizer) obj;
-		return other.getName().equals(name);
-	}
+        final SproutFertilizer other = (SproutFertilizer) obj;
+        return other.getName().equals(name);
+    }
 
-	@Override
-	public String toString() {
-		return "Fertilizer{name= " + name + ", amount= " + amount + "}";
-	}
+    @Override
+    public String toString() {
+        return "Fertilizer{name= " + name + ", amount= " + amount + "}";
+    }
 }

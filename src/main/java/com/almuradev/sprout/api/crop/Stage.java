@@ -23,17 +23,17 @@ import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.Light;
 
 public interface Stage {
-	public String getName();
+    public String getName();
 
     public String getToolSource();
 
-	public int getDamage();
+    public int getDamage();
 
-	public int getGrowthRequired();
+    public int getGrowthRequired();
 
-	public int getGrowthChance();
+    public int getGrowthChance();
 
-	public Fertilizer getFertilizer();
+    public Fertilizer getFertilizer();
 
-	public Light getLight();
+    public Light getLight();
 }

@@ -20,7 +20,7 @@
 package com.almuradev.sprout.api.mech;
 
 public interface Drop {
-	public String getName();
+    public String getName();
 
-	public int getAmount();
+    public int getAmount();
 }

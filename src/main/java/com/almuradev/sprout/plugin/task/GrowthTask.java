@@ -34,150 +34,148 @@ import com.almuradev.sprout.plugin.SproutPlugin;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
-
 import gnu.trove.procedure.TLongObjectProcedure;
-
-import org.getspout.spoutapi.block.SpoutBlock;
-import org.getspout.spoutapi.material.CustomBlock;
-import org.getspout.spoutapi.material.MaterialData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+import org.getspout.spoutapi.block.SpoutBlock;
+import org.getspout.spoutapi.material.CustomBlock;
+import org.getspout.spoutapi.material.MaterialData;
 
 public class GrowthTask implements Runnable {
-	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
-	private static final Random RANDOM = new Random();
-	private final SproutPlugin plugin;
-	private final WorldRegistry worldRegistry;
-	private final String world;
-	private long pastTime;
+    private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
+    private static final Random RANDOM = new Random();
+    private final SproutPlugin plugin;
+    private final WorldRegistry worldRegistry;
+    private final String world;
+    private long pastTime;
 
-	public GrowthTask(SproutPlugin plugin, String world) {
-		this.plugin = plugin;
-		this.world = world;
-		worldRegistry = plugin.getWorldRegistry();
-	}
+    public GrowthTask(SproutPlugin plugin, String world) {
+        this.plugin = plugin;
+        this.world = world;
+        worldRegistry = plugin.getWorldRegistry();
+    }
 
-	public static void schedule(Plugin plugin, boolean log, World... worlds) {
-		final SproutPlugin sproutPlugin = (SproutPlugin) plugin;
-		for (World world : worlds) {
-			if (world == null) {
-				continue;
-			}
-			final Long l = sproutPlugin.getConfiguration().getGrowthIntervalFor(world.getName());
-			if (l == null) {
-				continue;
-			}
-			if (log) {
-				plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
-			}
-			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
+    public static void schedule(Plugin plugin, boolean log, World... worlds) {
+        final SproutPlugin sproutPlugin = (SproutPlugin) plugin;
+        for (World world : worlds) {
+            if (world == null) {
+                continue;
+            }
+            final Long l = sproutPlugin.getConfiguration().getGrowthIntervalFor(world.getName());
+            if (l == null) {
+                continue;
+            }
+            if (log) {
+                plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
+            }
+            WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
 
-			//Async saving
-			ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName())).start();
-		}
-	}
+            //Async saving
+            ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName())).start();
+        }
+    }
 
-	public static void schedule(Plugin plugin, World... worlds) {
-		schedule(plugin, true, worlds);
-	}
+    public static void schedule(Plugin plugin, World... worlds) {
+        schedule(plugin, true, worlds);
+    }
 
-	public static void unschedule(World... worlds) {
-		for (World world : worlds) {
-			final Integer id = WORLD_ID_MAP.remove(world.getName());
-			if (id != null) {
-				Bukkit.getScheduler().cancelTask(id);
-			}
-			ThreadRegistry.remove(world.getName());
-		}
-	}
+    public static void unschedule(World... worlds) {
+        for (World world : worlds) {
+            final Integer id = WORLD_ID_MAP.remove(world.getName());
+            if (id != null) {
+                Bukkit.getScheduler().cancelTask(id);
+            }
+            ThreadRegistry.remove(world.getName());
+        }
+    }
 
-	public static void stop(Plugin plugin) {
-		Bukkit.getScheduler().cancelTasks(plugin);
-	}
+    public static void stop(Plugin plugin) {
+        Bukkit.getScheduler().cancelTasks(plugin);
+    }
 
-	@Override
-	public void run() {
-		final TInt21TripleObjectHashMap<?> worldRegistry = this.worldRegistry.get(world);
-		if (worldRegistry == null) {
-			return;
-		}
-		//First tick
-		if (pastTime == 0) {
-			pastTime = System.currentTimeMillis() / 1000;
-		}
-		final long localTime = System.currentTimeMillis() / 1000;
-		final long delta = localTime - pastTime;
-		pastTime = localTime;
+    @Override
+    public void run() {
+        final TInt21TripleObjectHashMap<?> worldRegistry = this.worldRegistry.get(world);
+        if (worldRegistry == null) {
+            return;
+        }
+        //First tick
+        if (pastTime == 0) {
+            pastTime = System.currentTimeMillis() / 1000;
+        }
+        final long localTime = System.currentTimeMillis() / 1000;
+        final long delta = localTime - pastTime;
+        pastTime = localTime;
 
-		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
-			@Override
-			public boolean execute(long l, Object o) {
-				final SimpleSprout sprout = (SimpleSprout) o;
-				final int x = Int21TripleHashed.key1(l);
-				final int y = Int21TripleHashed.key2(l);
-				final int z = Int21TripleHashed.key3(l);
-				final int chunkX = x >> 4;
-				final int chunkZ = z >> 4;
-				final Sprout live = plugin.getWorldRegistry().get(world, x, y, z);
-				if (!sprout.equals(live)) {
-					return true;
-				}
-				if (!sprout.isFullyGrown()) {
-					final Stage current = sprout.getCurrentStage();
-					if (current != null) {
-						if (RANDOM.nextInt((current.getGrowthChance() - 0) + 1) + 0 == current.getGrowthChance()) {
-							// Force Load the chunk, enables Sprouts to grow when player is away.
-							if (SproutConfiguration.forceLoad) {
-								Bukkit.getWorld(world).loadChunk(chunkX, chunkZ);
-							}
-							if (Bukkit.getWorld(world).isChunkLoaded(chunkX, chunkZ)) {	
-								final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
-								final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
-								final Material material = Material.getMaterial(current.getName());
+        worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
+            @Override
+            public boolean execute(long l, Object o) {
+                final SimpleSprout sprout = (SimpleSprout) o;
+                final int x = Int21TripleHashed.key1(l);
+                final int y = Int21TripleHashed.key2(l);
+                final int z = Int21TripleHashed.key3(l);
+                final int chunkX = x >> 4;
+                final int chunkZ = z >> 4;
+                final Sprout live = plugin.getWorldRegistry().get(world, x, y, z);
+                if (!sprout.equals(live)) {
+                    return true;
+                }
+                if (!sprout.isFullyGrown()) {
+                    final Stage current = sprout.getCurrentStage();
+                    if (current != null) {
+                        if (RANDOM.nextInt((current.getGrowthChance() - 0) + 1) + 0 == current.getGrowthChance()) {
+                            // Force Load the chunk, enables Sprouts to grow when player is away.
+                            if (SproutConfiguration.forceLoad) {
+                                Bukkit.getWorld(world).loadChunk(chunkX, chunkZ);
+                            }
+                            if (Bukkit.getWorld(world).isChunkLoaded(chunkX, chunkZ)) {
+                                final Block block = Bukkit.getWorld(world).getBlockAt(x, y, z);
+                                final CustomBlock customBlock = MaterialData.getCustomBlock(current.getName());
+                                final Material material = Material.getMaterial(current.getName());
 
-								if (customBlock == null) {
-									if (material == null) {
-										return true;
-									}
-								}
+                                if (customBlock == null) {
+                                    if (material == null) {
+                                        return true;
+                                    }
+                                }
 
-								boolean lightPassed = true;
-								final Light light = current.getLight();
+                                boolean lightPassed = true;
+                                final Light light = current.getLight();
 
-								// (A <= B <= C) block inclusive
-								if (!sprout.getVariables().ignoreLight() && !(light.getMinimumLight() <= block.getLightLevel() && block.getLightLevel() <= light.getMaximumLight())) {
-									lightPassed = false;
-								}
+                                // (A <= B <= C) block inclusive
+                                if (!sprout.getVariables().ignoreLight() && !(light.getMinimumLight() <= block.getLightLevel() && block.getLightLevel() <= light.getMaximumLight())) {
+                                    lightPassed = false;
+                                }
 
-								if (!lightPassed) {
-									// not enough light to continue growth task
-									return true;
-								}
+                                if (!lightPassed) {
+                                    // not enough light to continue growth task
+                                    return true;
+                                }
 
-								if (customBlock != null) {
-									if (((SpoutBlock) block).getCustomBlock() != customBlock) {
-										((SpoutBlock) block).setCustomBlock(customBlock);
-									}
-								} else {
-									((SpoutBlock) block).setCustomBlock(null);
-									block.setType(material);
-								}
-								if (sprout.isOnLastStage()) {
-									((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
-									sprout.setFullyGrown(true);
-								} else {
-									sprout.grow((int) delta);
-								}
-							}
-						}
-					}
-				}
-				return true;
-			}
-		}
-		);
-	}
+                                if (customBlock != null) {
+                                    if (((SpoutBlock) block).getCustomBlock() != customBlock) {
+                                        ((SpoutBlock) block).setCustomBlock(customBlock);
+                                    }
+                                } else {
+                                    ((SpoutBlock) block).setCustomBlock(null);
+                                    block.setType(material);
+                                }
+                                if (sprout.isOnLastStage()) {
+                                    ((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
+                                    sprout.setFullyGrown(true);
+                                } else {
+                                    sprout.grow((int) delta);
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        );
+    }
 }

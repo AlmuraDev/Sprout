@@ -32,78 +32,76 @@ import com.almuradev.sprout.plugin.io.SimpleSproutRegistry;
 import com.almuradev.sprout.plugin.io.SimpleWorldRegistry;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
-
-import org.mcstats.MetricsLite;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 public class SproutPlugin extends JavaPlugin {
-	private final FlatFileStorage flatFileStorage;
-	private final SproutConfiguration configuration;
-	private final SimpleSproutRegistry sproutRegistry;
-	private final SimpleSQLStorage sqlStorage;
-	private final SimpleWorldRegistry worldRegistry;
+    private final FlatFileStorage flatFileStorage;
+    private final SproutConfiguration configuration;
+    private final SimpleSproutRegistry sproutRegistry;
+    private final SimpleSQLStorage sqlStorage;
+    private final SimpleWorldRegistry worldRegistry;
 
-	public SproutPlugin() {
-		configuration = new SproutConfiguration(this);
-		flatFileStorage = new FlatFileStorage(this);
-		sproutRegistry = new SimpleSproutRegistry();
-		sqlStorage = new SimpleSQLStorage(this);
-		worldRegistry = new SimpleWorldRegistry();
-	}
+    public SproutPlugin() {
+        configuration = new SproutConfiguration(this);
+        flatFileStorage = new FlatFileStorage(this);
+        sproutRegistry = new SimpleSproutRegistry();
+        sqlStorage = new SimpleSQLStorage(this);
+        worldRegistry = new SimpleWorldRegistry();
+    }
 
-	@Override
-	public void onDisable() {
-		GrowthTask.stop(this);
-		ThreadRegistry.stop();
-		sqlStorage.dropAll();
-	}
+    @Override
+    public void onDisable() {
+        GrowthTask.stop(this);
+        ThreadRegistry.stop();
+        sqlStorage.dropAll();
+    }
 
-	@Override
-	public void onEnable() {
-		configuration.onEnable();
-		final SQLMode mode = configuration.getMode();
-		if (mode == null) {
-			getLogger().severe("SQL mode within config.yml is not a valid SQL mode (h2, sqlite, mysql). Disabling...");
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
-		flatFileStorage.onEnable(getDataFolder());
-		flatFileStorage.load();
-		switch (mode) {
-			case H2:
-			case SQLITE:
-				sqlStorage.onEnable(mode, getDataFolder());
-				break;
-			case MYSQL:
-				sqlStorage.onEnable(mode, configuration.getHost(), configuration.getDatabase(), configuration.getPort(), configuration.getUsername(), configuration.getPassword());
-		}
-		worldRegistry.putAll(sqlStorage.getAll());
-		getServer().getPluginManager().registerEvents(new SproutListener(this), this);
-		GrowthTask.schedule(this, Bukkit.getWorlds().toArray(new World[Bukkit.getWorlds().size()]));
-		try {
-			MetricsLite metrics = new MetricsLite(this);
-			metrics.start();
-		} catch (IOException ignore) {
-		}
-		getCommand("sprout").setExecutor(new SproutExecutor(this));
-	}
+    @Override
+    public void onEnable() {
+        configuration.onEnable();
+        final SQLMode mode = configuration.getMode();
+        if (mode == null) {
+            getLogger().severe("SQL mode within config.yml is not a valid SQL mode (h2, sqlite, mysql). Disabling...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        flatFileStorage.onEnable(getDataFolder());
+        flatFileStorage.load();
+        switch (mode) {
+            case H2:
+            case SQLITE:
+                sqlStorage.onEnable(mode, getDataFolder());
+                break;
+            case MYSQL:
+                sqlStorage.onEnable(mode, configuration.getHost(), configuration.getDatabase(), configuration.getPort(), configuration.getUsername(), configuration.getPassword());
+        }
+        worldRegistry.putAll(sqlStorage.getAll());
+        getServer().getPluginManager().registerEvents(new SproutListener(this), this);
+        GrowthTask.schedule(this, Bukkit.getWorlds().toArray(new World[Bukkit.getWorlds().size()]));
+        try {
+            MetricsLite metrics = new MetricsLite(this);
+            metrics.start();
+        } catch (IOException ignore) {
+        }
+        getCommand("sprout").setExecutor(new SproutExecutor(this));
+    }
 
-	public SproutConfiguration getConfiguration() {
-		return configuration;
-	}
+    public SproutConfiguration getConfiguration() {
+        return configuration;
+    }
 
-	public SproutRegistry getSproutRegistry() {
-		return sproutRegistry;
-	}
+    public SproutRegistry getSproutRegistry() {
+        return sproutRegistry;
+    }
 
-	public SQLStorage getStorage() {
-		return sqlStorage;
-	}
+    public SQLStorage getStorage() {
+        return sqlStorage;
+    }
 
-	public WorldRegistry getWorldRegistry() {
-		return worldRegistry;
-	}
+    public WorldRegistry getWorldRegistry() {
+        return worldRegistry;
+    }
 }

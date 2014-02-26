@@ -25,9 +25,9 @@ import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.util.TInt21TripleObjectHashMap;
 
 public interface SQLStorage {
-	public SQLStorage add(String world, int x, int y, int z, Sprout sprout);
+    public SQLStorage add(String world, int x, int y, int z, Sprout sprout);
 
-	public SQLStorage remove(String world, int x, int y, int z);
+    public SQLStorage remove(String world, int x, int y, int z);
 
-	public Map<String, TInt21TripleObjectHashMap> getAll();
+    public Map<String, TInt21TripleObjectHashMap> getAll();
 }

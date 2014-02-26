@@ -43,165 +43,163 @@ import com.alta189.simplesave.h2.H2Configuration;
 import com.alta189.simplesave.mysql.MySQLConfiguration;
 import com.alta189.simplesave.sqlite.SQLiteConfiguration;
 import com.rits.cloning.Cloner;
-
 import gnu.trove.procedure.TLongObjectProcedure;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 public class SimpleSQLStorage implements SQLStorage {
-	private final SproutPlugin plugin;
-	private final Cloner cloner = new Cloner();
-	private Database db;
-	private int saved = 0;
+    private final SproutPlugin plugin;
+    private final Cloner cloner = new Cloner();
+    private Database db;
+    private int saved = 0;
 
-	public SimpleSQLStorage(SproutPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public SimpleSQLStorage(SproutPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void onEnable(SQLMode mode, File loc) {
-		onEnable(mode, loc, null, null, 25566, null, null);
-	}
+    public void onEnable(SQLMode mode, File loc) {
+        onEnable(mode, loc, null, null, 25566, null, null);
+    }
 
-	public void onEnable(SQLMode mode, String host, String database, int port, String username, String password) {
-		onEnable(mode, null, host, database, port, username, password);
-	}
+    public void onEnable(SQLMode mode, String host, String database, int port, String username, String password) {
+        onEnable(mode, null, host, database, port, username, password);
+    }
 
-	public void onEnable(SQLMode mode, File loc, String host, String database, int port, String username, String password) {
-		Configuration configuration;
-		try {
-			configuration = mode.getAssociation().newInstance();
-		} catch (Exception ignore) {
-			throw new IllegalArgumentException("Cannot create the SQL configuration object!");
-		}
-		if (configuration instanceof H2Configuration) {
-			createFile(loc);
-			((H2Configuration) configuration).setDatabase(new File(loc, "sprouts_h2_db").getAbsolutePath());
-		} else if (configuration instanceof SQLiteConfiguration) {
-			createFile(loc);
-			((SQLiteConfiguration) configuration).setPath(new File(loc, "sprouts_sqlite_db").getAbsolutePath());
-		} else {
-			((MySQLConfiguration) configuration)
-					.setHost(host)
-					.setDatabase(database)
-					.setPort(port)
-					.setUser(username)
-					.setPassword(password);
-		}
-		db = DatabaseFactory.createNewDatabase(configuration);
+    public void onEnable(SQLMode mode, File loc, String host, String database, int port, String username, String password) {
+        Configuration configuration;
+        try {
+            configuration = mode.getAssociation().newInstance();
+        } catch (Exception ignore) {
+            throw new IllegalArgumentException("Cannot create the SQL configuration object!");
+        }
+        if (configuration instanceof H2Configuration) {
+            createFile(loc);
+            ((H2Configuration) configuration).setDatabase(new File(loc, "sprouts_h2_db").getAbsolutePath());
+        } else if (configuration instanceof SQLiteConfiguration) {
+            createFile(loc);
+            ((SQLiteConfiguration) configuration).setPath(new File(loc, "sprouts_sqlite_db").getAbsolutePath());
+        } else {
+            ((MySQLConfiguration) configuration)
+                    .setHost(host)
+                    .setDatabase(database)
+                    .setPort(port)
+                    .setUser(username)
+                    .setPassword(password);
+        }
+        db = DatabaseFactory.createNewDatabase(configuration);
 
-		try {
-			db.registerTable(Sprouts.class);
-		} catch (TableRegistrationException e) {
-			e.printStackTrace();
-		}
+        try {
+            db.registerTable(Sprouts.class);
+        } catch (TableRegistrationException e) {
+            e.printStackTrace();
+        }
 
-		try {
-			db.connect();
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            db.connect();
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public SQLStorage add(String world, int x, int y, int z, Sprout sprout) {
-		return add(world, Int21TripleHashed.key(x, y, z), sprout);
-	}
+    @Override
+    public SQLStorage add(String world, int x, int y, int z, Sprout sprout) {
+        return add(world, Int21TripleHashed.key(x, y, z), sprout);
+    }
 
-	public SQLStorage add(String world, long loc, Sprout sprout) {
-		if (world == null || world.isEmpty() || sprout == null) {
-			throw new IllegalArgumentException("World or sprout is null!");
-		}
+    public SQLStorage add(String world, long loc, Sprout sprout) {
+        if (world == null || world.isEmpty() || sprout == null) {
+            throw new IllegalArgumentException("World or sprout is null!");
+        }
 
-		final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
-		if (row == null) {
-			db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
-		} else {
-			//Check to see if we need to do a save
-			if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge())) {
-				return this;
-			}
-			row.setSprout(sprout.getName());
-			row.setAge(sprout.getAge());
-			row.setStillGrowing(!sprout.isFullyGrown());
-			db.save(row);
-		}
-		return this;
-	}
+        final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
+        if (row == null) {
+            db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
+        } else {
+            //Check to see if we need to do a save
+            if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge())) {
+                return this;
+            }
+            row.setSprout(sprout.getName());
+            row.setAge(sprout.getAge());
+            row.setStillGrowing(!sprout.isFullyGrown());
+            db.save(row);
+        }
+        return this;
+    }
 
-	@Override
-	public SQLStorage remove(String world, int x, int y, int z) {
-		return remove(world, Int21TripleHashed.key(x, y, z));
-	}
+    @Override
+    public SQLStorage remove(String world, int x, int y, int z) {
+        return remove(world, Int21TripleHashed.key(x, y, z));
+    }
 
-	public SQLStorage remove(String world, long loc) {
-		if (world == null || world.isEmpty()) {
-			throw new IllegalArgumentException("World is null!");
-		}
+    public SQLStorage remove(String world, long loc) {
+        if (world == null || world.isEmpty()) {
+            throw new IllegalArgumentException("World is null!");
+        }
 
-		final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
-		if (row != null) {
-			db.remove(row);
-		}
-		return this;
-	}
+        final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
+        if (row != null) {
+            db.remove(row);
+        }
+        return this;
+    }
 
-	@Override
-	public Map<String, TInt21TripleObjectHashMap> getAll() {
-		final HashMap<String, TInt21TripleObjectHashMap> registry = new HashMap<>();
-		for (Sprouts row : db.select(Sprouts.class).execute().find()) {
-			TInt21TripleObjectHashMap<Sprout> worldRegistry = registry.get(row.getWorld());
-			if (worldRegistry == null) {
-				worldRegistry = new TInt21TripleObjectHashMap<Sprout>();
-				registry.put(row.getWorld(), worldRegistry);
-			}
-			final Sprout sprout = plugin.getSproutRegistry().get(row.getSprout());
-			if (sprout == null) {
-				continue;
-			}
-			final Sprout toInject = cloner.deepClone(sprout);
-			((SimpleSprout) toInject).grow(row.getAge());
-			((SimpleSprout) toInject).setFullyGrown(!row.isStillGrowing());
-			worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
-		}
-		return registry;
-	}
+    @Override
+    public Map<String, TInt21TripleObjectHashMap> getAll() {
+        final HashMap<String, TInt21TripleObjectHashMap> registry = new HashMap<>();
+        for (Sprouts row : db.select(Sprouts.class).execute().find()) {
+            TInt21TripleObjectHashMap<Sprout> worldRegistry = registry.get(row.getWorld());
+            if (worldRegistry == null) {
+                worldRegistry = new TInt21TripleObjectHashMap<Sprout>();
+                registry.put(row.getWorld(), worldRegistry);
+            }
+            final Sprout sprout = plugin.getSproutRegistry().get(row.getSprout());
+            if (sprout == null) {
+                continue;
+            }
+            final Sprout toInject = cloner.deepClone(sprout);
+            ((SimpleSprout) toInject).grow(row.getAge());
+            ((SimpleSprout) toInject).setFullyGrown(!row.isStillGrowing());
+            worldRegistry.put(Int21TripleHashed.key1(row.getLocation()), Int21TripleHashed.key2(row.getLocation()), Int21TripleHashed.key3(row.getLocation()), toInject);
+        }
+        return registry;
+    }
 
-	public void dropAll() {		
-		db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");		
-		for (final World world : Bukkit.getWorlds()) {
-			final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
-			if (registry == null) {
-				continue;
-			}
-			saved = 0;
-			registry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
-				@Override
-				public boolean execute(long l, Object o) {
-					final SimpleSprout sprout = (SimpleSprout) o;
-					if (sprout.isFullyGrown()) {
-						return true;
-					}
-					final int x = Int21TripleHashed.key1(l);
-					final int y = Int21TripleHashed.key2(l);
-					final int z = Int21TripleHashed.key3(l);
-					db.save(new Sprouts(world.getName(),Int21TripleHashed.key(x, y, z), sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
-					saved += 1;
-					return true;
-				}					
-			});
-			Bukkit.getLogger().info("[Sprout] Saving World: " + world.getName() + " Sprouts: " + saved);
-		}
-	}
+    public void dropAll() {
+        db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");
+        for (final World world : Bukkit.getWorlds()) {
+            final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
+            if (registry == null) {
+                continue;
+            }
+            saved = 0;
+            registry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
+                @Override
+                public boolean execute(long l, Object o) {
+                    final SimpleSprout sprout = (SimpleSprout) o;
+                    if (sprout.isFullyGrown()) {
+                        return true;
+                    }
+                    final int x = Int21TripleHashed.key1(l);
+                    final int y = Int21TripleHashed.key2(l);
+                    final int z = Int21TripleHashed.key3(l);
+                    db.save(new Sprouts(world.getName(), Int21TripleHashed.key(x, y, z), sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
+                    saved += 1;
+                    return true;
+                }
+            });
+            Bukkit.getLogger().info("[Sprout] Saving World: " + world.getName() + " Sprouts: " + saved);
+        }
+    }
 
-	private void createFile(final File dir) {
-		try {
-			Files.createDirectories(dir.toPath());
-		} catch (FileAlreadyExistsException fafe) {
-			;
-		} catch (IOException e) {
-			plugin.getLogger().severe("Could not create " + dir.getPath() + "! Disabling...");
-			plugin.getServer().getPluginManager().disablePlugin(plugin);
-		}
-	}
+    private void createFile(final File dir) {
+        try {
+            Files.createDirectories(dir.toPath());
+        } catch (FileAlreadyExistsException fafe) {
+            ;
+        } catch (IOException e) {
+            plugin.getLogger().severe("Could not create " + dir.getPath() + "! Disabling...");
+            plugin.getServer().getPluginManager().disablePlugin(plugin);
+        }
+    }
 }

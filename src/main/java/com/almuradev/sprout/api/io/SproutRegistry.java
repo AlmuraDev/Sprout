@@ -24,21 +24,21 @@ import java.util.Collection;
 import com.almuradev.sprout.api.crop.Sprout;
 
 public interface SproutRegistry {
-	public Sprout add(Sprout sprout);
+    public Sprout add(Sprout sprout);
 
-	public SproutRegistry addAll(Collection<Sprout> sprouts);
+    public SproutRegistry addAll(Collection<Sprout> sprouts);
 
-	public boolean contains(String name);
+    public boolean contains(String name);
 
-	public Sprout find(String itemSource);
+    public Sprout find(String itemSource);
 
-	public Sprout get(int index);
+    public Sprout get(int index);
 
-	public Sprout get(String name);
+    public Sprout get(String name);
 
-	public int size();
+    public int size();
 
-	public Sprout remove(String name);
+    public Sprout remove(String name);
 
-	public Collection<Sprout> getAll();
+    public Collection<Sprout> getAll();
 }

@@ -24,81 +24,80 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.almuradev.sprout.api.io.SQLMode;
-
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class SproutConfiguration {
-	private final SproutPlugin plugin;
-	private FileConfiguration config;
-	private Map<String, Long> growthIntervals = new HashMap<>();
-	public static boolean jobsEnabled, bonusMessage, forceLoad = false;
+    private final SproutPlugin plugin;
+    private FileConfiguration config;
+    private Map<String, Long> growthIntervals = new HashMap<>();
+    public static boolean jobsEnabled, bonusMessage, forceLoad = false;
 
-	public SproutConfiguration(SproutPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public SproutConfiguration(SproutPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void onEnable() {
-		if (!new File(plugin.getDataFolder(), "config.yml").exists()) {
-			plugin.saveDefaultConfig();
-		}
-		if (!new File(plugin.getDataFolder(), "sprouts.yml").exists()) {
-			plugin.saveResource("sprouts.yml", true);
-		}
-		config = plugin.getConfig();
-				
-		if (config.getBoolean("jobs.enabled") == true) {
-			jobsEnabled = true;
-		}
-		
-		if (config.getBoolean("feedback.bonus-message-enabled") == true) {
-			bonusMessage = true;
-		}
-		
-		if (config.getBoolean("forceloadchunks.enabled") == true) {
-			forceLoad = true;
-		}
-		
-		for (String world : config.getKeys(false)) {
-			final ConfigurationSection worldSection = config.getConfigurationSection(world);
-			growthIntervals.put(world, worldSection.getLong("growth-interval", 350));
-		}
-	}
+    public void onEnable() {
+        if (!new File(plugin.getDataFolder(), "config.yml").exists()) {
+            plugin.saveDefaultConfig();
+        }
+        if (!new File(plugin.getDataFolder(), "sprouts.yml").exists()) {
+            plugin.saveResource("sprouts.yml", true);
+        }
+        config = plugin.getConfig();
 
-	public Long getGrowthIntervalFor(String world) {
-		return growthIntervals.get(world);
-	}
+        if (config.getBoolean("jobs.enabled") == true) {
+            jobsEnabled = true;
+        }
+
+        if (config.getBoolean("feedback.bonus-message-enabled") == true) {
+            bonusMessage = true;
+        }
+
+        if (config.getBoolean("forceloadchunks.enabled") == true) {
+            forceLoad = true;
+        }
+
+        for (String world : config.getKeys(false)) {
+            final ConfigurationSection worldSection = config.getConfigurationSection(world);
+            growthIntervals.put(world, worldSection.getLong("growth-interval", 350));
+        }
+    }
+
+    public Long getGrowthIntervalFor(String world) {
+        return growthIntervals.get(world);
+    }
 
 	/*
-	 * SQL Configuration Options
+     * SQL Configuration Options
 	 */
 
-	public SQLMode getMode() {
-		final String raw = config.getString("sql.mode", "H2");
-		try {
-			return SQLMode.valueOf(raw.toUpperCase());
-		} catch (Exception e) {
-			return null;
-		}
-	}
+    public SQLMode getMode() {
+        final String raw = config.getString("sql.mode", "H2");
+        try {
+            return SQLMode.valueOf(raw.toUpperCase());
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-	public String getHost() {
-		return config.getString("sql.host", "localhost");
-	}
+    public String getHost() {
+        return config.getString("sql.host", "localhost");
+    }
 
-	public String getDatabase() {
-		return config.getString("sql.database", "minecraft");
-	}
+    public String getDatabase() {
+        return config.getString("sql.database", "minecraft");
+    }
 
-	public int getPort() {
-		return config.getInt("sql.port", 25566);
-	}
+    public int getPort() {
+        return config.getInt("sql.port", 25566);
+    }
 
-	public String getUsername() {
-		return config.getString("sql.username", "minecraft");
-	}
+    public String getUsername() {
+        return config.getString("sql.username", "minecraft");
+    }
 
-	public String getPassword() {
-		return config.getString("sql.password", "minecraft");
-	}
+    public String getPassword() {
+        return config.getString("sql.password", "minecraft");
+    }
 }
