@@ -19,13 +19,14 @@
  */
 package com.almuradev.sprout.api.crop;
 
+import java.util.Collection;
+
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.Light;
+import com.almuradev.sprout.api.mech.Tool;
 
 public interface Stage {
     public String getName();
-
-    public String getToolSource();
 
     public int getDamage();
 
@@ -36,4 +37,10 @@ public interface Stage {
     public Fertilizer getFertilizer();
 
     public Light getLight();
+
+    public Collection<Tool> getTools();
+
+    public Collection<Tool> getRequiredTools();
+
+    public Collection<Tool> getBonusTools();
 }

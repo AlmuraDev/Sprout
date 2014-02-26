@@ -19,10 +19,12 @@
  */
 package com.almuradev.sprout.plugin.crop;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import com.almuradev.sprout.api.crop.Sprout;
@@ -30,6 +32,7 @@ import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.Light;
+import com.almuradev.sprout.api.mech.Tool;
 import com.almuradev.sprout.api.mech.VariableHolder;
 import com.almuradev.sprout.plugin.mech.SproutVariableHolder;
 
@@ -40,11 +43,11 @@ public class SimpleSprout implements Sprout {
     private final String blockSource;
     private final String itemSource;
     private final String placementSource;
-    private final String toolSource;
     private final Fertilizer fertilizerSource;
     private final Light light;
     private final int damage;
     private final Collection<Drop> bonus;
+    private final Collection<Tool> tools;
     private final int bonusChance;
     private int age = 0;
     private final VariableHolder variable;
@@ -53,11 +56,11 @@ public class SimpleSprout implements Sprout {
     //Optimizations
     private boolean fullyGrown;
 
-    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, String toolSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus) {
-        this(name, blockSource, itemSource, placementSource, toolSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, new SproutVariableHolder());
+    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, Collection<Tool> tools) {
+        this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, tools, new SproutVariableHolder());
     }
 
-    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, String toolSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, VariableHolder variable) {
+    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, Collection<Tool> tools, VariableHolder variable) {
         if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
             throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
         }
@@ -66,7 +69,6 @@ public class SimpleSprout implements Sprout {
         this.blockSource = blockSource;
         this.itemSource = itemSource;
         this.placementSource = placementSource;
-        this.toolSource = toolSource;
         this.damage = damage;
         this.fertilizerSource = fertilizerSource;
         this.light = light;
@@ -74,6 +76,7 @@ public class SimpleSprout implements Sprout {
         this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
         this.bonusChance = bonusChance;
         this.bonus = bonus == null ? Collections.<Drop>emptyList() : drops;
+        this.tools = tools == null ? Collections.<Tool>emptyList() : tools;
         this.variable = variable;
         this.fertilizerUsed = new LinkedHashMap<>();
         fullyGrown = false;
@@ -92,11 +95,6 @@ public class SimpleSprout implements Sprout {
     @Override
     public String getPlacementSource() {
         return placementSource;
-    }
-
-    @Override
-    public String getToolSource() {
-        return toolSource;
     }
 
     @Override
@@ -185,6 +183,33 @@ public class SimpleSprout implements Sprout {
     }
 
     @Override
+    public Collection<Tool> getTools() {
+        return Collections.unmodifiableCollection(tools);
+    }
+
+    @Override
+    public Collection<Tool> getRequiredTools() {
+        final List<Tool> tools = new ArrayList<>();
+        for (Tool tool : this.tools) {
+            if (tool.isRequired()) {
+                tools.add(tool);
+            }
+        }
+        return tools;
+    }
+
+    @Override
+    public Collection<Tool> getBonusTools() {
+        final List<Tool> tools = new ArrayList<>();
+        for (Tool tool : this.tools) {
+            if (tool.isBonus()) {
+                tools.add(tool);
+            }
+        }
+        return tools;
+    }
+
+    @Override
     public Collection<Drop> getBonus() {
         return bonus;
     }
@@ -211,7 +236,7 @@ public class SimpleSprout implements Sprout {
 
     @Override
     public String toString() {
-        return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", toolSource= " + toolSource + ", drops= {" + drops + "}, bonusChance= " + bonusChance + "bonusDrops= {" + bonus + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
+        return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops + "}, bonusChance= " + bonusChance + "bonusDrops= {" + bonus + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", tools= {" + tools + "}, stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
     }
 
     public void setFullyGrown(boolean fullyGrown) {

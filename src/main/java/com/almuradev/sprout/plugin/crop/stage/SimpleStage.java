@@ -19,22 +19,28 @@
  */
 package com.almuradev.sprout.plugin.crop.stage;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.Light;
+import com.almuradev.sprout.api.mech.Tool;
 
 public class SimpleStage implements Stage {
     private final String name;
-    private final String toolSource;
+    private final Collection<Tool> tools;
     private final int growthRequired;
     private final int growthChance;
     private final Fertilizer fertilizer;
     private final Light light;
     private final int damage;
 
-    public SimpleStage(String name, String toolSource, int growthRequired, int growthChance, Fertilizer fertilizer, Light light, int damage) {
+    public SimpleStage(String name, int growthRequired, int growthChance, Fertilizer fertilizer, Light light, Collection<Tool> tools, int damage) {
         this.name = name;
-        this.toolSource = toolSource;
+        this.tools = tools;
         this.growthRequired = growthRequired;
         this.growthChance = growthChance;
         this.fertilizer = fertilizer;
@@ -45,11 +51,6 @@ public class SimpleStage implements Stage {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String getToolSource() {
-        return toolSource;
     }
 
     @Override
@@ -78,6 +79,33 @@ public class SimpleStage implements Stage {
     }
 
     @Override
+    public Collection<Tool> getTools() {
+        return Collections.unmodifiableCollection(tools);
+    }
+
+    @Override
+    public Collection<Tool> getRequiredTools() {
+        final List<Tool> tools = new ArrayList<>();
+        for (Tool tool : this.tools) {
+            if (tool.isRequired()) {
+                tools.add(tool);
+            }
+        }
+        return tools;
+    }
+
+    @Override
+    public Collection<Tool> getBonusTools() {
+        final List<Tool> tools = new ArrayList<>();
+        for (Tool tool : this.tools) {
+            if (tool.isBonus()) {
+                tools.add(tool);
+            }
+        }
+        return tools;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null || !(obj instanceof SimpleStage)) {
             return false;
@@ -89,6 +117,6 @@ public class SimpleStage implements Stage {
 
     @Override
     public String toString() {
-        return "Stage{name= " + name + ", toolSource= " + toolSource + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", damage= " + damage + "}";
+        return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", tools= {" + tools + "}, damage= " + damage + "}";
     }
 }

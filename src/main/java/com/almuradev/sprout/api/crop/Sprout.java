@@ -25,6 +25,7 @@ import java.util.Map;
 import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
 import com.almuradev.sprout.api.mech.Light;
+import com.almuradev.sprout.api.mech.Tool;
 import com.almuradev.sprout.api.mech.VariableHolder;
 
 public interface Sprout {
@@ -35,8 +36,6 @@ public interface Sprout {
     public String getBlockSource();
 
     public String getPlacementSource();
-
-    public String getToolSource();
 
     public int getDamage();
 
@@ -57,6 +56,12 @@ public interface Sprout {
     public Collection<Drop> getDrops();
 
     public int getBonusChance();
+
+    public Collection<Tool> getTools();
+
+    public Collection<Tool> getRequiredTools();
+
+    public Collection<Tool> getBonusTools();
 
     public Collection<Drop> getBonus();
 
