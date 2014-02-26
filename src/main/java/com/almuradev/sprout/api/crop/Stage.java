@@ -25,6 +25,8 @@ import com.almuradev.sprout.api.mech.Light;
 public interface Stage {
 	public String getName();
 
+    public String getToolSource();
+
 	public int getDamage();
 
 	public int getGrowthRequired();

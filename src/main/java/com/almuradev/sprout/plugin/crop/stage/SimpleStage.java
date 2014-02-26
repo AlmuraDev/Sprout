@@ -25,14 +25,16 @@ import com.almuradev.sprout.api.mech.Light;
 
 public class SimpleStage implements Stage {
 	private final String name;
+    private final String toolSource;
 	private final int growthRequired;
 	private final int growthChance;
 	private final Fertilizer fertilizer;
 	private final Light light;
 	private final int damage;
 
-	public SimpleStage(final String name, final int growthRequired, final int growthChance, final Fertilizer fertilizer, final Light light, int damage) {
+	public SimpleStage(String name, String toolSource, int growthRequired, int growthChance, Fertilizer fertilizer, Light light, int damage) {
 		this.name = name;
+        this.toolSource = toolSource;
 		this.growthRequired = growthRequired;
 		this.growthChance = growthChance;
 		this.fertilizer = fertilizer;
@@ -44,6 +46,11 @@ public class SimpleStage implements Stage {
 	public String getName() {
 		return name;
 	}
+
+    @Override
+    public String getToolSource() {
+        return toolSource;
+    }
 
 	@Override
 	public int getDamage() {
@@ -82,6 +89,6 @@ public class SimpleStage implements Stage {
 
 	@Override
 	public String toString() {
-		return "Stage{name= " + name + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", damage= " + damage + "}";
+		return "Stage{name= " + name + ", toolSource= " + toolSource + ", growthRequired= " + growthRequired + ", growthChance= " + growthChance + ", fertilizer= " + fertilizer + ", light= " + light + ", damage= " + damage + "}";
 	}
 }

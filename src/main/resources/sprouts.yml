@@ -1,6 +1,7 @@
 alfalfa:
     item-source: MoreMaterials\KFood_Core\alfalfa_seed
     block-source: MoreMaterials\KFood_Core\flatseed
+    tool-source: MoreMaterials\Example\Tool
     fertilizer-source: bonemeal
     fertilizer-amount: 1
     min-light-level: 7
@@ -19,6 +20,7 @@ alfalfa:
     stages:
         1:
             source: MoreMaterials\KFood_Core\flatseed
+            tool-source: MoreMaterials\Example\Tool
             fertilizer-source: bonemeal
             fertilizer-amount: 1
             min-light-level: 7

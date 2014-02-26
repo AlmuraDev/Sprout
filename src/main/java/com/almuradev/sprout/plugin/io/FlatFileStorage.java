@@ -131,6 +131,17 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 			if (Material.getMaterial(initialPlacementSource.toUpperCase()) == null && MaterialData.getCustomItem(initialPlacementSource) == null) {
 				plugin.getLogger().warning("The placement source [" + initialPlacementSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 			}
+            //TOOL SOURCE
+            final String initialRawToolSource = nameSection.getString("tool-source", "");
+            final String initialToolSource;
+            if (initialRawToolSource.isEmpty()) {
+                initialToolSource = initialRawToolSource;
+            } else {
+                initialToolSource = replacePeriodWithBackslash(initialRawToolSource);
+                if (Material.getMaterial(initialToolSource.toUpperCase()) == null && MaterialData.getCustomItem(initialToolSource) == null) {
+                    plugin.getLogger().warning("The tool source [" + initialToolSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+                }
+            }
 			//DAMAGE
 			final int damage = nameSection.getInt("damage", 0);
 			//LIGHT
@@ -187,6 +198,17 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				if (Material.getMaterial(stageSource) == null && MaterialData.getCustomItem(stageSource) == null) {
 					plugin.getLogger().warning("The stage [" + index + "] source [" + stageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
 				}
+                //TOOL SOURCE
+                final String rawStageToolSource = indexSection.getString("tool-source", "");
+                final String stageToolSource;
+                if (rawStageToolSource.isEmpty()) {
+                    stageToolSource = rawStageToolSource;
+                } else {
+                    stageToolSource = replacePeriodWithBackslash(rawStageToolSource);
+                    if (Material.getMaterial(stageToolSource) == null && MaterialData.getCustomItem(stageToolSource) == null) {
+                        plugin.getLogger().warning("The stage [" + index + "] tool source [" + stageToolSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Item.");
+                    }
+                }
 				//LIGHT
 				final int minStageLightLevel = indexSection.getInt("min-light-level", minLightLevel);
 				final int maxStageLightLevel = indexSection.getInt("max-light-level", maxLightLevel);
@@ -202,7 +224,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final int growthChance = indexSection.getInt("growth-chance", 10);
 				//DAMAGE
 				final int stageDamage = indexSection.getInt("damage", damage);
-				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount), new SproutLight(minStageLightLevel, maxStageLightLevel), stageDamage));
+				stages.put(Integer.parseInt(index), new SimpleStage(stageSource, stageToolSource, growthTicks, growthChance, new SproutFertilizer(fertilizerStageSource, fertilizerStageAmount), new SproutLight(minStageLightLevel, maxStageLightLevel), stageDamage));
 			}
 			//VARIABLES
 			final ConfigurationSection variablesSection = nameSection.getConfigurationSection("variables");
@@ -212,9 +234,9 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
 				final boolean damagePlayer = variablesSection.getBoolean("damage-player", false);
 				final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
 				final boolean ignoreLight = variablesSection.getBoolean("ignore-light", false);
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak, ignoreLight));
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, initialToolSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak, ignoreLight));
 			} else {
-				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops);
+				created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, initialToolSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops);
 			}
 			plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
 			createdSprouts.add(created);

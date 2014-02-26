@@ -36,6 +36,8 @@ public interface Sprout {
 
 	public String getPlacementSource();
 
+    public String getToolSource();
+
 	public int getDamage();
 
 	public Fertilizer getFertilizerSource();

@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
@@ -41,6 +42,7 @@ public class SimpleSprout implements Sprout {
 	private final String blockSource;
 	private final String itemSource;
 	private final String placementSource;
+    private final String toolSource;
 	private final Fertilizer fertilizerSource;
 	private final Light light;
 	private final int damage;
@@ -53,11 +55,11 @@ public class SimpleSprout implements Sprout {
 	//Optimizations
 	private boolean fullyGrown;
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus) {
-		this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, new SproutVariableHolder());
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, String toolSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus) {
+		this(name, blockSource, itemSource, placementSource, toolSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, new SproutVariableHolder());
 	}
 
-	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, VariableHolder variable) {
+	public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, String toolSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, VariableHolder variable) {
 		if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
 			throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
 		}
@@ -66,6 +68,7 @@ public class SimpleSprout implements Sprout {
 		this.blockSource = blockSource;
 		this.itemSource = itemSource;
 		this.placementSource = placementSource;
+        this.toolSource = toolSource;
 		this.damage = damage;
 		this.fertilizerSource = fertilizerSource;
 		this.light = light;
@@ -93,7 +96,12 @@ public class SimpleSprout implements Sprout {
 		return placementSource;
 	}
 
-	@Override
+    @Override
+    public String getToolSource() {
+        return toolSource;
+    }
+
+    @Override
 	public int getDamage() {
 		return damage;
 	}
@@ -205,7 +213,7 @@ public class SimpleSprout implements Sprout {
 
 	@Override
 	public String toString() {
-		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", drops= {" + drops + "}, bonusChance= " + bonusChance + "bonusDrops= {" + bonus + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
+		return "Sprout{name= " + name + ", blockSource= " + blockSource + ", itemSource= " + itemSource + ", placementSource= " + placementSource + ", toolSource= " + toolSource + ", drops= {" + drops + "}, bonusChance= " + bonusChance + "bonusDrops= {" + bonus + "}, fertilizer= " + fertilizerSource + ", light= " + light + ", stages= {" + stages + "}, " + variable + ", fullyGrown= " + fullyGrown + "}";
 	}
 
 	public void setFullyGrown(boolean fullyGrown) {
@@ -240,28 +248,24 @@ public class SimpleSprout implements Sprout {
 	}
 
 	public Stage getFirstStage() {
-		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+        final LinkedList<Map.Entry<Integer,Stage>> entryList = new LinkedList<>(stages.entrySet());
 		return entryList.get(0).getValue();
 	}
 
 	public Stage getPreviousStage(int current) {
-		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+        final LinkedList<Map.Entry<Integer,Stage>> entryList = new LinkedList<>(stages.entrySet());
 		return entryList.get(current - 2).getValue();
 	}
 
 	public Stage getLastStage() {
-		final List<Map.Entry<Integer, Stage>> entryList = new LinkedList(stages.entrySet());
+		final LinkedList<Map.Entry<Integer,Stage>> entryList = new LinkedList<>(stages.entrySet());
 		return entryList.get(entryList.size() - 1).getValue();
 	}
 
 	public boolean isOnLastStage() {
 		final Stage current = getCurrentStage();
-		if (current == null) {
-			return false;
-		}
-
-		return getLastStage().equals(current);
-	}
+        return current != null && getLastStage().equals(current);
+    }
 
 	public void grow(int amount) {
 		age += amount;
@@ -274,16 +278,16 @@ public class SimpleSprout implements Sprout {
 	public void incrementFertilizerCount(Stage stage) {
 		Integer value = fertilizerUsed.get(stage);
 		if (value == null) {
-			value = new Integer(1);
+			value = 1;
 		} else {
-			value = new Integer(value.intValue() + 1);
+			value++;
 		}
 		fertilizerUsed.put(stage, value);
 	}
 
 	public int getFertilizerCount(Stage stage) {
 		if (fertilizerUsed.containsKey(stage)) {
-			return fertilizerUsed.get(stage).intValue();
+			return fertilizerUsed.get(stage);
 		}
 		return 0;
 	}
