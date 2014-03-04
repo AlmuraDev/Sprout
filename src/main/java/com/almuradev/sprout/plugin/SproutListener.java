@@ -118,13 +118,17 @@ public class SproutListener implements Listener {
             event.setCancelled(true); //Cancels Bukkit Event, SpoutPlugin events proceed this.
             
             // Handle Custom Tools, Required tools first.
-            SpoutItemStack handStack = new SpoutItemStack(event.getPlayer().getItemInHand());            
+            SpoutItemStack handStack = null;
+            if (event.getPlayer().getItemInHand()!=null) {
+            	handStack = new SpoutItemStack(event.getPlayer().getItemInHand());
+            }
             boolean foundTool = false;
             if (handStack != null && !sprout.getRequiredTools().isEmpty()) {
             	for (Tool requiredTool : sprout.getRequiredTools()) {
             		if (requiredTool.getName().equals(handStack.getMaterial().getName())) {
             			// Found exact tool.
             			foundTool = true;
+            			break;
             		}
             	}
             }
@@ -155,20 +159,14 @@ public class SproutListener implements Listener {
             ((SpoutBlock) block).setCustomBlock(null);
 
             //Lets roll a dice for a bonus!
-            if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {
-            	if (handStack != null && !sprout.getBonusTools().isEmpty()) {
-            		for (Tool bonusTool : sprout.getBonusTools()) {
-            			if (bonusTool.getName().equals(handStack.getMaterial().getName())) {
-            				bonusTool.getBonusAmount();
-            			}
-            		}
-            	}
+            if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {            	
             	if (!sprout.getBonus().isEmpty()) {
             		int bonusModifier = 0;
             		if (handStack != null && !sprout.getBonusTools().isEmpty()) {
-            			for (Tool bonusTool : sprout.getRequiredTools()) {
+            			for (Tool bonusTool : sprout.getBonusTools()) {
             				if (bonusTool.getName().equals(handStack.getMaterial().getName())) {
             					bonusModifier = bonusTool.getBonusAmount();
+            					break;
             				}
             			}
             		} 
