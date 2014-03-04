@@ -26,6 +26,7 @@ import com.almuradev.sprout.api.crop.Sprout;
 import com.almuradev.sprout.api.crop.Stage;
 import com.almuradev.sprout.api.mech.Drop;
 import com.almuradev.sprout.api.mech.Fertilizer;
+import com.almuradev.sprout.api.mech.Tool;
 import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.SaveThread;
@@ -65,6 +66,7 @@ import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SproutListener implements Listener {
     private final Random RANDOM = new Random();
@@ -112,7 +114,29 @@ public class SproutListener implements Listener {
             if (sprout == null) {
                 return;
             }
-            event.setCancelled(true);
+            
+            event.setCancelled(true); //Cancels Bukkit Event, SpoutPlugin events proceed this.
+            
+            // Handle Custom Tools, Required tools first.
+            SpoutItemStack handStack = new SpoutItemStack(event.getPlayer().getItemInHand());            
+            boolean foundTool = false;
+            if (handStack != null && !sprout.getRequiredTools().isEmpty()) {
+            	for (Tool requiredTool : sprout.getRequiredTools()) {
+            		if (requiredTool.getName().equals(handStack.getMaterial().getName())) {
+            			// Found exact tool.
+            			foundTool = true;
+            		}
+            	}
+            }
+            
+            if (handStack != null && !sprout.getRequiredTools().isEmpty() && !foundTool) {
+            	//Invalid tool or item in hand null
+            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " invalid tool used.");
+            	// Stop processing
+            	return;
+            }
+
+            
 
             //Handle Jobs Integration Calls
             if (SproutConfiguration.jobsEnabled && sprout.isFullyGrown()) {
@@ -132,14 +156,34 @@ public class SproutListener implements Listener {
 
             //Lets roll a dice for a bonus!
             if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {
-                if (!sprout.getBonus().isEmpty() && RANDOM.nextInt(sprout.getBonusChance() - 1 + 1) + 1 == sprout.getBonusChance()) {
-                    if (SproutConfiguration.bonusMessage) {
-                        event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " You get a bonus drop!");
-                    }
-                    disperseDrops(event.getPlayer(), sprout, block, true);
-                } else {
-                    disperseDrops(event.getPlayer(), sprout, block, false);
-                }
+            	if (handStack != null && !sprout.getBonusTools().isEmpty()) {
+            		for (Tool bonusTool : sprout.getBonusTools()) {
+            			if (bonusTool.getName().equals(handStack.getMaterial().getName())) {
+            				bonusTool.getBonusAmount();
+            			}
+            		}
+            	}
+            	if (!sprout.getBonus().isEmpty()) {
+            		int bonusModifier = 0;
+            		if (handStack != null && !sprout.getBonusTools().isEmpty()) {
+            			for (Tool bonusTool : sprout.getRequiredTools()) {
+            				if (bonusTool.getName().equals(handStack.getMaterial().getName())) {
+            					bonusModifier = bonusTool.getBonusAmount();
+            				}
+            			}
+            		} 
+            		// Catch Maff Fail
+            		if (sprout.getBonusChance() - bonusModifier < 0) {
+            			//System.out.println("[Sprout] - Bonus multiplier cannot be more than initial bonus chance.");
+            		} else if (RANDOM.nextInt((sprout.getBonusChance()-bonusModifier) + 1) == (sprout.getBonusChance()-bonusModifier)) {
+            			if (SproutConfiguration.bonusMessage) {
+            				event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " You get a bonus drop!");
+            			}
+            			disperseDrops(event.getPlayer(), sprout, block, true);            	 
+            		}
+            	} else {
+            		disperseDrops(event.getPlayer(), sprout, block, false);
+            	}
             }
         }
     }
