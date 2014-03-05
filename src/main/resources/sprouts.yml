@@ -25,14 +25,7 @@ alfalfa:
             required: true
     stages:
         1:
-            source: MoreMaterials\KFood_Core\flatseed
-            tools:
-                MoreMaterials\Example\Tool:
-                   required: false
-                   bonus: true
-                   bonus-amount: 1
-                MoreMaterials\Example2\Tool:
-                   required: true
+            source: MoreMaterials\KFood_Core\flatseed                            
             fertilizer-source: bonemeal
             fertilizer-amount: 1
             min-light-level: 7
@@ -57,6 +50,11 @@ alfalfa:
             growth-chance: 5
         4:
             source: MoreMaterials\KFood_Core\alfalfa3
+            tools:
+                MoreMaterials\Sprout-Tools\HarvestClaw:
+                   required: false
+                   bonus: true
+                   bonus-amount: 5
             fertilizer-source: bonemeal
             fertilizer-amount: 1
             min-light-level: 7

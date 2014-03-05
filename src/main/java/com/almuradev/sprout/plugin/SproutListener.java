@@ -126,7 +126,7 @@ public class SproutListener implements Listener {
             	}
             }
             
-            if (!foundTool && !sprout.getRequiredTools().isEmpty()) {
+            if (!foundTool && !sprout.getRequiredTools().isEmpty() && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             	//Invalid tool or item in hand null
             	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires a tool to harvest.");
             	return;
