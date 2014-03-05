@@ -31,14 +31,10 @@ import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
+import com.almuradev.sprout.plugin.util.JobsWorker;
 import com.almuradev.sprout.plugin.util.Util;
 import com.rits.cloning.Cloner;
-import me.zford.jobs.Jobs;
-import me.zford.jobs.bukkit.BukkitUtil;
-import me.zford.jobs.bukkit.actions.BlockActionInfo;
-import me.zford.jobs.config.ConfigManager;
-import me.zford.jobs.container.ActionType;
-import me.zford.jobs.container.JobsPlayer;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -65,8 +61,8 @@ import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.CustomBlock;
+import org.getspout.spoutapi.material.CustomItem;
 import org.getspout.spoutapi.material.MaterialData;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SproutListener implements Listener {
     private final Random RANDOM = new Random();
@@ -106,11 +102,8 @@ public class SproutListener implements Listener {
             disperseSeeds(event.getPlayer(), sprout, block);
         } else {
             //Handle breaking of Sprouts
-            final Sprout sprout = plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
+            final Sprout sprout = plugin.getWorldRegistry().get(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
             final SaveThread thread = ((SaveThread) ThreadRegistry.get(block.getWorld().getName()));
-            if (thread != null) {
-                thread.remove(block.getLocation(), (SimpleSprout) sprout);
-            }
             if (sprout == null) {
                 return;
             }
@@ -123,9 +116,9 @@ public class SproutListener implements Listener {
             	handStack = new SpoutItemStack(event.getPlayer().getItemInHand());
             }
             boolean foundTool = false;
-            if (handStack != null && !sprout.getRequiredTools().isEmpty()) {
+            if (handStack != null && handStack.isCustomItem() && !sprout.getRequiredTools().isEmpty()) {
             	for (Tool requiredTool : sprout.getRequiredTools()) {
-            		if (requiredTool.getName().equals(handStack.getMaterial().getName())) {
+            		if (requiredTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
             			// Found exact tool.
             			foundTool = true;
             			break;
@@ -133,28 +126,23 @@ public class SproutListener implements Listener {
             	}
             }
             
-            if (handStack != null && !sprout.getRequiredTools().isEmpty() && !foundTool) {
+            if (!foundTool && !sprout.getRequiredTools().isEmpty()) {
             	//Invalid tool or item in hand null
-            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " invalid tool used.");
-            	// Stop processing
+            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires a tool to harvest.");
             	return;
             }
-
-            
-
-            //Handle Jobs Integration Calls
-            if (SproutConfiguration.jobsEnabled && sprout.isFullyGrown()) {
-                me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
-                if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                    if (Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
-                        // restricted area multiplier
-                        double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
-                        JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
-                        Jobs.action(jPlayer, new BlockActionInfo(block, ActionType.BREAK), multiplier);
-                    }
-                }
+            // Remove Sprout from Db.
+            if (thread != null) {
+            	plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ()); // Remove from Registry
+                thread.remove(block.getLocation(), (SimpleSprout) sprout); // Remove from DB.
             }
-            // Clear current location
+
+            //Handle Jobs Integration Calls            
+            if (SproutConfiguration.jobsEnabled) {
+            	JobsWorker.jobsBreak(event.getPlayer(), block);
+            }
+            
+            // Clear current location           
             block.setType(Material.AIR);
             ((SpoutBlock) block).setCustomBlock(null);
 
@@ -164,7 +152,7 @@ public class SproutListener implements Listener {
             		int bonusModifier = 0;
             		if (handStack != null && !sprout.getBonusTools().isEmpty()) {
             			for (Tool bonusTool : sprout.getBonusTools()) {
-            				if (bonusTool.getName().equals(handStack.getMaterial().getName())) {
+            				if (bonusTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
             					bonusModifier = bonusTool.getBonusAmount();
             					break;
             				}
@@ -418,16 +406,9 @@ public class SproutListener implements Listener {
                         decrementInventory(interacter, held);
                     }
                     //Handle Jobs Integration Calls
+                    
                     if (SproutConfiguration.jobsEnabled) {
-                        me.zford.jobs.Player player = BukkitUtil.wrapPlayer(event.getPlayer());
-                        if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                            if (Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
-                                // restricted area multiplier
-                                double multiplier = ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
-                                JobsPlayer jPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getName());
-                                Jobs.action(jPlayer, new BlockActionInfo(where, ActionType.PLACE), multiplier);
-                            }
-                        }
+                        JobsWorker.jobsPlace(event.getPlayer(), where);
                     }
                 }
         }

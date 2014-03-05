@@ -48,6 +48,10 @@ public class SproutConfiguration {
 
         if (config.getBoolean("jobs.enabled") == true) {
             jobsEnabled = true;
+            if (plugin.getServer().getPluginManager().getPlugin("Jobs") == null) {
+            	jobsEnabled = false;
+            	System.out.println("[Sprout] - Jobs integration enabled by Config.yml but wasn't detected as installed.");
+            }
         }
 
         if (config.getBoolean("feedback.bonus-message-enabled") == true) {
