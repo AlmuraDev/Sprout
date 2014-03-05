@@ -199,7 +199,9 @@ public class SproutListener implements Listener {
 
             to.setType(Material.AIR);
             ((SpoutBlock) to).setCustomBlock(null);
-            disperseDrops(sprout, to, false);
+            if (!sprout.getRequiredTools().isEmpty()) {
+            	disperseDrops(sprout, to, false);
+            }
         }
     }
 
@@ -220,7 +222,9 @@ public class SproutListener implements Listener {
         event.setCancelled(true);
         physics.setType(Material.AIR);
         ((SpoutBlock) physics).setCustomBlock(null);
-        disperseDrops(sprout, physics, false);
+        if (!sprout.getRequiredTools().isEmpty()) {
+        	disperseDrops(sprout, physics, false);
+        }
     }
 
     @EventHandler (priority = EventPriority.LOW, ignoreCancelled = true)

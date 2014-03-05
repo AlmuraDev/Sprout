@@ -42,8 +42,7 @@ public class JobsWorker {
 	public static void jobsPlace(Player sPlayer, Block block) {
 		me.zford.jobs.Player player = me.zford.jobs.bukkit.BukkitUtil.wrapPlayer(sPlayer);
 		if (!sPlayer.getGameMode().equals(GameMode.CREATIVE)) {
-			if (me.zford.jobs.Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {
-				// restricted area multiplier
+			if (me.zford.jobs.Jobs.getPermissionHandler().hasWorldPermission(player, player.getLocation().getWorld())) {			
 				double multiplier = me.zford.jobs.config.ConfigManager.getJobsConfiguration().getRestrictedMultiplier(player);
 				me.zford.jobs.container.JobsPlayer jPlayer = me.zford.jobs.Jobs.getPlayerManager().getJobsPlayer(player.getName());
 				me.zford.jobs.Jobs.action(jPlayer, new me.zford.jobs.bukkit.actions.BlockActionInfo(block, me.zford.jobs.container.ActionType.PLACE), multiplier);
