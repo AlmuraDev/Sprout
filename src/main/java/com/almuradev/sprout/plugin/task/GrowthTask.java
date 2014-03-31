@@ -164,8 +164,8 @@ public class GrowthTask implements Runnable {
                                     block.setType(material);
                                 }
                                 if (sprout.isOnLastStage()) {
+                                	sprout.setFullyGrown(true);
                                     ((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
-                                    sprout.setFullyGrown(true);
                                 } else {
                                     sprout.grow((int) delta);
                                 }

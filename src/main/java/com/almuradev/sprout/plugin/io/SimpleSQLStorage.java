@@ -112,11 +112,12 @@ public class SimpleSQLStorage implements SQLStorage {
         }
 
         final Sprouts row = db.select(Sprouts.class).where().equal("world", world).and().equal("location", loc).execute().findOne();
+
         if (row == null) {
             db.save(new Sprouts(world, loc, sprout.getName(), sprout.getAge(), !sprout.isFullyGrown()));
         } else {
             //Check to see if we need to do a save
-            if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge())) {
+            if (sprout.getName().equalsIgnoreCase(row.getSprout()) && (sprout.getAge() == row.getAge()) && (sprout.isFullyGrown() == !row.isStillGrowing())) {
                 return this;
             }
             row.setSprout(sprout.getName());

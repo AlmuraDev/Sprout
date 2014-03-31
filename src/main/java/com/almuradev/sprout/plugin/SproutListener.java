@@ -107,7 +107,6 @@ public class SproutListener implements Listener {
             if (sprout == null) {
                 return;
             }
-            
             event.setCancelled(true); //Cancels Bukkit Event, SpoutPlugin events proceed this.
             
             // Handle Custom Tools, Required tools first.
@@ -131,11 +130,6 @@ public class SproutListener implements Listener {
             	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires a tool to harvest.");
             	return;
             }
-            // Remove Sprout from Db.
-            if (thread != null) {
-            	plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ()); // Remove from Registry
-                thread.remove(block.getLocation(), (SimpleSprout) sprout); // Remove from DB.
-            }
 
             //Handle Jobs Integration Calls            
             if (SproutConfiguration.jobsEnabled) {
@@ -147,7 +141,7 @@ public class SproutListener implements Listener {
             ((SpoutBlock) block).setCustomBlock(null);
 
             //Lets roll a dice for a bonus!
-            if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {            	
+            if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {
             	if (!sprout.getBonus().isEmpty()) {
             		int bonusModifier = 0;
             		if (handStack != null && !sprout.getBonusTools().isEmpty()) {
@@ -167,9 +161,14 @@ public class SproutListener implements Listener {
             			}
             			disperseDrops(event.getPlayer(), sprout, block, true);            	 
             		}
-            	} else {
-            		disperseDrops(event.getPlayer(), sprout, block, false);
             	}
+            	disperseDrops(event.getPlayer(), sprout, block, false);
+            }
+
+            // Remove Sprout from Db.
+            if (thread != null) {
+            	thread.remove(block.getLocation(), (SimpleSprout) sprout); // Remove from DB.
+            	plugin.getWorldRegistry().remove(block.getWorld().getName(), block.getX(), block.getY(), block.getZ()); // Remove from Registry
             }
         }
     }
