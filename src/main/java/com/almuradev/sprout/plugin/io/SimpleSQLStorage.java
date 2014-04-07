@@ -52,6 +52,7 @@ public class SimpleSQLStorage implements SQLStorage {
     private final Cloner cloner = new Cloner();
     private Database db;
     private int saved = 0;
+    private Configuration configuration;
 
     public SimpleSQLStorage(SproutPlugin plugin) {
         this.plugin = plugin;
@@ -65,8 +66,7 @@ public class SimpleSQLStorage implements SQLStorage {
         onEnable(mode, null, host, database, port, username, password);
     }
 
-    public void onEnable(SQLMode mode, File loc, String host, String database, int port, String username, String password) {
-        Configuration configuration;
+    public void onEnable(SQLMode mode, File loc, String host, String database, int port, String username, String password) {        
         try {
             configuration = mode.getAssociation().newInstance();
         } catch (Exception ignore) {
@@ -166,8 +166,16 @@ public class SimpleSQLStorage implements SQLStorage {
         return registry;
     }
 
-    public void dropAll() {
-        db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");
+    public void dropAll() {         
+    	if (configuration instanceof H2Configuration) {  
+    		db.directQuery("delete FROM `sprouts` where stillGrowing > 0");
+    	} else if (configuration instanceof SQLiteConfiguration) {
+    		db.directQuery("delete FROM `sprouts` where stillGrowing > 0");
+    	} else { // Should be MySQL
+    		db.directQuery("delete FROM `sprout`.`sprouts` where stillGrowing > 0");
+    	}
+        
+    	
         for (final World world : Bukkit.getWorlds()) {
             final TInt21TripleObjectHashMap<?> registry = plugin.getWorldRegistry().get(world.getName());
             if (registry == null) {

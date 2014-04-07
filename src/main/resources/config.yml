@@ -32,7 +32,7 @@ world:
 sql:
     mode: h2
     host: localhost
-    database: minecraft
+    database: Sprout
     port: 25566
     username: minecraft
     password: minecraft
