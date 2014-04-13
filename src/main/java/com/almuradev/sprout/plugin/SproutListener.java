@@ -57,6 +57,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.block.SpoutBlock;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
@@ -423,7 +424,7 @@ public class SproutListener implements Listener {
     }
 
     @EventHandler (priority = EventPriority.LOW)
-    public void onWorldSave(WorldSaveEvent event) {
+    public void onWorldUnload(WorldUnloadEvent event) {
         GrowthTask.unschedule(event.getWorld());
     }
 
