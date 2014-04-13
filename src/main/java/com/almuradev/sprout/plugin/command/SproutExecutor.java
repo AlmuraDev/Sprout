@@ -27,7 +27,9 @@ import com.almuradev.sprout.plugin.crop.SimpleSprout;
 import com.almuradev.sprout.plugin.task.GrowthTask;
 import com.almuradev.sprout.plugin.thread.SaveThread;
 import com.almuradev.sprout.plugin.thread.ThreadRegistry;
+
 import gnu.trove.procedure.TLongObjectProcedure;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -89,6 +91,25 @@ public class SproutExecutor implements CommandExecutor {
                                 return true;
                             }
                             info(sender, world);
+                            return true;
+                    }
+                case "task":
+                    if (!checkPermission(sender, "sprout.task")) {
+                        sender.sendMessage("[Sprout] You do not have permission!");
+                        return true;
+                    }
+                    switch (args.length) {
+                        case 1:
+                            for (World world : Bukkit.getWorlds()) {
+                            	final Integer id = GrowthTask.WORLD_ID_MAP.get(world.getName());
+                            	if (id != null) {
+                            		Bukkit.getServer().broadcastMessage("Task Info: World: " + world.getName() + " Task ID: " + id);
+                            		Bukkit.getServer().broadcastMessage("Task is Running: " + Bukkit.getScheduler().isCurrentlyRunning(id));
+                            		Bukkit.getServer().broadcastMessage("Task is Queued: " + Bukkit.getScheduler().isQueued(id));
+                            	} else {
+                            		Bukkit.getServer().broadcastMessage("No task for World: " + world.getName());
+                            	}
+                            }
                             return true;
                     }
             }

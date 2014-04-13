@@ -45,12 +45,13 @@ import org.getspout.spoutapi.material.CustomBlock;
 import org.getspout.spoutapi.material.MaterialData;
 
 public class GrowthTask implements Runnable {
-	private static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
+	public static final Map<String, Integer> WORLD_ID_MAP = new HashMap<>();
 	private static final Random RANDOM = new Random();
 	private final SproutPlugin plugin;
 	private final WorldRegistry worldRegistry;
 	private final String world;
 	private long pastTime;
+	public static int taskInt;
 
 	public GrowthTask(SproutPlugin plugin, String world) {
 		this.plugin = plugin;
@@ -68,10 +69,14 @@ public class GrowthTask implements Runnable {
 			if (l == null) {
 				continue;
 			}
+			
+			taskInt = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l);
+			
 			if (log) {
-				plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).");
+				plugin.getLogger().info("Growth is scheduled for [" + world.getName() + "] every ~" + l / 20 + " second(s).  Task: " + taskInt);
 			}
-			WORLD_ID_MAP.put(world.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new GrowthTask(sproutPlugin, world.getName()), 0, l));
+			
+			WORLD_ID_MAP.put(world.getName(), taskInt);
 
 			//Async saving
 			ThreadRegistry.add(new SaveThread((SproutPlugin) plugin, world.getName())).start();
@@ -113,7 +118,7 @@ public class GrowthTask implements Runnable {
 		final long delta = localTime - pastTime;
 		pastTime = localTime;
 		if (SproutConfiguration.debug) {
-			Bukkit.getServer().broadcastMessage("[Sprout Debug] - Proceed with Execute Override.");
+			Bukkit.getServer().broadcastMessage("[Sprout Debug] - Growth Task Running.");
 		}
 		worldRegistry.getInternalMap().forEachEntry(new TLongObjectProcedure<Object>() {
 			@Override
@@ -126,7 +131,7 @@ public class GrowthTask implements Runnable {
 				final int chunkZ = z >> 4;
 				final Sprout live = plugin.getWorldRegistry().get(world, x, y, z);
 				if (SproutConfiguration.debug){
-					Bukkit.getServer().broadcastMessage("[Sprout Debug] : Sprout @ " + x + " / " + y + " / " + z + " Age: " + sprout.getAge() + " Name: " + sprout.getName());
+					//Bukkit.getServer().broadcastMessage("[Sprout Debug] : Sprout @ " + x + " / " + y + " / " + z + " Age: " + sprout.getAge() + " Name: " + sprout.getName());
 				}
 				if (!sprout.equals(live)) {
 					if (SproutConfiguration.debug) {
@@ -185,7 +190,7 @@ public class GrowthTask implements Runnable {
 									((SaveThread) ThreadRegistry.get(world)).add(x, y, z, sprout);
 								} else {
 									if (SproutConfiguration.debug){
-										Bukkit.getServer().broadcastMessage("[Sprout Debug] : Growing Sprout @ " + x + " / " + y + " / " + z);
+										Bukkit.getServer().broadcastMessage("[Sprout Debug] : Growing Sprout @ " + x + " / " + y + " / " + z + " New Age: " + sprout.getAge());
 									}
 									sprout.grow((int) delta);
 								}
