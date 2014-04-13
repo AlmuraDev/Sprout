@@ -38,6 +38,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitWorker;
 import org.getspout.spoutapi.block.SpoutBlock;
 
 public class SproutExecutor implements CommandExecutor {
@@ -50,7 +51,7 @@ public class SproutExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (args.length == 0) {
-        	sender.sendMessage("[Sprout] debug version: 1.6.3.1.");
+        	sender.sendMessage("[Sprout] debug version: 1.6.3 - 3.");
         }
     	if (args.length > 0) {
             switch (args[0].toLowerCase()) {
@@ -112,6 +113,12 @@ public class SproutExecutor implements CommandExecutor {
                             	} else {
                             		Bukkit.getServer().broadcastMessage("No task for World: " + world.getName());
                             	}
+                            }
+                            return true;
+                        case 2:
+                            
+                        	for (BukkitWorker workers : Bukkit.getScheduler().getActiveWorkers()) {
+                            	sender.sendMessage("Task: " + workers.getTaskId() + " Owner: " + workers.getOwner() + " Thread: " + workers.getThread() + " Class:" + workers.getClass());
                             }
                             return true;
                     }

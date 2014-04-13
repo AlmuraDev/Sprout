@@ -92,6 +92,7 @@ public class GrowthTask implements Runnable {
 			final Integer id = WORLD_ID_MAP.remove(world.getName());
 			if (SproutConfiguration.debug) { 
 				Bukkit.getServer().broadcastMessage("[Sprout Debug] - stopping task: " + world.getName());
+				Thread.dumpStack();				
 			}
 			if (id != null) {
 				Bukkit.getScheduler().cancelTask(id);
