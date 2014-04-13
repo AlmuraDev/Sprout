@@ -42,3 +42,5 @@ jobs:
     enabled: false
 forceloadchunks:
     enabled: false
+debug:
+    enabled: true
