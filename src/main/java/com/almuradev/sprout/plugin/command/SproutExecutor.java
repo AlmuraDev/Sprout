@@ -49,7 +49,10 @@ public class SproutExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-        if (args.length > 0) {
+        if (args.length == 0) {
+        	sender.sendMessage("[Sprout] debug version: 1.6.3.1.");
+        }
+    	if (args.length > 0) {
             switch (args[0].toLowerCase()) {
                 case "clear":
                     if (!checkPermission(sender, "sprout.clear")) {

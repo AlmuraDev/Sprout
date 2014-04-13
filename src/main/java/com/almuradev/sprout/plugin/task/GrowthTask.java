@@ -90,6 +90,9 @@ public class GrowthTask implements Runnable {
 	public static void unschedule(World... worlds) {
 		for (World world : worlds) {
 			final Integer id = WORLD_ID_MAP.remove(world.getName());
+			if (SproutConfiguration.debug) { 
+				Bukkit.getServer().broadcastMessage("[Sprout Debug] - stopping task: " + world.getName());
+			}
 			if (id != null) {
 				Bukkit.getScheduler().cancelTask(id);
 			}
@@ -98,6 +101,10 @@ public class GrowthTask implements Runnable {
 	}
 
 	public static void stop(Plugin plugin) {
+		if (SproutConfiguration.debug) {
+			Bukkit.getServer().broadcastMessage("[Sprout Debug] - stopping all tasks");
+			Thread.dumpStack();
+		}
 		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 
