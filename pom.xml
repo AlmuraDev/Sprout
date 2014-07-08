@@ -5,7 +5,7 @@
 	<!-- Project information -->
 	<groupId>com.almuradev</groupId>
 	<artifactId>sprout</artifactId>
-	<version>1.6.4</version>
+	<version>1.6.5</version>
 	<name>Sprout</name>
 	<url>http://www.almuradev.com</url>
 	<description>The premiere Spoutcraft farming emulation system.</description>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>me.zford</groupId>
 			<artifactId>jobs</artifactId>
-			<version>2.11.3</version>
+			<version>2.11.5</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/Jobs.jar</systemPath>
 		</dependency>

@@ -202,7 +202,9 @@ public class GrowthTask implements Runnable {
 									sprout.grow((int) delta);
 								}
 							} else {
-								Bukkit.getServer().broadcastMessage("[Sprout Debug] : Sprout @ " + x + " / " + y + " / " + z + " was in a chunk that wasn't loaded - zero growth.");
+								if (SproutConfiguration.debug){
+									Bukkit.getServer().broadcastMessage("[Sprout Debug] : Sprout @ " + x + " / " + y + " / " + z + " was in a chunk that wasn't loaded - zero growth.");
+								}
 							}
 						}
 					}
