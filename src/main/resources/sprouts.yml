@@ -6,7 +6,7 @@ alfalfa:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
-    minimum-level-required: 5
+    minimum-level-required: 18
     drops: 
         MoreMaterials\KFood_Core\alfalfa:
             amount: 1        
@@ -75,6 +75,7 @@ barley:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 5
     drops: 
         MoreMaterials\KFood_Core\barley:
             amount: 1        
@@ -131,6 +132,7 @@ bellpepper:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 15
     drops: 
         MoreMaterials\KFood_Core\bellpepper:
             amount: 1        
@@ -187,6 +189,7 @@ blackberry:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 75
     drops: 
         MoreMaterials\KFood_Core\blackberry:
             amount: 1        
@@ -243,6 +246,7 @@ bambooshoot:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 50
     drops: 
         MoreMaterials\KFood_Core\bambooshoot:
             amount: 1        
@@ -300,6 +304,7 @@ broccoli:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 15
     drops: 
         MoreMaterials\KFood_Core\broccoli:
             amount: 1        
@@ -356,6 +361,7 @@ butterbean:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 25
     drops: 
         MoreMaterials\KFood_Core\butterbean:
             amount: 1        
@@ -412,6 +418,7 @@ cabbage:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 8
     drops: 
         MoreMaterials\KFood_Core\cabbage:
             amount: 1        
@@ -468,6 +475,7 @@ celery:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 10
     drops: 
         MoreMaterials\KFood_Core\celery:
             amount: 1        
@@ -524,6 +532,7 @@ chilipepper:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 5
     drops: 
         MoreMaterials\KFood_Core\chilipepper:
             amount: 1        
@@ -580,6 +589,7 @@ corn:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 1
     drops: 
         MoreMaterials\KFood_Core\corn:
             amount: 1        
@@ -636,6 +646,7 @@ cotton:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 15
     drops: 
         MoreMaterials\KFood_Core\cotton:
             amount: 1        
@@ -692,6 +703,7 @@ cucumber:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 9
     drops: 
         MoreMaterials\KFood_Core\cucumber:
             amount: 1        
@@ -747,7 +759,8 @@ daikon:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 10    
+    bonus-chance: 10 
+    minimum-level-required: 15    
     drops: 
         MoreMaterials\KFood_Core\daikon:
             amount: 1        
@@ -804,6 +817,7 @@ eggplant:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 5
     drops: 
         MoreMaterials\KFood_Core\eggplant:
             amount: 1        
@@ -858,6 +872,7 @@ fargreens:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 10
     drops: 
         MoreMaterials\KFood_Core\fargreens:
             amount: 1        
@@ -913,7 +928,8 @@ garlic:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 10    
+    bonus-chance: 10
+    minimum-level-required: 20    
     drops: 
         MoreMaterials\KFood_Core\garlic:
             amount: 1        
@@ -968,7 +984,8 @@ grape:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 10    
+    bonus-chance: 10
+    minimum-level-required: 60    
     drops: 
         MoreMaterials\KFood_Core\grape:
             amount: 1        
@@ -1025,6 +1042,7 @@ leek:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 35
     drops: 
         MoreMaterials\KFood_Core\leek:
             amount: 1        
@@ -1081,6 +1099,7 @@ lettuce:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 5
     drops: 
         MoreMaterials\KFood_Core\lettuce:
             amount: 1        
@@ -1137,6 +1156,7 @@ lotusroot:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 30
     drops: 
         MoreMaterials\KFood_Core\lotusroot:
             amount: 1        
@@ -1193,6 +1213,7 @@ luffa:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 2
     drops: 
         MoreMaterials\KFood_Core\luffa:
             amount: 1        
@@ -1249,6 +1270,7 @@ olive:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 6
     drops: 
         MoreMaterials\KFood_Core\olive:
             amount: 1        
@@ -1304,7 +1326,8 @@ oat:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 10    
+    bonus-chance: 10
+    minimum-level-required: 10  
     drops: 
         MoreMaterials\KFood_Core\oat:
             amount: 1        
@@ -1361,6 +1384,7 @@ onion:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10    
+    minimum-level-required: 2
     drops: 
         MoreMaterials\KFood_Core\onion:
             amount: 1        
@@ -1417,6 +1441,7 @@ peanut:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 25
     drops: 
         MoreMaterials\KFood_Core\peanut:
             amount: 1        
@@ -1474,6 +1499,7 @@ radish:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 4
     drops: 
         MoreMaterials\KFood_Core\radish:
             amount: 1        
@@ -1530,6 +1556,7 @@ raspberry:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 45
     drops: 
         MoreMaterials\KFood_Core\raspberry:
             amount: 1        
@@ -1586,6 +1613,7 @@ rice:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 3
     drops: 
         MoreMaterials\KFood_Core\rice:
             amount: 1        
@@ -1643,6 +1671,7 @@ strawberry:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 30
     drops: 
         MoreMaterials\KFood_Core\strawberry:
             amount: 1        
@@ -1700,6 +1729,7 @@ soybean:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10    
+    minimum-level-required: 15
     drops: 
         MoreMaterials\KFood_Core\soybean:
             amount: 1        
@@ -1756,7 +1786,8 @@ spinach:
     fertilizer-amount: 1
     min-light-level: 7
     max-light-level: 15
-    bonus-chance: 10    
+    bonus-chance: 10   
+    minimum-level-required: 5    
     drops: 
         MoreMaterials\KFood_Core\spinach:
             amount: 1        
@@ -1814,6 +1845,7 @@ sweetpepper:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 7
     drops: 
         MoreMaterials\KFood_Core\sweetpepper:
             amount: 1        
@@ -1871,6 +1903,7 @@ sweetpotato:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 10
     drops: 
         MoreMaterials\KFood_Core\sweetpotato:
             amount: 1        
@@ -1928,6 +1961,7 @@ tobacco:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 50
     drops: 
         MoreMaterials\KFood_Core\tobacco:
             amount: 1        
@@ -1985,6 +2019,7 @@ tomato:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 1
     drops: 
         MoreMaterials\KFood_Core\tomato:
             amount: 1        
@@ -2042,6 +2077,7 @@ turnip:
     min-light-level: 7
     max-light-level: 15
     bonus-chance: 10
+    minimum-level-required: 25
     drops: 
         MoreMaterials\KFood_Core\turnip:
             amount: 1        
