@@ -67,5 +67,7 @@ public interface Sprout {
 
     public int getAge();
 
+    public int getMinimumLevelRequired();
+
     public VariableHolder getVariables();
 }

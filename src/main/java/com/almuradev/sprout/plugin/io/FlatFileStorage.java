@@ -136,6 +136,8 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
             //LIGHT
             final int minLightLevel = nameSection.getInt("min-light-level", 0);
             final int maxLightLevel = nameSection.getInt("max-light-level", 15);
+            //LEVEL
+            final int minimumLevelRequired = nameSection.getInt("minimum-level-required", 1);
             //FERTILIZER
             final String fertilizerRawSource = nameSection.getString("fertilizer-source", "bonemeal");
             final String fertilizerSource = replacePeriodWithBackslash(fertilizerRawSource);
@@ -244,9 +246,9 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
                 final boolean damagePlayer = variablesSection.getBoolean("damage-player", false);
                 final boolean dropItemSourceOnGrassBreak = variablesSection.getBoolean("drop-item-source-on-grass-break", true);
                 final boolean ignoreLight = variablesSection.getBoolean("ignore-light", false);
-                created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, tools, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak, ignoreLight));
+                created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, tools, minimumLevelRequired, new SproutVariableHolder(allowFertilization, damagePlayer, dropItemSourceOnGrassBreak, ignoreLight));
             } else {
-                created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, tools);
+                created = new SimpleSprout(name, initialBlockSource, initialItemSource, initialPlacementSource, damage, new SproutFertilizer(fertilizerSource, fertilizerAmount), new SproutLight(minLightLevel, maxLightLevel), stages, drops, bonusChance, bonusDrops, tools, minimumLevelRequired);
             }
             plugin.getLogger().info("Loaded sprout [" + created.getName() + "].");
             createdSprouts.add(created);

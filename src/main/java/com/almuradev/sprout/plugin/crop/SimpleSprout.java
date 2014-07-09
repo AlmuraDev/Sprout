@@ -49,6 +49,7 @@ public class SimpleSprout implements Sprout {
     private final Collection<Drop> bonus;
     private final Collection<Tool> tools;
     private final int bonusChance;
+    private final int minimumLevelRequired;
     private int age = 0;
     private final VariableHolder variable;
     //Fertilization
@@ -56,11 +57,11 @@ public class SimpleSprout implements Sprout {
     //Optimizations
     private boolean fullyGrown;
 
-    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, Collection<Tool> tools) {
-        this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, tools, new SproutVariableHolder());
+    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, Collection<Tool> tools, int minimumLevelRequired) {
+        this(name, blockSource, itemSource, placementSource, damage, fertilizerSource, light, stages, drops, bonusChance, bonus, tools, minimumLevelRequired, new SproutVariableHolder());
     }
 
-    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, Collection<Tool> tools, VariableHolder variable) {
+    public SimpleSprout(String name, String blockSource, String itemSource, String placementSource, int damage, Fertilizer fertilizerSource, Light light, Map<Integer, Stage> stages, Collection<Drop> drops, int bonusChance, Collection<Drop> bonus, Collection<Tool> tools, int minimumLevelRequired, VariableHolder variable) {
         if (name == null || name.isEmpty() || itemSource == null || itemSource.isEmpty() || blockSource == null || blockSource.isEmpty()) {
             throw new IllegalArgumentException("Specified identifier , item or block source(s) is/are null!");
         }
@@ -75,6 +76,7 @@ public class SimpleSprout implements Sprout {
         this.stages = stages == null ? Collections.<Integer, Stage>emptyMap() : stages;
         this.drops = drops == null ? Collections.<Drop>emptyList() : drops;
         this.bonusChance = bonusChance;
+        this.minimumLevelRequired = minimumLevelRequired;
         this.bonus = bonus == null ? Collections.<Drop>emptyList() : drops;
         this.tools = tools == null ? Collections.<Tool>emptyList() : tools;
         this.variable = variable;
@@ -217,6 +219,11 @@ public class SimpleSprout implements Sprout {
     @Override
     public int getAge() {
         return age;
+    }
+
+    @Override
+    public int getMinimumLevelRequired() {
+        return minimumLevelRequired;
     }
 
     @Override
