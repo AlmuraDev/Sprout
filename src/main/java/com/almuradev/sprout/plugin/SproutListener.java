@@ -35,6 +35,8 @@ import com.almuradev.sprout.plugin.util.JobsWorker;
 import com.almuradev.sprout.plugin.util.Util;
 import com.rits.cloning.Cloner;
 
+import me.zford.jobs.Jobs;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -129,6 +131,11 @@ public class SproutListener implements Listener {
             if (!foundTool && !sprout.getRequiredTools().isEmpty() && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             	//Invalid tool or item in hand null
             	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires a tool to harvest.");
+            	return;
+            }
+            
+            if (Jobs.hasRequiredJobAndLevel(event.getPlayer(), "Farmer", sprout.getMinimumLevelRequired())) {
+            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires job " + ChatColor.WHITE + " [Farmer]" + ChatColor.DARK_RED + ", lvl " + sprout.getMinimumLevelRequired() + " .");
             	return;
             }
 
@@ -393,6 +400,11 @@ public class SproutListener implements Listener {
                     //Make sure where we are setting the block won't be already obstructed.
                     if (where.getType() != Material.AIR) {
                         return;
+                    }
+                    
+                    if (Jobs.hasRequiredJobAndLevel(event.getPlayer(), "Farmer", sprout.getMinimumLevelRequired())) {
+                    	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires job " + ChatColor.WHITE + " [Farmer]" + ChatColor.DARK_RED + ", lvl " + sprout.getMinimumLevelRequired() + " .");
+                    	return;
                     }
 
                     final Sprout toInject = cloner.deepClone(sprout);
