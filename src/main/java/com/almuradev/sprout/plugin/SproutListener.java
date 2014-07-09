@@ -134,13 +134,12 @@ public class SproutListener implements Listener {
             	return;
             }
             
-            if (Jobs.hasRequiredJobAndLevel(event.getPlayer(), "Farmer", sprout.getMinimumLevelRequired())) {
-            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires job " + ChatColor.WHITE + " [Farmer]" + ChatColor.DARK_RED + ", lvl " + sprout.getMinimumLevelRequired() + " .");
-            	return;
-            }
-
-            //Handle Jobs Integration Calls            
+            //Handle Jobs Integration Calls
             if (SproutConfiguration.jobsEnabled) {
+            	if (!Jobs.hasRequiredJobAndLevel(event.getPlayer(), "Farmer", sprout.getMinimumLevelRequired())) {
+            		event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " Harvesting this crop requires the job " + ChatColor.GOLD + "[Farmer]" + ChatColor.WHITE + ", at level " + ChatColor.GOLD + sprout.getMinimumLevelRequired() + ChatColor.WHITE + " or higher.");
+            		return;
+            	}
             	JobsWorker.jobsBreak(event.getPlayer(), block);
             }
             
@@ -402,9 +401,13 @@ public class SproutListener implements Listener {
                         return;
                     }
                     
-                    if (Jobs.hasRequiredJobAndLevel(event.getPlayer(), "Farmer", sprout.getMinimumLevelRequired())) {
-                    	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires job " + ChatColor.WHITE + " [Farmer]" + ChatColor.DARK_RED + ", lvl " + sprout.getMinimumLevelRequired() + " .");
-                    	return;
+                    //Handle Jobs Integration Calls
+                    if (SproutConfiguration.jobsEnabled) {
+                    	if (!Jobs.hasRequiredJobAndLevel(event.getPlayer(), "Farmer", sprout.getMinimumLevelRequired())) {
+                    		event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " Planting this seed requires the job " + ChatColor.GOLD + "[Farmer]" + ChatColor.WHITE + ", at level " + ChatColor.GOLD + sprout.getMinimumLevelRequired() + ChatColor.WHITE + " or higher.");
+                    		return;
+                    	}
+                    	// Planting experience within jobs is handled by block place of the vanilla block of "CROP"
                     }
 
                     final Sprout toInject = cloner.deepClone(sprout);
