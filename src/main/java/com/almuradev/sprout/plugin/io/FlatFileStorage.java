@@ -206,7 +206,7 @@ class FileLoadingVisitor extends SimpleFileVisitor<Path> {
                     plugin.getLogger().warning("The stage [" + index + "] source [" + stageSource + "] for sprout [" + name + "] is not a Minecraft material or a SpoutPlugin Custom Block.");
                 }
                 //TOOLS
-                final ConfigurationSection stageToolsSection = stagesSection.getConfigurationSection("tools");
+                final ConfigurationSection stageToolsSection = indexSection.getConfigurationSection("tools");
                 final List<Tool> stageTools = new LinkedList<>();
                 if (stageToolsSection != null) {
                     for (String rawToolSource : stageToolsSection.getKeys(false)) {
