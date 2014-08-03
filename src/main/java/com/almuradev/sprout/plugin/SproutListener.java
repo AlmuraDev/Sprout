@@ -117,20 +117,41 @@ public class SproutListener implements Listener {
             if (event.getPlayer().getItemInHand()!=null) {
             	handStack = new SpoutItemStack(event.getPlayer().getItemInHand());
             }
-            boolean foundTool = false;
+            boolean foundSproutTool = false;
+            boolean foundStageTool = false;
+            // Sprout based Tools
             if (handStack != null && handStack.isCustomItem() && !sprout.getRequiredTools().isEmpty()) {
             	for (Tool requiredTool : sprout.getRequiredTools()) {
             		if (requiredTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
             			// Found exact tool.
-            			foundTool = true;
+            			foundSproutTool = true;
             			break;
             		}
             	}
             }
             
-            if (!foundTool && !sprout.getRequiredTools().isEmpty() && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+            // Stage based Tools
+            if (handStack != null && handStack.isCustomItem() && !sprout.getCurrentStage().getRequiredTools().isEmpty()) {
+            	for (Tool requiredStageTool : sprout.getCurrentStage().getRequiredTools()) {
+            		if (requiredStageTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
+            			// Found exact tool.
+            			foundStageTool = true;
+            			break;
+            		}
+            	}
+            }
+            
+            // Sprout Tool Lookup
+            if (!foundSproutTool && !sprout.getRequiredTools().isEmpty() && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {            	
             	//Invalid tool or item in hand null
-            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.DARK_RED + " Requires a tool to harvest.");
+            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " Requires a tool to harvest.");            	
+            	return;
+            }
+            
+            // Stage Tool Lookup
+            if (!foundStageTool && !sprout.getCurrentStage().getRequiredTools().isEmpty() && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {            	
+            	//Invalid tool or item in hand null
+            	event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " Requires a tool to harvest.");            	
             	return;
             }
             

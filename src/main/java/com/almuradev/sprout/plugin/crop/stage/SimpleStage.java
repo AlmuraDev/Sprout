@@ -85,24 +85,24 @@ public class SimpleStage implements Stage {
 
     @Override
     public Collection<Tool> getRequiredTools() {
-        final List<Tool> tools = new ArrayList<>();
+        final List<Tool> requiredTools = new ArrayList<>();
         for (Tool tool : this.tools) {
             if (tool.isRequired()) {
-                tools.add(tool);
+                requiredTools.add(tool);
             }
         }
-        return tools;
+        return requiredTools;
     }
 
     @Override
     public Collection<Tool> getBonusTools() {
-        final List<Tool> tools = new ArrayList<>();
+        final List<Tool> bonusTools = new ArrayList<>();
         for (Tool tool : this.tools) {
             if (tool.isBonus()) {
-                tools.add(tool);
+                bonusTools.add(tool);
             }
         }
-        return tools;
+        return bonusTools;
     }
 
     @Override
