@@ -140,7 +140,7 @@ public class SproutListener implements Listener {
             		}
             	}
             }
-            
+                        
             // Sprout Tool Lookup
             if (!foundSproutTool && !sprout.getRequiredTools().isEmpty() && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {            	
             	//Invalid tool or item in hand null
