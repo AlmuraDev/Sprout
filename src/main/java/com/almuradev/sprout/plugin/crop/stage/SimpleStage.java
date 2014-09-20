@@ -20,6 +20,7 @@
 package com.almuradev.sprout.plugin.crop.stage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -85,24 +86,24 @@ public class SimpleStage implements Stage {
 
     @Override
     public Collection<Tool> getRequiredTools() {
-        final List<Tool> requiredTools = new ArrayList<>();
-        for (Tool tool : this.tools) {
+        final List<Tool> requiredTools = new LinkedList<>();
+        for (Tool tool : tools) {
             if (tool.isRequired()) {
                 requiredTools.add(tool);
             }
         }
-        return requiredTools;
+        return Collections.unmodifiableCollection(requiredTools);
     }
 
     @Override
     public Collection<Tool> getBonusTools() {
-        final List<Tool> bonusTools = new ArrayList<>();
-        for (Tool tool : this.tools) {
+        final List<Tool> bonusTools = new LinkedList<>();
+        for (Tool tool : tools) {
             if (tool.isBonus()) {
                 bonusTools.add(tool);
             }
         }
-        return bonusTools;
+        return Collections.unmodifiableCollection(bonusTools);
     }
 
     @Override
