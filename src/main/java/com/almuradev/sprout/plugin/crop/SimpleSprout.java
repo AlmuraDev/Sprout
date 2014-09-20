@@ -191,29 +191,29 @@ public class SimpleSprout implements Sprout {
 
     @Override
     public Collection<Tool> getRequiredTools() {
-        final List<Tool> tools = new ArrayList<>();
-        for (Tool tool : this.tools) {
+        final List<Tool> requiredTools = new LinkedList<>();
+        for (Tool tool : tools) {
             if (tool.isRequired()) {
-                tools.add(tool);
+                requiredTools.add(tool);
             }
         }
-        return tools;
+        return Collections.unmodifiableCollection(requiredTools);
     }
 
     @Override
     public Collection<Tool> getBonusTools() {
-        final List<Tool> tools = new ArrayList<>();
-        for (Tool tool : this.tools) {
+        final List<Tool> bonusTools = new LinkedList<>();
+        for (Tool tool : tools) {
             if (tool.isBonus()) {
-                tools.add(tool);
+                bonusTools.add(tool);
             }
         }
-        return tools;
+        return Collections.unmodifiableCollection(bonusTools);
     }
 
     @Override
     public Collection<Drop> getBonus() {
-        return bonus;
+        return Collections.unmodifiableCollection(bonus);
     }
 
     @Override
