@@ -170,24 +170,31 @@ public class SproutListener implements Listener {
 
             //Lets roll a dice for a bonus!
             if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (sprout.isFullyGrown())) {
-            	if (!sprout.getBonus().isEmpty()) {
-            		int bonusModifier = 0;
-            		if (handStack != null && !sprout.getBonusTools().isEmpty()) {
-            			for (Tool bonusTool : sprout.getBonusTools()) {
-            				if (bonusTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
-            					bonusModifier = bonusTool.getBonusAmount();
-            					break;
-            				}
-            			}
-            		} 
-            		// Catch Maff Fail
-            		if (sprout.getBonusChance() - bonusModifier < 0) {
-            			//System.out.println("[Sprout] - Bonus multiplier cannot be more than initial bonus chance.");
+                if (!sprout.getBonus().isEmpty()) {
+                    int bonusModifier = 0;
+                    if (handStack != null && !sprout.getCurrentStage().getBonusTools().isEmpty()) {
+                        for (Tool bonusTool : sprout.getCurrentStage().getBonusTools()) {
+                            if (bonusTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
+                                bonusModifier = bonusTool.getBonusAmount();
+                                break;
+                            }
+                        }
+                    } else if (handStack != null && !sprout.getBonusTools().isEmpty()) {
+                        for (Tool bonusTool : sprout.getBonusTools()) {
+                            if (bonusTool.getName().equalsIgnoreCase(((CustomItem) handStack.getMaterial()).getFullName())) {
+                                bonusModifier = bonusTool.getBonusAmount();
+                                break;
+                            }
+                        }
+                    }
+
+            		if (sprout.getBonusChance() - bonusModifier < 0) {  // Automatic bonus drop
+            			disperseDrops(event.getPlayer(), sprout, block, true);
             		} else if (RANDOM.nextInt((sprout.getBonusChance()-bonusModifier) + 1) == (sprout.getBonusChance()-bonusModifier)) {
             			if (SproutConfiguration.bonusMessage) {
             				event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[Sprout]" + ChatColor.WHITE + " You get a bonus drop!");
             			}
-            			disperseDrops(event.getPlayer(), sprout, block, true);            	 
+            			disperseDrops(event.getPlayer(), sprout, block, true);
             		}
             	}
             	disperseDrops(event.getPlayer(), sprout, block, false);
