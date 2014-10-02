@@ -7,6 +7,8 @@ alfalfa:
     max-light-level: 15
     bonus-chance: 10
     minimum-level-required: 18
+    minimum-moisture-required: 1
+    minimum-temperature-required: 70.5
     drops: 
         MoreMaterials\KFood_Core\alfalfa:
             amount: 1        

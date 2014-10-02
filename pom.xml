@@ -19,8 +19,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bukkitVersion>1.6.2-R1.0</bukkitVersion>
-		<spoutcraftpluginVersion>1.6.2-R1.1-SNAPSHOT</spoutcraftpluginVersion>
+		<bukkitVersion>1.6.4-R2.1</bukkitVersion>
+		<spoutcraftpluginVersion>1.6.4-R2.1-SNAPSHOT</spoutcraftpluginVersion>
 		<mainClass>com.almuradev.sprout.plugin.SproutPlugin</mainClass>
 	</properties>
 

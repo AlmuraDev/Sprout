@@ -70,4 +70,8 @@ public interface Sprout {
     public int getMinimumLevelRequired();
 
     public VariableHolder getVariables();
+
+    int getMinimumRequiredMoisture();
+
+    double getMinimumRequiredTemperature();
 }
